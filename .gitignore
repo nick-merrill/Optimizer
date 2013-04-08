@@ -4,4 +4,9 @@
 
 # Eclipse stuff
 .project
-
+.classpath
+.settings/
+.loadpath
+*.tmp
+*.bak
+*.swp
