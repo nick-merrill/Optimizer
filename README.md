@@ -6,7 +6,7 @@ Collaborators:
 
 - Samuel Kim
 - Nicholas Merrill
-- Crystall Stowell
+- Crystal Stowell
 
 ## Algorithm
 
