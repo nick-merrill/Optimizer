@@ -1,6 +1,6 @@
 package solutions;
 
-public class PSOSolution extends Solution {
+public class PSOSolution implements Solution {
     double velocity;
     
     public void setVelocity(double v) {
@@ -9,5 +9,9 @@ public class PSOSolution extends Solution {
     
     public double getVelocity() {
         return this.velocity;
+    }
+
+    public void randSol() {
+        
     }
 }
