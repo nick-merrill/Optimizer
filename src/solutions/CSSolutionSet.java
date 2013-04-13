@@ -52,6 +52,10 @@ public class CSSolutionSet implements SolutionSet {
             solutions.get(i).randSol();
         }
     }
+    
+    public int getNumNests() {
+        return numNests;
+    }
 
 
 }

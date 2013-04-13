@@ -52,7 +52,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 			CSSolution i = nests.getRandSol();
 		    CSSolution newSol = randWalk(i);
 		    
-		    int j = rand.nextInt(N_NESTS);
+		    int j = rand.nextInt(nests.getNumNests());
 		    CSSolution jSol = nests.getSol(j);
 		    
 		    if (optProb.fitness(newSol) > optProb.fitness(jSol)) {
