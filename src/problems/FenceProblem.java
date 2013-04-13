@@ -14,12 +14,17 @@ public class FenceProblem extends OptimizationProblem {
     // We maximize for area.
     public double fitness(Solution sol) {
         ArrayList<Double> coefs = sol.getCoefs();
-        double area = coefs.get(0) * coefs.get(1);
+        double side1 = coefs.get(0);
+        double side3 = fenceLength - 2*side1;
+        double area = side1 * side3;
         
         return area;
     }
     
+    
+    
+    
     public int getNumVar() {
-        return 2;
+        return 1;
     }
 }
