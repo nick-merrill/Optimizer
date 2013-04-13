@@ -1,10 +1,8 @@
 package problems;
 
+import solutions.*;
+
 public abstract class OptimizationProblem {
-	public int getNumVar() {
-		return 0;
-	}
-	public float fitness(Solution s) {
-		return 0;
-	}
+	public abstract int getNumVar();
+	public abstract float fitness(Solution s);
 }
