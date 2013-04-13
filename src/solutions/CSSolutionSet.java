@@ -35,6 +35,10 @@ public class CSSolutionSet implements SolutionSet {
         
     }
     
+    public void replace() {
+        
+    }
+    
     // 
     public void abandonWorstSolutions(double abandonmentRatio) {
         sortSolsByFitness();

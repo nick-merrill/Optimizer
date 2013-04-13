@@ -1,10 +1,12 @@
 package problems;
 
+import solutions.Solution;
+
 public abstract class OptimizationProblem {
 	public int getNumVar() {
 		return 0;
 	}
-	public float fitness(Solution s) {
+	public double fitness(Solution s) {
 		return 0;
 	}
 }

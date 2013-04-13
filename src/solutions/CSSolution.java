@@ -16,4 +16,12 @@ public class CSSolution implements Solution {
     public void randSol() {
         
     }
+    
+    public ArrayList<Double> getCoefs() {
+        return coefficients;
+    }
+    
+    public void setCoefs(ArrayList<Double> coefs) {
+        this.coefficients = coefs;
+    }
 }
