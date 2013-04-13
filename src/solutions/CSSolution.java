@@ -3,7 +3,11 @@ package solutions;
 import java.util.ArrayList;
 
 public class CSSolution implements Solution {
-    public ArrayList<Double> coefficients;
+    private ArrayList<Double> coefficients;
+    
+    public CSSolution(int numVars) {
+    	coefficients = new ArrayList<Double>(numVars);
+    }
     
     // Uses old solution to WALK to a new solution
     // and returns that solution.

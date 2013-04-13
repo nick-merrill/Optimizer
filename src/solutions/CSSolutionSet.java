@@ -13,9 +13,9 @@ public class CSSolutionSet implements SolutionSet {
         this.numNests = numNests;
         this.numVars  = numVars;
         this.rand = new Random();
-        this.solutions = new ArrayList<CSSolution>();
+        this.solutions = new ArrayList<CSSolution>(numNests);
         for (int i = 0; i < numNests; i++) {
-            this.solutions.set(i, new CSSolution());
+            this.solutions.set(i, new CSSolution(numVars));
         }
     }
     
@@ -35,11 +35,15 @@ public class CSSolutionSet implements SolutionSet {
         
     }
     
-    public void replace() {
-        
+    public void replace(int j, CSSolution sol) {
+        this.solutions.set(j, sol);
     }
     
-    // 
+    public CSSolution getSol(int i) {
+    	return this.solutions.get(i);
+    }
+    
+    // TODO
     public void abandonWorstSolutions(double abandonmentRatio) {
         sortSolsByFitness();
         int numToAbandon = (int) (abandonmentRatio * this.numNests);

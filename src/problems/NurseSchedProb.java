@@ -17,4 +17,10 @@ public class NurseSchedProb extends OptimizationProblem {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public boolean withinConstraints(Solution s) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
