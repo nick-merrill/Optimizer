@@ -1,10 +1,15 @@
 package solutions;
 
+import java.util.ArrayList;
+
 public class CSSolution implements Solution {
+    public ArrayList<Double> coefficients;
     
-    // uses old solution to walk to a new solution
-    public void walkSol() {
-        
+    // Uses old solution to WALK to a new solution
+    // and returns that solution.
+    public void newSolution(Solution i) {
+        // TODO: Implement this on a per-problem basis,
+        //       accessing the public coefficients ArrayList.
     }
     
     // sets solution with random solution
