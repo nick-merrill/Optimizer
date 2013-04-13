@@ -23,7 +23,7 @@ public class FenceProblem extends OptimizationProblem {
     }
     
     /**
-     * Returns the length of side3, given side1.
+     * Returns the length of side3, given side1. 
      */
     private double side3(double side1) {
         return fenceLength - 2*side1;

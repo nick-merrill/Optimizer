@@ -6,12 +6,9 @@ import solutions.*;
 import problems.*;
 
 public class CuckooSearchOpt extends OptimizationAlgorithm {
-	
-	public SolutionSet newSolutionSet(SolutionSet seed) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
+    private SolutionSet solutions;
+    
 	public void solve(OptimizationProblem optProb) {
 		/* 
 		 * Objective function 
@@ -33,6 +30,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 
 		// number of nests
 		final int N_NESTS = 150;
+		final int N_OPTIMIZATIONS = 100;
 
 		// probability of discovery
 		final double ABANDON_PROBABILITY = 0.25;
@@ -42,13 +40,8 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		
 		Random rand = new Random();
 
-		// upper and lower bounds
-
-		// fitness function
-
-
 		int t = 0;
-		while (t < 100) {
+		while (t < N_OPTIMIZATIONS) {
 			CSSolution i = nests.getRandSol();
 		    CSSolution newSol = randWalk(i);
 		    
@@ -58,21 +51,20 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		    if (optProb.fitness(newSol) > optProb.fitness(jSol)) {
 		        nests.replace(j, newSol);
 		    }
-		    //TODO
+		    
 		    nests.abandonWorstSolutions(ABANDON_PROBABILITY);
-		    
-		    
 		    
 		    t++;
 		}
-
-	}
-
-	public SolutionSet getSolutions() {
-		return null;
 	}
 
 	public CSSolution randWalk(CSSolution seed) {
 		return seed;
 	}
+
+	// TODO: prevent returning null. Instead throw an exception.
+	public SolutionSet getSolutions() {
+	    // TODO: ensure solutions are sorted, most fit to least fit.
+        return solutions;
+    }
 }
