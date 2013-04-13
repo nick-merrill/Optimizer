@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CSSolutionSet implements SolutionSet {
-    private ArrayList<Solution> solutions;
+    private ArrayList<CSSolution> solutions;
     private Random rand;
     private int numNests;
     private int numVars;
@@ -13,13 +13,13 @@ public class CSSolutionSet implements SolutionSet {
         this.numNests = numNests;
         this.numVars  = numVars;
         this.rand = new Random();
-        this.solutions = new ArrayList<Solution>();
+        this.solutions = new ArrayList<CSSolution>();
         for (int i = 0; i < numNests; i++) {
             this.solutions.set(i, new CSSolution());
         }
     }
     
-    public Solution getRandSol() {
+    public CSSolution getRandSol() {
         return solutions.get(rand.nextInt(this.numNests));
     }
     
