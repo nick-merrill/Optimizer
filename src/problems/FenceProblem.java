@@ -27,4 +27,10 @@ public class FenceProblem extends OptimizationProblem {
     public int getNumVar() {
         return 1;
     }
+
+	@Override
+	public boolean contraints(Solution s) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

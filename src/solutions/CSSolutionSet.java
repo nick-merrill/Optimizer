@@ -13,9 +13,9 @@ public class CSSolutionSet implements SolutionSet {
         this.numNests = numNests;
         this.numVars  = numVars;
         this.rand = new Random();
-        this.solutions = new ArrayList<CSSolution>();
+        this.solutions = new ArrayList<CSSolution>(numNests);
         for (int i = 0; i < numNests; i++) {
-            this.solutions.set(i, new CSSolution());
+            this.solutions.set(i, new CSSolution(numVars));
         }
     }
     
