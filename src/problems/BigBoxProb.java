@@ -2,13 +2,11 @@ package problems;
 
 import solutions.Solution;
 
-public class NurseSchedProb extends OptimizationProblem {
+public class BigBoxProb extends OptimizationProblem {
 
-	public NurseSchedProb(int employees) {
-		//construct problem
-	}
-	
+	@Override
 	public int getNumVar() {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -17,4 +15,5 @@ public class NurseSchedProb extends OptimizationProblem {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 }

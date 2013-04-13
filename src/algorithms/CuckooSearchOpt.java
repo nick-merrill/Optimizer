@@ -47,7 +47,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		int t = 0;
 		while (t < 100) {
 		    CSSolution i = nests.getRandSol();
-		    Solution newSol = new CSSolution(i);
+		    Solution newSol = randWalk(i);
 		    Solution j = nests.getRandSol();
 		    if (optProb.fitness(newSol) > optProb.fitness(j)) {
 		        nests.replace(j, newSol);
@@ -65,4 +65,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		return null;
 	}
 
+	public CSSolution randWalk(CSSolution seed) {
+		return seed;
+	}
 }

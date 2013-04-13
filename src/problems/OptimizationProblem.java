@@ -1,12 +1,9 @@
 package problems;
 
-import solutions.Solution;
+import solutions.*;
 
 public abstract class OptimizationProblem {
-	public int getNumVar() {
-		return 0;
-	}
-	public double fitness(Solution s) {
-		return 0;
-	}
+	public abstract int getNumVar();
+	public abstract double fitness(Solution s);
+	public abstract boolean contraints(Solution s);
 }

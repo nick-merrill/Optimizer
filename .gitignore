@@ -10,3 +10,4 @@
 *.tmp
 *.bak
 *.swp
+bin/*
