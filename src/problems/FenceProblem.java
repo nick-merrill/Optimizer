@@ -29,7 +29,7 @@ public class FenceProblem extends OptimizationProblem {
     
     // We maximize for area.
     public double fitness(Solution sol) {
-        return this.area(sol);
+        return area(sol);
     }
     
     /* A solution is within constraints if side lengths
