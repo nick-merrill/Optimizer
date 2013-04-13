@@ -3,7 +3,7 @@ package solutions;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CSSolutionSet extends SolutionSet {
+public class CSSolutionSet implements SolutionSet {
     private ArrayList<Solution> solutions;
     private Random rand;
     private int numNests;
@@ -44,5 +44,6 @@ public class CSSolutionSet extends SolutionSet {
             solutions.get(i).randSol();
         }
     }
+
 
 }
