@@ -35,11 +35,15 @@ public class CSSolutionSet implements SolutionSet {
         
     }
     
-    public void replace() {
-        
+    public void replace(int j, CSSolution sol) {
+        this.solutions.set(j, sol);
     }
     
-    // 
+    public CSSolution getSol(int i) {
+    	return this.solutions.get(i);
+    }
+    
+    // TODO
     public void abandonWorstSolutions(double abandonmentRatio) {
         sortSolsByFitness();
         int numToAbandon = (int) (abandonmentRatio * this.numNests);

@@ -5,14 +5,14 @@ import solutions.*;
 
 public class BoxMinAreaProb extends OptimizationProblem {
 
-	final double boxW;
+	final double boxV;
 	
 	public BoxMinAreaProb(double volume) {
-		this.boxW = volume;
+		this.boxV = volume;
 	}
 	
 	public BoxMinAreaProb() {
-		this.boxW = 1000;
+		this.boxV = 1000;
 	}
 	
 	public int getNumVar() {
@@ -31,11 +31,17 @@ public class BoxMinAreaProb extends OptimizationProblem {
 	}
 
 	@Override
-	public boolean contraints(Solution s) {
-		
-		
-		// TODO Auto-generated method stub
-		return false;
+	public boolean withinConstraints(Solution s) {
+		ArrayList<Double> coefs = s.getCoefs();
+        double x = coefs.get(0);
+        double y = coefs.get(0);
+		if (x > 0 &&
+			y > 0 &&
+			x * y < boxV) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
-
 }

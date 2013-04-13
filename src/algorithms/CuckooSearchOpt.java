@@ -1,5 +1,7 @@
 package algorithms;
 
+import java.util.Random;
+
 import solutions.*;
 import problems.*;
 
@@ -35,9 +37,10 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		// probability of discovery
 		final double ABANDON_PROBABILITY = 0.25;
 
-		//TODO: THIS STUFF NEEDS TO BE ABSTRACTED  OUT
 		final int NUM_VAR = optProb.getNumVar();
 		CSSolutionSet nests = new CSSolutionSet(N_NESTS, NUM_VAR);
+		
+		Random rand = new Random();
 
 		// upper and lower bounds
 
@@ -46,13 +49,17 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 
 		int t = 0;
 		while (t < 100) {
-		    CSSolution i = nests.getRandSol();
-		    Solution newSol = randWalk(i);
-		    Solution j = nests.getRandSol();
-		    if (optProb.fitness(newSol) > optProb.fitness(j)) {
+			CSSolution i = nests.getRandSol();
+		    CSSolution newSol = randWalk(i);
+		    
+		    int j = rand.nextInt(N_NESTS);
+		    CSSolution jSol = nests.getSol(j);
+		    
+		    if (optProb.fitness(newSol) > optProb.fitness(jSol)) {
 		        nests.replace(j, newSol);
 		    }
-		    nests.abandon(ABANDON_PROBABILITY);
+		    //TODO
+		    nests.abandonWorstSolutions(ABANDON_PROBABILITY);
 		    
 		    
 		    
