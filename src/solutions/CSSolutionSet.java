@@ -23,6 +23,7 @@ public class CSSolutionSet implements SolutionSet {
         return solutions.get(rand.nextInt(this.numNests));
     }
     
+    // TODO
     // evaluates the fitness of each solution in solutions
     private void evalFitness() {
         for (int i = 0; i < this.numNests; i++) {
@@ -44,7 +45,7 @@ public class CSSolutionSet implements SolutionSet {
     }
     
     // TODO
-    public void abandonWorstSolutions(double abandonmentRatio) {
+    public void abandonWorstSols(double abandonmentRatio) {
         sortSolsByFitness();
         int numToAbandon = (int) (abandonmentRatio * this.numNests);
         int numToKeep = this.numNests - numToAbandon;
@@ -53,7 +54,7 @@ public class CSSolutionSet implements SolutionSet {
         }
     }
     
-    public int getNumNests() {
+    public int getNumSols() {
         return numNests;
     }
 

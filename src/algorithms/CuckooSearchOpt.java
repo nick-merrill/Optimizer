@@ -36,23 +36,23 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		final double ABANDON_PROBABILITY = 0.25;
 
 		final int NUM_VAR = optProb.getNumVar();
-		CSSolutionSet nests = new CSSolutionSet(N_NESTS, NUM_VAR);
+		CSSolutionSet solutions = new CSSolutionSet(N_NESTS, NUM_VAR);
 		
 		Random rand = new Random();
 
 		int t = 0;
 		while (t < N_OPTIMIZATIONS) {
-			CSSolution i = nests.getRandSol();
+			CSSolution i = solutions.getRandSol();
 		    CSSolution newSol = randWalk(i);
 		    
-		    int j = rand.nextInt(nests.getNumNests());
-		    CSSolution jSol = nests.getSol(j);
+		    int j = rand.nextInt(solutions.getNumSols());
+		    CSSolution jSol = solutions.getSol(j);
 		    
 		    if (optProb.fitness(newSol) > optProb.fitness(jSol)) {
-		        nests.replace(j, newSol);
+		        solutions.replace(j, newSol);
 		    }
 		    
-		    nests.abandonWorstSolutions(ABANDON_PROBABILITY);
+		    solutions.abandonWorstSols(ABANDON_PROBABILITY);
 		    
 		    t++;
 		}
