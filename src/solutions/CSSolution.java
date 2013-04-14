@@ -1,24 +1,35 @@
 package solutions;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CSSolution implements Solution {
     private ArrayList<Double> coefficients;
+    private int numVars;
     
     public CSSolution(int numVars) {
-    	coefficients = new ArrayList<Double>(numVars);
+    	coefficients = new ArrayList<Double>();
+    	this.numVars = numVars;
     }
     
-    // Uses old solution to WALK to a new solution
-    // and returns that solution.
-    public void newSolution(CSSolution i) {
-        // TODO: Implement this on a per-problem basis,
-        //       accessing the public coefficients ArrayList.
+    /**
+     * Initialize CSSolution with specific ArrayList of
+     * coefficients.
+     */
+    public CSSolution(ArrayList<Double> coefs) {
+        this.coefficients = coefs;
+        this.numVars = coefs.size();
     }
     
-    // sets solution with random solution
-    public void randSol() {
-        
+    /**
+     * Sets solution with random coefficients.
+     */
+    public void setAsRandSol() {
+        Random rand = new Random();
+        for (int i = 0; i < numVars; i++) {
+            // TODO: generate legitimate random number
+            coefficients.set(i, rand.nextDouble() * 100);
+        }
     }
     
     public ArrayList<Double> getCoefs() {

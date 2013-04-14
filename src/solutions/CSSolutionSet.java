@@ -50,7 +50,7 @@ public class CSSolutionSet implements SolutionSet {
         int numToAbandon = (int) (abandonmentRatio * this.numNests);
         int numToKeep = this.numNests - numToAbandon;
         for (int i = numToKeep; i < numNests; i++) {
-            solutions.get(i).randSol();
+            solutions.get(i).setAsRandSol();
         }
     }
     
