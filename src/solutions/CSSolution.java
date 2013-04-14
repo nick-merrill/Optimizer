@@ -11,7 +11,7 @@ public class CSSolution implements Solution {
     
     // Uses old solution to WALK to a new solution
     // and returns that solution.
-    public void newSolution(Solution i) {
+    public void newSolution(CSSolution i) {
         // TODO: Implement this on a per-problem basis,
         //       accessing the public coefficients ArrayList.
     }
