@@ -12,6 +12,7 @@ public class BoxMinAreaProb extends OptimizationProblem {
 	}
 	
 	public BoxMinAreaProb() {
+		//TODO: RANDOM
 		this.boxV = 1000;
 	}
 	

@@ -32,7 +32,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		*/
 
 		// number of nests
-		final int N_NESTS = 150;
+		final int N_NESTS = 100;
 
 		// probability of discovery
 		final double ABANDON_PROBABILITY = 0.25;
