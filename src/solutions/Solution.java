@@ -7,7 +7,7 @@ import problems.OptimizationProblem;
 
 public abstract class Solution {
 	
-    protected ArrayList<Double> coefficients;
+    protected ArrayList<Double> coefs;
     protected int numVars;
     
     private Random rand = new Random();
@@ -38,6 +38,8 @@ public abstract class Solution {
     		coefs.set(coefIndex, newCoef);
     		// removes the variable that has already been visited
     		variableIndicies.remove(index);
+    		// updates distance for next for loop
+    		distance -= Math.pow(varStep, 2);
     	}
     }
     
