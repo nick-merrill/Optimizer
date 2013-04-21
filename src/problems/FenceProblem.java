@@ -9,7 +9,7 @@ import solutions.Solution;
  * enclosed by a rectangular fence given that the fence only
  * requires three walls of material (the fourth wall is a river).
  * Naming convention: side1 and side2 are opposite sides of equal length,
- * and side3 always uses any remaining fence that side1 and side 2
+ * and side3 always uses any remaining fence that side1 and side2
  * did not use.
  */
 public class FenceProblem extends OptimizationProblem {
