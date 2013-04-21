@@ -67,9 +67,9 @@ public class Solution {
     	// creates a neighborhood of size 1 times the scaling factor
     	double distanceSquared = Math.pow(rand.nextDouble() * prob.getScalingFactor(),2);
     	// creates an ArrayList from 0 to n-1 (for indexing purposes only)
-    	ArrayList<Integer> variableIndicies = new ArrayList<Integer>();
+    	ArrayList<Integer> variableIndicies = new ArrayList<Integer>(n);
     	for (int i = 0; i < n; i++) {
-    		variableIndicies.set(i, i);
+    		variableIndicies.add(i, i);
     	}
     	
     	ArrayList<Double> coefs = this.getCoefs();
