@@ -18,14 +18,15 @@ public abstract class Solution {
     public void randomWalk (OptimizationProblem prob) {
     	int n = prob.getNumVar();
     	// creates a neighborhood of size 1 times the scaling factor
-    	double distance = rand.nextDouble() * prob.getScalingFactor();
+    	double distanceSquared = Math.pow(rand.nextDouble() * prob.getScalingFactor(),2);
     	// creates an ArrayList from 0 to n-1 (for indexing purposes only)
     	ArrayList<Integer> variableIndicies = new ArrayList<Integer>();
     	for (int i = 0; i < n; i++) {
     		variableIndicies.set(i, i);
     	}
-
+    	
     	ArrayList<Double> coefs = this.getCoefs();
+    	System.out.println(coefs);
     	for (int i = 0; i < n; i++) {
     		// chooses a random index of the list of indices
     		int index = rand.nextInt(variableIndicies.size());
@@ -33,14 +34,16 @@ public abstract class Solution {
     		int coefIndex = variableIndicies.get(index);
     		double curCoef = coefs.get(coefIndex);
     		// alters this variable coefficient by adding a random step between (-distance,distance)
+    		double distance = Math.sqrt(distanceSquared);
     		double varStep = rand.nextDouble()*distance*2-distance;
     		double newCoef = curCoef + varStep;
     		coefs.set(coefIndex, newCoef);
     		// removes the variable that has already been visited
     		variableIndicies.remove(index);
     		// updates distance for next for loop
-    		distance -= Math.pow(varStep, 2);
+    		distanceSquared -= Math.pow(varStep, 2);
     	}
+    	System.out.println(coefs);
     }
     
     public void levyFlight (OptimizationProblem prob) {
