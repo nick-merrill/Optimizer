@@ -15,13 +15,5 @@ public class CSSolution extends Solution {
         super(coefs);
     }
 
-    /**
-     * Sets solution with random coefficients.
-     */
-    public void setAsRandSol(OptimizationProblem optProb) {
-        for (int i = 0; i < this.numVars; i++) {
-            // TODO: generate legitimate random number, depending on optProb
-            this.coefs.set(i, rand.nextDouble() * 100);
-        }
-    }
+    
 }

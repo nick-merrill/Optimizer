@@ -7,13 +7,13 @@ import problems.*;
 
 public class CuckooSearchOpt extends OptimizationAlgorithm {
 
-    private CSSolutionSet solutions;
+    private SolutionSet solutions;
     private final int N_NESTS;				//number of nests (solutions)
     private final int N_OPTIMIZATIONS;		//number of generations
     private final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
     
     public CuckooSearchOpt() {
-		N_NESTS = 15;
+		N_NESTS = 5;
 		N_OPTIMIZATIONS = 3000;
 		ABANDON_PROBABILITY = 0.25;
     }
@@ -38,17 +38,18 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		*/
 
 		int NUM_VAR = optProb.getNumVar();
-		solutions = new CSSolutionSet(N_NESTS, NUM_VAR);
+		solutions = new SolutionSet(N_NESTS, NUM_VAR);
+		solutions.initializeWithRandomSols(optProb);
 		
 		Random rand = new Random();
 
 		int t = 0;
 		while (t < N_OPTIMIZATIONS) {
-			CSSolution i = solutions.getRandSol();
-		    CSSolution newSol = (CSSolution) i.randomWalk(optProb, "");
+			Solution i = solutions.getRandSol();
+		    Solution newSol = i.randomWalk(optProb, "");
 		    
 		    int j = rand.nextInt(solutions.getNumSols());
-		    CSSolution jSol = solutions.getSol(j);
+		    Solution jSol = solutions.getSol(j);
 		    
 		    // TODO: use solutions' instance data to get the fitnesses
 		    if (optProb.fitness(newSol) > optProb.fitness(jSol))
@@ -62,7 +63,6 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 
 	// TODO: prevent returning null. Instead throw an exception.
 	public SolutionSet getSolutions(OptimizationProblem optProb) {
-	    // TODO: ensure solutions are sorted, most fit to least fit.
 	    solutions.sortByFitness(optProb);
         return solutions;
     }

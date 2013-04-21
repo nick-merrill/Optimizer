@@ -7,13 +7,14 @@ import java.util.Random;
 
 import problems.OptimizationProblem;
 
-public class CSSolutionSet implements SolutionSet {
+public class CSSolutionSet /* extends SolutionSet */ {
     private ArrayList<CSSolution> solutions;
     private Random rand;
     private int numNests;
     private int numVars;
     
     public CSSolutionSet(int numNests, int numVars) {
+//        super(numNests, numVars);
         this.numNests = numNests;
         this.numVars  = numVars;
         this.rand = new Random();
@@ -21,6 +22,12 @@ public class CSSolutionSet implements SolutionSet {
         
         for (int i = 0; i < numNests; i++) {
             this.solutions.add(i, new CSSolution(numVars));
+        }
+    }
+    
+    public void initializeWithRandomSols(OptimizationProblem optProb) {
+        for (CSSolution sol : this.solutions) {
+            sol.setAsRandSol(optProb);
         }
     }
     
@@ -60,8 +67,10 @@ public class CSSolutionSet implements SolutionSet {
      */
     public void sortByFitness(OptimizationProblem optProb) {
         // Evaluates the fitness of each solution in solutions.
-        for (int i = 0; i < this.numNests; i++)
-            solutions.get(0).evalFitness(optProb);
+        for (int i = 0; i < this.numNests; i++) {
+            System.out.printf("Evaluating fitness for i=%d\n", i);
+            solutions.get(i).evalFitness(optProb);
+        }
         // Sorts solutions by their respective fitness numbers.
         Collections.sort(this.solutions, new SolutionByFitnessComparator());
     }
