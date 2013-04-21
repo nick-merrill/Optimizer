@@ -6,12 +6,9 @@ import solutions.*;
 import problems.*;
 
 public class CuckooSearchOpt extends OptimizationAlgorithm {
-	
-	public SolutionSet newSolutionSet(SolutionSet seed) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
+    private SolutionSet solutions;
+    
 	public void solve(OptimizationProblem optProb) {
 		/* 
 		 * Objective function 
@@ -33,46 +30,42 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 
 		// number of nests
 		final int N_NESTS = 150;
+		final int N_OPTIMIZATIONS = 100;
 
 		// probability of discovery
 		final double ABANDON_PROBABILITY = 0.25;
 
 		final int NUM_VAR = optProb.getNumVar();
-		CSSolutionSet nests = new CSSolutionSet(N_NESTS, NUM_VAR);
+		CSSolutionSet solutions = new CSSolutionSet(N_NESTS, NUM_VAR);
 		
 		Random rand = new Random();
 
-		// upper and lower bounds
-
-		// fitness function
-
-
 		int t = 0;
-		while (t < 100) {
-			CSSolution i = nests.getRandSol();
+		while (t < N_OPTIMIZATIONS) {
+			CSSolution i = solutions.getRandSol();
 		    CSSolution newSol = randWalk(i);
 		    
-		    int j = rand.nextInt(nests.getNumNests());
-		    CSSolution jSol = nests.getSol(j);
+		    int j = rand.nextInt(solutions.getNumSols());
+		    CSSolution jSol = solutions.getSol(j);
 		    
 		    if (optProb.fitness(newSol) > optProb.fitness(jSol)) {
-		        nests.replace(j, newSol);
+		        solutions.replace(j, newSol);
 		    }
-		    //TODO
-		    nests.abandonWorstSolutions(ABANDON_PROBABILITY);
 		    
-		    
+		    solutions.abandonWorstSols(ABANDON_PROBABILITY);
 		    
 		    t++;
 		}
-
 	}
 
-	public SolutionSet getSolutions() {
-		return null;
-	}
-
+	// TODO
 	public CSSolution randWalk(CSSolution seed) {
 		return seed;
 	}
+
+	// TODO: prevent returning null. Instead throw an exception.
+	public SolutionSet getSolutions() {
+	    // TODO: ensure solutions are sorted, most fit to least fit.
+        return solutions;
+    }
 }
