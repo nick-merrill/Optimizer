@@ -7,7 +7,16 @@ import problems.*;
 
 public class CuckooSearchOpt extends OptimizationAlgorithm {
 
-    private SolutionSet solutions;
+    private CSSolutionSet solutions;
+    private final int N_NESTS;				//number of nests (solutions)
+    private final int N_OPTIMIZATIONS;		//number of generations
+    private final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
+    
+    public CuckooSearchOpt() {
+		N_NESTS = 150;
+		N_OPTIMIZATIONS = 100;
+		ABANDON_PROBABILITY = 0.25;
+    }
     
 	public void solve(OptimizationProblem optProb) {
 		/* 
@@ -28,15 +37,8 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		 * end while
 		*/
 
-		// number of nests
-		final int N_NESTS = 150;
-		final int N_OPTIMIZATIONS = 100;
-
-		// probability of discovery
-		final double ABANDON_PROBABILITY = 0.25;
-
-		final int NUM_VAR = optProb.getNumVar();
-		CSSolutionSet solutions = new CSSolutionSet(N_NESTS, NUM_VAR);
+		int NUM_VAR = optProb.getNumVar();
+		solutions = new CSSolutionSet(N_NESTS, NUM_VAR);
 		
 		Random rand = new Random();
 

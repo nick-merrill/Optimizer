@@ -3,12 +3,10 @@ package solutions;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CSSolution implements Solution {
-    private ArrayList<Double> coefficients;
-    private int numVars;
+public class CSSolution extends Solution {
     
     public CSSolution(int numVars) {
-    	coefficients = new ArrayList<Double>();
+    	coefs = new ArrayList<Double>();
     	this.numVars = numVars;
     }
     
@@ -17,7 +15,7 @@ public class CSSolution implements Solution {
      * coefficients.
      */
     public CSSolution(ArrayList<Double> coefs) {
-        this.coefficients = coefs;
+        this.coefs = coefs;
         this.numVars = coefs.size();
     }
     
@@ -28,15 +26,15 @@ public class CSSolution implements Solution {
         Random rand = new Random();
         for (int i = 0; i < numVars; i++) {
             // TODO: generate legitimate random number
-            coefficients.set(i, rand.nextDouble() * 100);
+            coefs.set(i, rand.nextDouble() * 100);
         }
     }
     
     public ArrayList<Double> getCoefs() {
-        return coefficients;
+        return coefs;
     }
     
     public void setCoefs(ArrayList<Double> coefs) {
-        this.coefficients = coefs;
+        this.coefs = coefs;
     }
 }

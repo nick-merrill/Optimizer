@@ -2,15 +2,20 @@ package solutions;
 
 import java.util.ArrayList;
 
-public class PSOSolution implements Solution {
-    private ArrayList<Double> coefficients;
-    double velocity;
+public class PSOSolution extends Solution {
+    private ArrayList<Double> bestPos;
+    private ArrayList<Double> velocity;
     
-    public void setVelocity(double v) {
+    public PSOSolution(ArrayList<Double> coefs) {
+    	this.coefs = coefs;
+    	this.bestPos = coefs;
+    }
+    
+    public void setVelocity(ArrayList<Double> v) {
         this.velocity = v;
     }
     
-    public double getVelocity() {
+    public ArrayList<Double> getVelocity() {
         return this.velocity;
     }
 
@@ -19,10 +24,18 @@ public class PSOSolution implements Solution {
     }
     
     public ArrayList<Double> getCoefs() {
-        return coefficients;
+        return coefs;
     }
     
     public void setCoefs(ArrayList<Double> coefs) {
-        this.coefficients = coefs;
+        this.coefs = coefs;
+    }
+    
+    public void setBestPos() {
+    	this.bestPos = this.coefs;
+    }
+    
+    public void setBestPos(ArrayList<Double> coefs) {
+    	this.bestPos = coefs;
     }
 }
