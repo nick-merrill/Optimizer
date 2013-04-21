@@ -13,8 +13,8 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     private final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
     
     public CuckooSearchOpt() {
-		N_NESTS = 150;
-		N_OPTIMIZATIONS = 100;
+		N_NESTS = 15;
+		N_OPTIMIZATIONS = 3000;
 		ABANDON_PROBABILITY = 0.25;
     }
     
@@ -45,29 +45,25 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		int t = 0;
 		while (t < N_OPTIMIZATIONS) {
 			CSSolution i = solutions.getRandSol();
-		    CSSolution newSol = randWalk(i);
+		    CSSolution newSol = (CSSolution) i.randomWalk(optProb, "");
 		    
 		    int j = rand.nextInt(solutions.getNumSols());
 		    CSSolution jSol = solutions.getSol(j);
 		    
-		    if (optProb.fitness(newSol) > optProb.fitness(jSol)) {
+		    // TODO: use solutions' instance data to get the fitnesses
+		    if (optProb.fitness(newSol) > optProb.fitness(jSol))
 		        solutions.replace(j, newSol);
-		    }
 		    
-		    solutions.abandonWorstSols(ABANDON_PROBABILITY);
+		    solutions.abandonWorstSols(optProb, ABANDON_PROBABILITY);
 		    
 		    t++;
 		}
 	}
 
-	// TODO
-	public CSSolution randWalk(CSSolution seed) {
-		return seed;
-	}
-
 	// TODO: prevent returning null. Instead throw an exception.
-	public SolutionSet getSolutions() {
+	public SolutionSet getSolutions(OptimizationProblem optProb) {
 	    // TODO: ensure solutions are sorted, most fit to least fit.
+	    solutions.sortByFitness(optProb);
         return solutions;
     }
 }
