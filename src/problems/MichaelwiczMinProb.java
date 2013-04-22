@@ -35,7 +35,7 @@ public class MichaelwiczMinProb extends OptimizationProblem {
      * minimize the function.
      */
     public double fitness(Solution s) {
-        // Negates the evaluation in order to optimize for the *minimum*        
+        // Negates the evaluation in order to optimize for the *minimum*
         return -this.eval(s);
     }
 
