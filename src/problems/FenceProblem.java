@@ -30,8 +30,8 @@ public class FenceProblem extends OptimizationProblem {
     }
     
     private double area(Solution sol) {
-        ArrayList<Double> coefs = sol.getCoefs();
-        double side1 = coefs.get(0);
+        ArrayList<Double> vars = sol.getVars();
+        double side1 = vars.get(0);
         return side1 * side3(side1);
     }
     
@@ -50,8 +50,8 @@ public class FenceProblem extends OptimizationProblem {
      * is less than half the fence length.
      */
     public boolean withinConstraints(Solution sol) {
-        ArrayList<Double> coefs = sol.getCoefs();
-        double side1 = coefs.get(0);
+        ArrayList<Double> vars = sol.getVars();
+        double side1 = vars.get(0);
         return (side1 > 0 && side3(side1) > 0);
     }
     

@@ -6,9 +6,9 @@ public class PSOSolution extends Solution {
     private ArrayList<Double> bestPos;
     private ArrayList<Double> velocity;
     
-    public PSOSolution(ArrayList<Double> coefs) {
-        super(coefs);
-    	this.bestPos = coefs;
+    public PSOSolution(ArrayList<Double> vars) {
+        super(vars);
+    	this.bestPos = vars;
     }
     
     public void setVelocity(ArrayList<Double> v) {
@@ -23,19 +23,19 @@ public class PSOSolution extends Solution {
         
     }
     
-    public ArrayList<Double> getCoefs() {
-        return coefs;
+    public ArrayList<Double> getVars() {
+        return vars;
     }
     
-    public void setCoefs(ArrayList<Double> coefs) {
-        this.coefs = coefs;
+    public void setVars(ArrayList<Double> vars) {
+        this.vars = vars;
     }
     
     public void setBestPos() {
-    	this.bestPos = this.coefs;
+    	this.bestPos = this.vars;
     }
     
-    public void setBestPos(ArrayList<Double> coefs) {
-    	this.bestPos = coefs;
+    public void setBestPos(ArrayList<Double> vars) {
+    	this.bestPos = vars;
     }
 }

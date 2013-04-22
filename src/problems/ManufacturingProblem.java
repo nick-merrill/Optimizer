@@ -69,9 +69,9 @@ public class ManufacturingProblem extends OptimizationProblem {
 	}
 	
 	private double profit(Solution sol) {
-		ArrayList<Double> coefs = sol.getCoefs();
-		double varX = coefs.get(0);
-		double varY = coefs.get(1);
+		ArrayList<Double> vars = sol.getVars();
+		double varX = vars.get(0);
+		double varY = vars.get(1);
 		return profitX * varX + profitY * varY;
 	}
 
@@ -89,9 +89,9 @@ public class ManufacturingProblem extends OptimizationProblem {
 	 * of that resource.
 	 */
 	public boolean withinConstraints(Solution sol) {
-		ArrayList<Double> coefs = sol.getCoefs();
-		double varX = coefs.get(0);
-		double varY = coefs.get(1);
+		ArrayList<Double> vars = sol.getVars();
+		double varX = vars.get(0);
+		double varY = vars.get(1);
 		return (varX > 0 && varY > 0 && 
 				usageAbyX * varX + usageAbyY * varY <= constraintA &&
 				usageBbyX * varX + usageBbyY * varY <= constraintB &&

@@ -11,8 +11,8 @@ public class CSSolution extends Solution {
         super(numVars);
     }
     
-    public CSSolution(ArrayList<Double> coefs) {
-        super(coefs);
+    public CSSolution(ArrayList<Double> vars) {
+        super(vars);
     }
 
     

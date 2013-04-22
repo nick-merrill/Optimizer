@@ -22,9 +22,9 @@ public class BoxMinAreaProb extends OptimizationProblem {
 
 	@Override
 	public double fitness(Solution s) {
-		ArrayList<Double> coefs = s.getCoefs();
-        double x = coefs.get(0);
-        double y = coefs.get(1);
+		ArrayList<Double> var = s.getVars();
+        double x = var.get(0);
+        double y = var.get(1);
         double z = 1000 / x / y;
 		double area = 2*x*y + 2*y*z + 2*x*z;
         
@@ -33,9 +33,9 @@ public class BoxMinAreaProb extends OptimizationProblem {
 
 	@Override
 	public boolean withinConstraints(Solution s) {
-		ArrayList<Double> coefs = s.getCoefs();
-        double x = coefs.get(0);
-        double y = coefs.get(0);
+		ArrayList<Double> vars = s.getVars();
+        double x = vars.get(0);
+        double y = vars.get(0);
 		if (x > 0 &&
 			y > 0 &&
 			x * y < boxV) {

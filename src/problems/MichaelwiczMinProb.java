@@ -22,9 +22,9 @@ public class MichaelwiczMinProb extends OptimizationProblem {
      * minimize the function.
      */
     public double fitness(Solution s) {
-        ArrayList<Double> coefs = s.getCoefs();
-        double x = coefs.get(0);
-        double y = coefs.get(1);
+        ArrayList<Double> vars = s.getVars();
+        double x = vars.get(0);
+        double y = vars.get(1);
         
         double michaelwicz =
             -Math.sin(x) * Math.pow(Math.sin(  Math.pow(x, 2) / Math.PI), 2*M) -
@@ -42,9 +42,9 @@ public class MichaelwiczMinProb extends OptimizationProblem {
     /** Returns true if x and y are between 0 and 5. */
     @Override
     public boolean withinConstraints(Solution s) {
-        ArrayList<Double> coefs = s.getCoefs();
-        return this.isInRange(coefs.get(0), 0., 5.) &&
-               this.isInRange(coefs.get(1), 0., 5.);
+        ArrayList<Double> vars = s.getVars();
+        return this.isInRange(vars.get(0), 0., 5.) &&
+               this.isInRange(vars.get(1), 0., 5.);
     }
 
 }

@@ -11,7 +11,7 @@ import problems.OptimizationProblem;
 
 public class Solution {
     
-    protected ArrayList<Double> coefs;
+    protected ArrayList<Double> vars;
     protected int numVars;
     
     /**
@@ -26,22 +26,22 @@ public class Solution {
      * Initialize CSSolution with specific ArrayList of
      * coefficients.
      */
-    public Solution(ArrayList<Double> coefs) {
-        this.coefs = coefs;
-        this.numVars = coefs.size();
+    public Solution(ArrayList<Double> vars) {
+        this.vars = vars;
+        this.numVars = vars.size();
     }
     
     public Solution(int numVars) {
-    	coefs = new ArrayList<Double>();
+    	this.vars = new ArrayList<Double>();
     	this.numVars = numVars;
     }
     
-    public ArrayList<Double> getCoefs() {
-        return coefs;
+    public ArrayList<Double> getVars() {
+        return vars;
     }
     
-    public void setCoefs(ArrayList<Double> coefs) {
-        this.coefs = coefs;
+    public void setVars(ArrayList<Double> vars) {
+        this.vars = vars;
     }
     
     public void evalFitness(OptimizationProblem optProb) {
@@ -59,20 +59,20 @@ public class Solution {
     
     private void initializeWithNull() {
         for (int i = 0; i < this.numVars; i++) {
-            this.coefs.add(null);
+            this.vars.add(null);
         }
     }
     
     /**
-     * Sets solution with random coefficients.
+     * Sets solution with random variable values.
      */
     public void setAsRandSol(OptimizationProblem optProb) {
-        if (this.coefs.size() < this.numVars) {
+        if (this.vars.size() < this.numVars) {
             this.initializeWithNull();
         }
         for (int i = 0; i < this.numVars; i++) {
             // TODO: generate legitimate random number, depending on optProb
-            this.coefs.set(i, rand.nextDouble() * 100);
+            this.vars.set(i, rand.nextDouble() * 100);
         }
     }
     
@@ -87,22 +87,22 @@ public class Solution {
     	// creates a neighborhood of size 1 times the scaling factor
     	double distanceSquared = Math.pow(rand.nextDouble() * prob.getScalingFactor(),2);
     	// creates an ArrayList from 0 to n-1 (for indexing purposes only)
-    	ArrayList<Integer> coefIndices = new ArrayList<Integer>(n);
+    	ArrayList<Integer> varIndices = new ArrayList<Integer>(n);
     	for (int i = 0; i < n; i++) {
-    		coefIndices.add(i, i);
+    		varIndices.add(i, i);
     	}
     	
-    	ArrayList<Double> coefs = this.getCoefs();
+    	ArrayList<Double> vars = this.getVars();
     	Solution newSol = new Solution(this.numVars);
     	newSol.initializeWithNull();
-    	ArrayList<Double> newCoefs = newSol.getCoefs();
+    	ArrayList<Double> newVars = newSol.getVars();
     	for (int i = 0; i < n; i++) {
-    		/* Chooses a random coefficient index from the indices
-    		 * of the remaining/unwalked coefficients. */
-    		int index = rand.nextInt(coefIndices.size());
-    		// Finds the coefficient of the variable that this index corresponds to.
-    		int coefIndex = coefIndices.get(index);
-    		double curCoef = coefs.get(coefIndex);
+    		/* Chooses a random variable index from the indices
+    		 * of the remaining/unwalked variables. */
+    		int index = rand.nextInt(varIndices.size());
+    		// Finds the variable value that this index corresponds to.
+    		int varIndex = varIndices.get(index);
+    		double curVar = vars.get(varIndex);
     		
     		// use correct distribution to generate random double [0,1)
     		double r;
@@ -113,10 +113,10 @@ public class Solution {
     		// alters this variable coefficient by adding a random step between (-distance,distance)
     		double distance = Math.sqrt(distanceSquared);
     		double varStep = r*distance*2-distance;
-    		double newCoef = curCoef + varStep;
-    		newCoefs.set(coefIndex, newCoef);
+    		double newVar = curVar + varStep;
+    		newVars.set(varIndex, newVar);
     		// removes the variable that has already been visited
-    		coefIndices.remove(index);
+    		varIndices.remove(index);
     		// updates distance for next for loop
     		distanceSquared -= Math.pow(varStep, 2);
     	}
@@ -125,11 +125,11 @@ public class Solution {
     }
     
     public void print() {
-        if (this.coefs.size() == 0) {
+        if (this.vars.size() == 0) {
             System.out.printf("Empty Solution\n");
         } else {
             for (int i = 0; i < this.numVars; i++) {
-                System.out.printf("x%d:\t%f\n", i, this.coefs.get(i));
+                System.out.printf("x%d:\t%f\n", i, this.vars.get(i));
             }
         }
         if (this.fitness != null)
