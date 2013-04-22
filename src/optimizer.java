@@ -16,6 +16,15 @@ public class optimizer {
 	    FenceProblem fenceProb = new FenceProblem(fenceLength);
 	    csAlg.solve(fenceProb);
 	    csAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb).print();
+	    
+	    double volume = 100.;
+	    BoxMinAreaProb boxProb = new BoxMinAreaProb(volume);
+	    csAlg.solve(boxProb);
+	    csAlg.getSolutions(boxProb).getMostFitSolution(boxProb).print();
+	    
+	    MichaelwiczMinProb michaelwiczProb = new MichaelwiczMinProb();
+	    csAlg.solve(michaelwiczProb);
+	    csAlg.getSolutions(michaelwiczProb).getMostFitSolution(michaelwiczProb).print();
 	}
 
 }
