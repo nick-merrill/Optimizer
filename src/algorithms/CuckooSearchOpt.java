@@ -46,7 +46,13 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		int t = 0;
 		while (t < N_OPTIMIZATIONS) {
 			Solution i = solutions.getRandSol();
-		    Solution newSol = i.randomWalk(optProb, "");
+			Solution newSol;
+		    newSol = i.randomWalk(optProb, "");
+		    /* If the random walk resulted in a solution that is not within constraints,
+		     * then give up on it. */
+		    if (!optProb.withinConstraints(newSol)) {
+		        newSol.setAsRandSol(optProb);
+		    }
 		    
 		    int j = rand.nextInt(solutions.getNumSols());
 		    Solution jSol = solutions.getSol(j);
