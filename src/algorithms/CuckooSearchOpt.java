@@ -40,10 +40,6 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		int NUM_VAR = optProb.getNumVar();
 		solutions = new SolutionSet(N_NESTS, NUM_VAR);
 		solutions.initializeWithRandomSols(optProb);
-		for (int i = 0; i < 5; i++) {
-		    System.out.printf("Solution %d... ", i);
-		    solutions.getSol(i).print();
-		}
 		
 		Random rand = new Random();
 
@@ -55,7 +51,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		    int j = rand.nextInt(solutions.getNumSols());
 		    Solution jSol = solutions.getSol(j);
 		    
-		    // TODO: use solutions' instance data to get the fitnesses
+		    // TODO: use solutions' instance data to get the fitnesses to avoid unnecessary calculations
 		    if (optProb.fitness(newSol) > optProb.fitness(jSol))
 		        solutions.replace(j, newSol);
 		    

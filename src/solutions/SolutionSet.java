@@ -68,9 +68,11 @@ public class SolutionSet {
     public void sortByFitness(OptimizationProblem optProb) {
         // Evaluates the fitness of each solution in solutions.
         for (int i = 0; i < this.numNests; i++)
-            solutions.get(0).evalFitness(optProb);
-        // Sorts solutions by their respective fitness numbers.
+            solutions.get(i).evalFitness(optProb);
+        // Sorts solutions by their respective fitness numbers with lowest fitness first.
         Collections.sort(this.solutions, new SolutionByFitnessComparator());
+        // Reverses sort to put the most fit solution first.
+        Collections.reverse(this.solutions);
     }
 
     public void abandonWorstSols(OptimizationProblem optProb, double abandonmentRatio) {
@@ -80,6 +82,7 @@ public class SolutionSet {
         for (int i = numToKeep; i < numNests; i++) {
             solutions.get(i).setAsRandSol(optProb);
         }
+        System.out.println("5");
     }
 
 }

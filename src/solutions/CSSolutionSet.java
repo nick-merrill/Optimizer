@@ -68,7 +68,6 @@ public class CSSolutionSet /* extends SolutionSet */ {
     public void sortByFitness(OptimizationProblem optProb) {
         // Evaluates the fitness of each solution in solutions.
         for (int i = 0; i < this.numNests; i++) {
-            System.out.printf("Evaluating fitness for i=%d\n", i);
             solutions.get(i).evalFitness(optProb);
         }
         // Sorts solutions by their respective fitness numbers.
