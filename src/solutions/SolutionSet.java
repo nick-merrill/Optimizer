@@ -82,7 +82,6 @@ public class SolutionSet {
         for (int i = numToKeep; i < numNests; i++) {
             solutions.get(i).setAsRandSol(optProb);
         }
-        System.out.println("5");
     }
 
 }
