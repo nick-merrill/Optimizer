@@ -7,11 +7,10 @@ import solutions.Solution;
 public abstract class OptimizationProblem {
 	protected double scalingFactor = 1;
 	
-	protected ConstraintSet coefConstraints;
+	protected ConstraintSet constraints;
 	
 	public abstract int getNumVar();
 	public abstract double fitness(Solution s);
-	public abstract boolean withinConstraints(Solution s);
 	
 	public double getScalingFactor() {
 		return scalingFactor;
@@ -86,19 +85,39 @@ public abstract class OptimizationProblem {
 	}
 	
 	private Constraint getConstraint(int coefIndex) {
-	    if (this.coefConstraints.hasConstraintFor(coefIndex))
-	        return this.coefConstraints.getConstraintFor(coefIndex);
+	    if (this.constraints.hasConstraintFor(coefIndex))
+	        return this.constraints.getConstraintFor(coefIndex);
 	    else
 	        // TODO: provide better default coefficient constraints
 	        return new Constraint(coefIndex, -1000, 1000);
 	}
-	public double getMinCoef(int coefIndex) {
+	public final double getMinCoef(int coefIndex) {
 	    Constraint coefConstraint = this.getConstraint(coefIndex);
 	    return coefConstraint.getMin();
 	}
-	public double getMaxCoef(int coefIndex) {
+	public final double getMaxCoef(int coefIndex) {
 	    Constraint coefConstraint = this.getConstraint(coefIndex);
 	    return coefConstraint.getMax();
+	}
+	
+	// Returns true if the variable is within the constraint's min and max, inclusive.
+	// Also returns true if no constraint exists for the variable.
+	public boolean withinConstraints(Solution sol, int coefIndex) {
+	    double coef = sol.getCoefs().get(coefIndex);
+	    if (this.constraints.hasConstraintFor(coefIndex)) {
+	        Constraint constraint = this.constraints.getConstraintFor(coefIndex);
+	        return constraint.getMin() <= coef && coef <= constraint.getMax();
+	    } else {
+	        return true;
+	    }
+	}
+	
+	/** Returns true if entire solution meets the defined constraints. */
+	public boolean withinConstraints(Solution sol) {
+	    for (int i = 0; i < this.getNumVar(); i++) {
+	        if (!withinConstraints(sol, i)) return false;
+	    }
+	    return true;
 	}
 	
 }
