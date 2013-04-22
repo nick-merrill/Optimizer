@@ -71,8 +71,10 @@ public class Solution {
             this.initializeWithNull();
         }
         for (int i = 0; i < this.numVars; i++) {
-            // TODO: generate legitimate random number, depending on optProb
-            this.vars.set(i, rand.nextDouble() * 100);
+            double min = optProb.getMinVar(i);
+            double max = optProb.getMaxVar(i);
+            double range = max - min;
+            this.vars.set(i, rand.nextDouble() * range + min);
         }
     }
     

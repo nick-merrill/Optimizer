@@ -51,6 +51,7 @@ public abstract class OptimizationProblem {
 	    
 	    // Returns index of Constraint for varIndex or -1 if constraint is not set.
 	    private int indexOfConstraintFor(int varIndex) {
+    	    System.out.println(2);
 	        int size = this.constraints.size();
 	        if (size > 0) {
     	        for (int i = 0; i < size; i++) {
@@ -62,6 +63,7 @@ public abstract class OptimizationProblem {
 	    
 	    // Returns true if a constraint exists for the varIndex.
 	    public boolean hasConstraintFor(int varIndex) {
+    	    System.out.println(1);
 	        return this.indexOfConstraintFor(varIndex) != -1;
 	    }
 	    
@@ -81,7 +83,7 @@ public abstract class OptimizationProblem {
 	    
 	    // TODO: throw error if constraint does not exist for varIndex.
 	    public Constraint getConstraintFor(int varIndex) {
-	        return(this.constraints.get(this.indexOfConstraintFor(varIndex)));
+	        return this.constraints.get(this.indexOfConstraintFor(varIndex));
 	    }
 	}
 	
