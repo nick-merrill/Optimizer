@@ -40,6 +40,10 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		int NUM_VAR = optProb.getNumVar();
 		solutions = new SolutionSet(N_NESTS, NUM_VAR);
 		solutions.initializeWithRandomSols(optProb);
+		for (int i = 0; i < 5; i++) {
+		    System.out.printf("Solution %d... ", i);
+		    solutions.getSol(i).print();
+		}
 		
 		Random rand = new Random();
 
