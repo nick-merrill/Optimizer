@@ -24,7 +24,7 @@ public class BoxMinAreaProb extends OptimizationProblem {
 	public double fitness(Solution s) {
 		ArrayList<Double> coefs = s.getCoefs();
         double x = coefs.get(0);
-        double y = coefs.get(0);
+        double y = coefs.get(1);
         double z = 1000 / x / y;
 		double area = 2*x*y + 2*y*z + 2*x*z;
         

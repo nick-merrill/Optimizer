@@ -11,6 +11,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	
 	public ParticleSwarmOpt() {
 		N_PARTICLES = 100;
+		N_RUNS = 1000;
 	}
 	
 	@Override
@@ -25,8 +26,9 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	}
 
 	@Override
-	public SolutionSet getSolutions() {
-		return solutions;
+	public SolutionSet getSolutions(OptimizationProblem optProb) {
+		solutions.sortByFitness(optProb);
+        return solutions;
 	}
 	
 }
