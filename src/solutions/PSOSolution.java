@@ -7,7 +7,7 @@ public class PSOSolution extends Solution {
     private ArrayList<Double> velocity;
     
     public PSOSolution(ArrayList<Double> coefs) {
-    	this.coefs = coefs;
+        super(coefs);
     	this.bestPos = coefs;
     }
     

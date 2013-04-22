@@ -7,14 +7,14 @@ import problems.*;
 
 public class CuckooSearchOpt extends OptimizationAlgorithm {
 
-    private CSSolutionSet solutions;
+    private SolutionSet solutions;
     private final int N_NESTS;				//number of nests (solutions)
     private final int N_OPTIMIZATIONS;		//number of generations
     private final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
     
     public CuckooSearchOpt() {
-		N_NESTS = 150;
-		N_OPTIMIZATIONS = 100;
+		N_NESTS = 5;
+		N_OPTIMIZATIONS = 3000;
 		ABANDON_PROBABILITY = 0.25;
     }
     
@@ -38,36 +38,36 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		*/
 
 		int NUM_VAR = optProb.getNumVar();
-		solutions = new CSSolutionSet(N_NESTS, NUM_VAR);
+		solutions = new SolutionSet(N_NESTS, NUM_VAR);
+		solutions.initializeWithRandomSols(optProb);
+		for (int i = 0; i < 5; i++) {
+		    System.out.printf("Solution %d... ", i);
+		    solutions.getSol(i).print();
+		}
 		
 		Random rand = new Random();
 
 		int t = 0;
 		while (t < N_OPTIMIZATIONS) {
-			CSSolution i = solutions.getRandSol();
-		    CSSolution newSol = randWalk(i);
+			Solution i = solutions.getRandSol();
+		    Solution newSol = i.randomWalk(optProb, "");
 		    
 		    int j = rand.nextInt(solutions.getNumSols());
-		    CSSolution jSol = solutions.getSol(j);
+		    Solution jSol = solutions.getSol(j);
 		    
-		    if (optProb.fitness(newSol) > optProb.fitness(jSol)) {
+		    // TODO: use solutions' instance data to get the fitnesses
+		    if (optProb.fitness(newSol) > optProb.fitness(jSol))
 		        solutions.replace(j, newSol);
-		    }
 		    
-		    solutions.abandonWorstSols(ABANDON_PROBABILITY);
+		    solutions.abandonWorstSols(optProb, ABANDON_PROBABILITY);
 		    
 		    t++;
 		}
 	}
 
-	// TODO
-	public CSSolution randWalk(CSSolution seed) {
-		return seed;
-	}
-
 	// TODO: prevent returning null. Instead throw an exception.
-	public SolutionSet getSolutions() {
-	    // TODO: ensure solutions are sorted, most fit to least fit.
+	public SolutionSet getSolutions(OptimizationProblem optProb) {
+	    solutions.sortByFitness(optProb);
         return solutions;
     }
 }

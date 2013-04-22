@@ -12,4 +12,5 @@ public abstract class OptimizationProblem {
 	public double getScalingFactor() {
 		return scalingFactor;
 	}
+	
 }
