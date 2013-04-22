@@ -16,22 +16,27 @@ public class MichaelwiczMinProb extends OptimizationProblem {
         return 2;
     }
 
+    /**
+     * Returns the evaluation of the Michaelwicz function for a given solution.
+     */
+    public double eval(Solution s) {
+        ArrayList<Double> vars = s.getVars();
+        double x = vars.get(0);
+        double y = vars.get(1);
+        
+        return
+            -Math.sin(x) * Math.pow(Math.sin(  Math.pow(x, 2) / Math.PI), 2*M) -
+             Math.sin(y) * Math.pow(Math.sin(2*Math.pow(y, 2) / Math.PI), 2*M);
+    }
+    
     @Override
     /**
      * Returns the negative of the Michaelwicz function in order to
      * minimize the function.
      */
     public double fitness(Solution s) {
-        ArrayList<Double> vars = s.getVars();
-        double x = vars.get(0);
-        double y = vars.get(1);
-        
-        double michaelwicz =
-            -Math.sin(x) * Math.pow(Math.sin(  Math.pow(x, 2) / Math.PI), 2*M) -
-             Math.sin(y) * Math.pow(Math.sin(2*Math.pow(y, 2) / Math.PI), 2*M);
-        
         // Negates the evaluation in order to optimize for the *minimum*        
-        return -michaelwicz;
+        return -this.eval(s);
     }
 
     /** Returns true if x is between low and high, inclusively. */
