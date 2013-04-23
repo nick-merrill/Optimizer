@@ -20,6 +20,7 @@ public class FenceProblem extends OptimizationProblem {
      */
     public FenceProblem(double fenceLength) {
         this.fenceLength = fenceLength;
+        this.constraints.add(new Constraint(0, 0, fenceLength));
     }
     
     /**

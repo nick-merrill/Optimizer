@@ -13,8 +13,22 @@ public abstract class OptimizationProblem {
 	    this.constraints = new ConstraintSet();
 	}
 	
+	/**
+	 * Returns the number of variables for the problem. For example,
+	 * in a bivariate problem, getNumVar() would return 2.
+	 */
 	public abstract int getNumVar();
+	
+	/**
+	 * Returns the fitness of the solution. An OptimizationAlgorithm will
+	 * optimize for this value to be a *maximum*.
+	 */
 	public abstract double fitness(Solution s);
+	
+	/**
+	 * Should return true if the solution is within any constraints of the
+	 * problem that are more complicated than simple variable bounding.
+	 */
 	public abstract boolean withinCustomConstraints(Solution s);
 	
 	public double getScalingFactor() {
@@ -69,14 +83,14 @@ public abstract class OptimizationProblem {
 	    
 	    // Returns true if a constraint exists for the varIndex.
 	    public boolean hasConstraintFor(int varIndex) {
-//    	    System.out.println(1);
 	        return this.indexOfConstraintFor(varIndex) != -1;
 	    }
 	    
 	    // Returns true if old constraint was replaced due to add.
-	    public boolean add(int varIndex, Constraint varConstraint) {
+	    public boolean add(Constraint varConstraint) {
+	        int varIndex = varConstraint.getVarIndex();
 	        int i = this.indexOfConstraintFor(varIndex);
-	        if (i != -1) {
+	        if (i == -1) {
 	            // Constraint does not yet exist, so creates new constraint.
 	            this.constraints.add(varConstraint);
 	            return false;
@@ -87,7 +101,7 @@ public abstract class OptimizationProblem {
 	        }
 	    }
 	    
-	    // TODO: throw error if constraint does not exist for varIndex.
+	    // TODO: add better error handling (throw)
 	    public Constraint getConstraintFor(int varIndex) {
 	        if (!this.hasConstraintFor(varIndex)) {
 	            System.out.println("Cannot get constraint that does not exist!");
@@ -125,7 +139,10 @@ public abstract class OptimizationProblem {
 	    }
 	}
 	
-	/** Returns true if entire solution meets the defined constraints. */
+	/**
+	 * Returns true if entire solution meets both any defined variable constraints
+	 * as well as the custom constraints defined by concrete problems.
+	 */
 	public boolean withinConstraints(Solution sol) {
 	    for (int i = 0; i < this.getNumVar(); i++) {
 	        if (!withinConstraints(sol, i)) return false;

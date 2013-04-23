@@ -60,7 +60,8 @@ public class Solution {
     }
     
     /**
-     * Sets solution with random variable values.
+     * Sets solution with random variable values, ensuring constraints for
+     * the optimization problem are met.
      */
     public void setAsRandSol(OptimizationProblem optProb) {
         if (this.vars.size() < this.numVars) {
@@ -71,8 +72,8 @@ public class Solution {
                 double min = optProb.getMinVar(i);
                 double max = optProb.getMaxVar(i);
                 double range = max - min;
-//                double range = 100, min = 0;
-                this.vars.set(i, rand.nextDouble() * range + min);
+                double newVar = rand.nextDouble() * range + min;
+                this.vars.set(i, newVar);
             }
         } while(!optProb.withinConstraints(this));
     }

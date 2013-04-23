@@ -11,6 +11,11 @@ public class MichaelwiczMinProb extends OptimizationProblem {
 
     final double M = 10.;
     
+    public MichaelwiczMinProb() {
+        this.constraints.add(new Constraint(0, 0,5));
+        this.constraints.add(new Constraint(1, 0,5));
+    }
+    
     public int getNumVar() {
         return 2;
     }
@@ -27,6 +32,7 @@ public class MichaelwiczMinProb extends OptimizationProblem {
             -Math.sin(x) * Math.pow(Math.sin(  Math.pow(x, 2) / Math.PI), 2*M) -
              Math.sin(y) * Math.pow(Math.sin(2*Math.pow(y, 2) / Math.PI), 2*M);
     }
+    
     
     @Override
     /**
