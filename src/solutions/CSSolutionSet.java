@@ -9,14 +9,12 @@ import problems.OptimizationProblem;
 
 public class CSSolutionSet implements SolutionSet {
     
-    protected ArrayList<CSSolution> solutions;
-    protected Random rand;
+    private ArrayList<CSSolution> solutions;
+    private Random rand;
     private int numNests;
-    private int numVars;
     
     public CSSolutionSet(int numNests, int numVars) {
         this.numNests = numNests;
-        this.numVars  = numVars;
         this.rand = new Random();
         this.solutions = new ArrayList<CSSolution>(numNests);
         
