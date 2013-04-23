@@ -15,17 +15,9 @@ import java.util.ArrayList;
  */
 
 public class ManufacturingProblem extends OptimizationProblem {
-	private double constraintA; 
-	private double constraintB;
-	private double constraintC;
-	private double profitX;
-	private double profitY;
-	private double usageAbyX;
-	private double usageAbyY;
-	private double usageBbyX;
-	private double usageBbyY;
-	private double usageCbyX;
-	private double usageCbyY;
+	private double constraintA, constraintB, constraintC, profitX, profitY,
+	               usageAbyX, usageAbyY, usageBbyX, usageBbyY, usageCbyX,
+	               usageCbyY;
 	
 	/**
 	 * Constructs a ManufacturingProblem, where only constraints are inputed
