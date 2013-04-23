@@ -30,7 +30,7 @@ public class FenceProblem extends OptimizationProblem {
         return fenceLength - 2*side1;
     }
     
-    private double area(Solution sol) {
+    public double area(Solution sol) {
         ArrayList<Double> vars = sol.getVars();
         double side1 = vars.get(0);
         return side1 * side3(side1);
