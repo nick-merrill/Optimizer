@@ -7,7 +7,7 @@ import problems.*;
 
 public class CuckooSearchOpt extends OptimizationAlgorithm {
 
-    private SolutionSet solutions;
+    private CSSolutionSet solutions;
     private final int N_NESTS;				//number of nests (solutions)
     private final int N_OPTIMIZATIONS;		//number of generations
     private final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
@@ -38,15 +38,15 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		*/
 
 		int NUM_VAR = optProb.getNumVar();
-		solutions = new SolutionSet(N_NESTS, NUM_VAR);
+		solutions = new CSSolutionSet(N_NESTS, NUM_VAR);
 		solutions.initializeWithRandomSols(optProb);
 		
 		Random rand = new Random();
 
 		int t = 0;
 		while (t < N_OPTIMIZATIONS) {
-			Solution i = solutions.getRandSol();
-			Solution newSol;
+			CSSolution i = solutions.getRandSol();
+			CSSolution newSol;
 		    newSol = i.randomWalk(optProb, "");
 		    /* If the random walk resulted in a solution that is not within constraints,
 		     * then give up on it. */
@@ -68,7 +68,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 	}
 
 	// TODO: prevent returning null. Instead throw an exception.
-	public SolutionSet getSolutions(OptimizationProblem optProb) {
+	public CSSolutionSet getSolutions(OptimizationProblem optProb) {
 	    solutions.sortByFitness(optProb);
         return solutions;
     }

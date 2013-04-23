@@ -1,5 +1,6 @@
 import algorithms.*;
 import problems.*;
+import solutions.Solution;
 
 public class optimizer {
 
@@ -24,7 +25,9 @@ public class optimizer {
 	    
 	    MichaelwiczMinProb michaelwiczProb = new MichaelwiczMinProb();
 	    csAlg.solve(michaelwiczProb);
-	    csAlg.getSolutions(michaelwiczProb).getMostFitSolution(michaelwiczProb).print();
+	    Solution michaelwiczSol = csAlg.getSolutions(michaelwiczProb).getMostFitSolution(michaelwiczProb);
+	    michaelwiczSol.print();
+	    System.out.printf("Michaelwicz minimum: %f\n", michaelwiczProb.eval(michaelwiczSol));
 	}
 
 }
