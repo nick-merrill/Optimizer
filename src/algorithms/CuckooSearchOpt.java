@@ -47,12 +47,11 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		while (t < N_OPTIMIZATIONS) {
 			CSSolution i = solutions.getRandSol();
 			CSSolution newSol;
-		    newSol = i.randomWalk(optProb, "");
-		    /* If the random walk resulted in a solution that is not within constraints,
-		     * then give up on it. */
-		    if (!optProb.withinConstraints(newSol)) {
-		        newSol.setAsRandSol(optProb);
-		    }
+			do {
+    		    newSol = i.randomWalk(optProb, "");
+    		    /* If the random walk resulted in a solution that is not within constraints,
+    		     * then try another random walk from the original solution. */
+			} while(!optProb.withinConstraints(newSol));
 		    
 		    int j = rand.nextInt(solutions.getNumSols());
 		    Solution jSol = solutions.getSol(j);
@@ -61,6 +60,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		    if (optProb.fitness(newSol) > optProb.fitness(jSol))
 		        solutions.replace(j, newSol);
 		    
+		    // Resets worst solutions to random values.
 		    solutions.abandonWorstSols(optProb, ABANDON_PROBABILITY);
 		    
 		    t++;

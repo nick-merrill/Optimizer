@@ -66,10 +66,12 @@ public class Solution {
         if (this.vars.size() < this.numVars) {
             this.initializeWithNull();
         }
-        for (int i = 0; i < this.numVars; i++) {
-            // TODO: generate legitimate random number, depending on optProb
-            this.vars.set(i, rand.nextDouble() * 100);
-        }
+        do {
+            for (int i = 0; i < this.numVars; i++) {
+                // TODO: generate legitimate random number, depending on optProb
+                this.vars.set(i, rand.nextDouble() * 100);
+            }
+        } while(!optProb.withinConstraints(this));
     }
     
     public void print() {
