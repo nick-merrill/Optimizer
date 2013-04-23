@@ -19,7 +19,9 @@ public abstract class OptimizationProblem {
 	/**
 	 * Provides bounds for one variable of the problem. Reasonable bounds
 	 * should ideally be set for every optimization problem to ensure
-	 * the most efficient optimization.
+     * the most efficient optimization.
+     * The main use of the Constraint class is to provide a means of random
+     * number generation for variable values.
 	 */
 	public class Constraint {
 	    int varIndex;
