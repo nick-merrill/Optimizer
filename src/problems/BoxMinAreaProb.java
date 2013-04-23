@@ -32,7 +32,7 @@ public class BoxMinAreaProb extends OptimizationProblem {
 	}
 
 	@Override
-	public boolean withinConstraints(Solution s) {
+	public boolean withinCustomConstraints(Solution s) {
 		ArrayList<Double> vars = s.getVars();
         double x = vars.get(0);
         double y = vars.get(0);

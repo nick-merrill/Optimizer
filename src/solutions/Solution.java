@@ -71,6 +71,7 @@ public class Solution {
                 double min = optProb.getMinVar(i);
                 double max = optProb.getMaxVar(i);
                 double range = max - min;
+//                double range = 100, min = 0;
                 this.vars.set(i, rand.nextDouble() * range + min);
             }
         } while(!optProb.withinConstraints(this));

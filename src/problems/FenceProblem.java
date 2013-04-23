@@ -49,7 +49,7 @@ public class FenceProblem extends OptimizationProblem {
      * greater than 0 simultaneously ensures that side1
      * is less than half the fence length.
      */
-    public boolean withinConstraints(Solution sol) {
+    public boolean withinCustomConstraints(Solution sol) {
         ArrayList<Double> vars = sol.getVars();
         double side1 = vars.get(0);
         return (side1 > 0 && side3(side1) > 0);

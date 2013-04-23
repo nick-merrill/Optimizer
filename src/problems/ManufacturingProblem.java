@@ -80,7 +80,7 @@ public class ManufacturingProblem extends OptimizationProblem {
 	 * the material used for each resource must be less than the constraint
 	 * of that resource.
 	 */
-	public boolean withinConstraints(Solution sol) {
+	public boolean withinCustomConstraints(Solution sol) {
 		ArrayList<Double> vars = sol.getVars();
 		double varX = vars.get(0);
 		double varY = vars.get(1);

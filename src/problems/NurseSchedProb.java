@@ -19,7 +19,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	}
 
 	@Override
-	public boolean withinConstraints(Solution s) {
+	public boolean withinCustomConstraints(Solution s) {
 		// TODO Auto-generated method stub
 		return false;
 	}

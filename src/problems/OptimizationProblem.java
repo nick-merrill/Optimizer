@@ -9,8 +9,13 @@ public abstract class OptimizationProblem {
 	
 	protected ConstraintSet constraints;
 	
+	public OptimizationProblem() {
+	    this.constraints = new ConstraintSet();
+	}
+	
 	public abstract int getNumVar();
 	public abstract double fitness(Solution s);
+	public abstract boolean withinCustomConstraints(Solution s);
 	
 	public double getScalingFactor() {
 		return scalingFactor;
@@ -47,13 +52,12 @@ public abstract class OptimizationProblem {
 	public class ConstraintSet {
 	    ArrayList<Constraint> constraints;
 	    
-	    ConstraintSet() {
+	    public ConstraintSet() {
 	        this.constraints = new ArrayList<Constraint>();
 	    }
 	    
 	    // Returns index of Constraint for varIndex or -1 if constraint is not set.
 	    private int indexOfConstraintFor(int varIndex) {
-    	    System.out.println(2);
 	        int size = this.constraints.size();
 	        if (size > 0) {
     	        for (int i = 0; i < size; i++) {
@@ -65,7 +69,7 @@ public abstract class OptimizationProblem {
 	    
 	    // Returns true if a constraint exists for the varIndex.
 	    public boolean hasConstraintFor(int varIndex) {
-    	    System.out.println(1);
+//    	    System.out.println(1);
 	        return this.indexOfConstraintFor(varIndex) != -1;
 	    }
 	    
@@ -85,6 +89,10 @@ public abstract class OptimizationProblem {
 	    
 	    // TODO: throw error if constraint does not exist for varIndex.
 	    public Constraint getConstraintFor(int varIndex) {
+	        if (!this.hasConstraintFor(varIndex)) {
+	            System.out.println("Cannot get constraint that does not exist!");
+	            System.exit(2);
+	        }
 	        return this.constraints.get(this.indexOfConstraintFor(varIndex));
 	    }
 	}
@@ -105,9 +113,9 @@ public abstract class OptimizationProblem {
 	    return varConstraint.getMax();
 	}
 	
-	// Returns true if the variable is within the constraint's min and max, inclusive.
-	// Also returns true if no constraint exists for the variable.
-	public boolean withinConstraints(Solution sol, int varIndex) {
+	/* Returns true if the variable is within the constraint's min and max, inclusive.
+	 * Also returns true if no constraint exists for the variable. */
+	private boolean withinConstraints(Solution sol, int varIndex) {
 	    double var = sol.getVars().get(varIndex);
 	    if (this.constraints.hasConstraintFor(varIndex)) {
 	        Constraint constraint = this.constraints.getConstraintFor(varIndex);
@@ -122,7 +130,8 @@ public abstract class OptimizationProblem {
 	    for (int i = 0; i < this.getNumVar(); i++) {
 	        if (!withinConstraints(sol, i)) return false;
 	    }
-	    return true;
+	    /* If each variable is within constraints, then verify entire solution
+	     * is within the problem's custom constraints. */
+	    return this.withinCustomConstraints(sol);
 	}
-	
 }

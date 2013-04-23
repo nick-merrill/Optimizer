@@ -11,7 +11,6 @@ public class MichaelwiczMinProb extends OptimizationProblem {
 
     final double M = 10.;
     
-    @Override
     public int getNumVar() {
         return 2;
     }
@@ -45,8 +44,7 @@ public class MichaelwiczMinProb extends OptimizationProblem {
     }
     
     /** Returns true if x and y are between 0 and 5. */
-    @Override
-    public boolean withinConstraints(Solution s) {
+    public boolean withinCustomConstraints(Solution s) {
         ArrayList<Double> vars = s.getVars();
         return this.isInRange(vars.get(0), 0., 5.) &&
                this.isInRange(vars.get(1), 0., 5.);
