@@ -66,12 +66,14 @@ public class Solution {
         if (this.vars.size() < this.numVars) {
             this.initializeWithNull();
         }
-        for (int i = 0; i < this.numVars; i++) {
-            double min = optProb.getMinVar(i);
-            double max = optProb.getMaxVar(i);
-            double range = max - min;
-            this.vars.set(i, rand.nextDouble() * range + min);
-        }
+        do {
+            for (int i = 0; i < this.numVars; i++) {
+                double min = optProb.getMinVar(i);
+                double max = optProb.getMaxVar(i);
+                double range = max - min;
+                this.vars.set(i, rand.nextDouble() * range + min);
+            }
+        } while(!optProb.withinConstraints(this));
     }
     
     public void print() {
