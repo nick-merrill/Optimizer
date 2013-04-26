@@ -85,11 +85,9 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 		}
 		return diff;
 	}
-
-
-	public SolutionSet getSolutions(OptimizationProblem optProb) {
-		solutions.sortByFitness(optProb);
-        return solutions;
-	}
 	
+	public PSOSolutionSet getSolutions(OptimizationProblem optProb) {
+	    solutions.sortByFitness(optProb);
+        return solutions;
+    }
 }
