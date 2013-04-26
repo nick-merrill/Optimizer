@@ -15,6 +15,12 @@ public class PSOSolution extends Solution {
     public PSOSolution(ArrayList<Double> vars) {
         super(vars);
     	this.bestPos = new bestPosClass(vars);
+    	velocity = new ArrayList<Double>(vars.size());
+    }
+
+    public PSOSolution(int numVars) {
+        super(numVars);
+        velocity = new ArrayList<Double>(numVars);
     }
     
     public void setVelocity(ArrayList<Double> v) {

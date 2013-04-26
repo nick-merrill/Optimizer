@@ -15,7 +15,6 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	private double cognitiveWeight;
 	private double socialWeight;
 	
-	
 	public ParticleSwarmOpt() {
 		N_PARTICLES = 100;
 		N_RUNS = 1000;
@@ -27,14 +26,22 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	@Override
 	public void solve(OptimizationProblem optProb) {
 		int NUM_VAR = optProb.getNumVar();
+		
+		//Initializes the swarm with random solutions and velocities
 		solutions = new PSOSolutionSet(N_PARTICLES, NUM_VAR, optProb);
+		
 		Random rand = new Random();
 		
-		//termination criterion
+		//number of iterations, or "generations", to termination criterion
 		for(int i = 0; i<N_RUNS; i++) {
 			//Iterates through particles, updating each's position and velocity
+			//Velocity: v_i,d = w * v_i,d + c1 * rp * (p_i,d - x_i,d) + c2 * rg * (g_d - x_i,d)
+			//w = intertiaWeight
+			//c1 = cognitiveWeight
+			//c2 = socialWeight
+			//rp, rg are randomly generated numbers for each dimension
 			for(int j=0; j<N_PARTICLES; j++) {
-				PSOSolution currSol = solutions.getSol(i);
+				PSOSolution currSol = (PSOSolution) solutions.getSol(i);
 
 				ArrayList<Double> currPos = currSol.getCurrPos();
 				ArrayList<Double> currVel = currSol.getVelocity();
@@ -45,14 +52,16 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 					double rp = rand.nextDouble();
 					double rg = rand.nextDouble();
 					
-					//Update the particle's velocity
+					//Update the particle's velocity according to above formula
 					currVel.set(k, inertiaWeight*currVel.get(k) 
 							+ cognitiveWeight*rp*localVector.get(k)
 							+ socialWeight*rg*globalVector.get(k));
 				}
 				
+				//Updates the particle's position, x_i = x_i + v_i
 				addListsInPlace(currPos, currVel);
 				
+				//Updates particle's best solution and globally best solution
 				if(optProb.fitness(currSol) < optProb.fitness(currSol.getBestPosSol())) {
 					currSol.setBestPos();
 					if(optProb.fitness(currSol) < optProb.fitness(solutions.getBestSol())) {

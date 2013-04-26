@@ -5,7 +5,7 @@ import java.util.Random;
 
 import problems.OptimizationProblem;
 
-public class PSOSolutionSet implements SolutionSet {
+public class PSOSolutionSet extends SolutionSet {
     private ArrayList<PSOSolution> solutions;
     private Random rand;
     private final int N_PARTICLES;
@@ -21,6 +21,7 @@ public class PSOSolutionSet implements SolutionSet {
         for (int i = 0; i < nParticles; i++) {
             //TODO: random initial solution should come from the problem, not solution
         	this.solutions.set(i, new PSOSolution(numVars));
+        	this.solutions.get(i).setAsRandSol(optProb);
             this.solutions.get(i).setBestPos();
             
             if(i==0) {
@@ -29,16 +30,14 @@ public class PSOSolutionSet implements SolutionSet {
             else if(optProb.fitness(bestSol) < optProb.fitness(solutions.get(i))) {
             	bestSol = solutions.get(i);
             }
-        }
-        
-        for (int i = 0; i < nParticles; i++) {
-        	this.solutions.get(i).setVelocity(//TODO)
+            
+            ArrayList<Double> currVel = this.solutions.get(i).getVelocity();
+            
+            for (int j=0; j<numVars; j++) {
+            	currVel.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
+            }
         }
     }
-	
-	public PSOSolution getSol(int i) {
-		return solutions.get(i);
-	}
 	
 	public PSOSolution getBestSol() {
 		return bestSol;
@@ -48,9 +47,4 @@ public class PSOSolutionSet implements SolutionSet {
 		bestSol = sol;
 	}
 
-	@Override
-	public void sortByFitness(OptimizationProblem optProb) {
-		// TODO Auto-generated method stub
-		
-	}
 }
