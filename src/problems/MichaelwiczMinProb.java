@@ -8,7 +8,7 @@ import solutions.Solution;
  * letting m = 10 and constraining x and y between 0 and 5, inclusive.
  */
 public class MichaelwiczMinProb extends OptimizationProblem {
-
+	
     final double M = 10.;
     
     @Override
