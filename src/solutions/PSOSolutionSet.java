@@ -9,12 +9,10 @@ public class PSOSolutionSet extends SolutionSet {
     private ArrayList<PSOSolution> solutions;
     private Random rand;
     private final int N_PARTICLES;
-    private final int N_VARS;
     private PSOSolution bestSol;
 	
 	public PSOSolutionSet(int nParticles, int numVars, OptimizationProblem optProb) {
         this.N_PARTICLES = nParticles;
-        this.N_VARS  = numVars;
         N_SOL = N_PARTICLES;
         this.rand = new Random();
         solutions = new ArrayList<PSOSolution>(N_PARTICLES);
@@ -35,6 +33,7 @@ public class PSOSolutionSet extends SolutionSet {
             
             ArrayList<Double> currVel = this.solutions.get(i).getVelocity();
             
+            //random velocity
             for (int j=0; j<numVars; j++) {
             	currVel.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
             }

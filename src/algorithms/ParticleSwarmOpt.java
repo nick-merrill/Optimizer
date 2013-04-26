@@ -80,21 +80,6 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 		}
 	}
 	
-
-	private void addListsInPlace(ArrayList<Double> lst1, ArrayList<Double> lst2) {
-		for(int i=0; i<lst1.size(); i++) {
-			lst1.set(i, lst1.get(i).doubleValue() + lst2.get(i).doubleValue());
-		}
-	}
-	
-	private ArrayList<Double> addLists(ArrayList<Double> lst1, ArrayList<Double> lst2) {
-		ArrayList<Double> sum = new ArrayList<Double>(lst1.size());
-		for(int i=0; i<lst1.size(); i++) {
-			sum.add(lst1.get(i).doubleValue() + lst2.get(i).doubleValue());
-		}
-		return sum;
-	}
-	
 	private ArrayList<Double> subLists(ArrayList<Double> lst1, ArrayList<Double> lst2) {
 		ArrayList<Double> diff = new ArrayList<Double>(lst1.size());
 		for(int i=0; i<lst1.size(); i++) {
