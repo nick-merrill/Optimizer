@@ -23,7 +23,7 @@ public abstract class SolutionSet {
     }
     
 	public Solution getSol(int i) {
-    	return this.solutions.get(i);
+    	return solutions.get(i);
     }
 	
     public Solution getMostFitSolution(OptimizationProblem optProb) {

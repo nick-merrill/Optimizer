@@ -10,6 +10,9 @@ public class PSOSolution extends Solution {
     	public bestPosClass(ArrayList<Double> vars) {
     		super(vars);
     	}
+    	public bestPosClass(int numVars) {
+    		super(numVars);
+    	}
     }
     
     public PSOSolution(ArrayList<Double> vars) {
@@ -20,6 +23,7 @@ public class PSOSolution extends Solution {
 
     public PSOSolution(int numVars) {
         super(numVars);
+        this.bestPos = new bestPosClass(numVars);
         velocity = new ArrayList<Double>(numVars);
     }
     
@@ -29,10 +33,6 @@ public class PSOSolution extends Solution {
     
     public ArrayList<Double> getVelocity() {
         return this.velocity;
-    }
-
-    public void randSol() {
-        
     }
     
     public ArrayList<Double> getCurrPos() {

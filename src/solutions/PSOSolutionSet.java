@@ -15,12 +15,14 @@ public class PSOSolutionSet extends SolutionSet {
 	public PSOSolutionSet(int nParticles, int numVars, OptimizationProblem optProb) {
         this.N_PARTICLES = nParticles;
         this.N_VARS  = numVars;
+        N_SOL = N_PARTICLES;
         this.rand = new Random();
-        solutions = new ArrayList<PSOSolution>(numVars);
+        solutions = new ArrayList<PSOSolution>(N_PARTICLES);
+        super.solutions = solutions;
         
         for (int i = 0; i < nParticles; i++) {
             //TODO: random initial solution should come from the problem, not solution
-        	this.solutions.set(i, new PSOSolution(numVars));
+        	this.solutions.add(new PSOSolution(numVars));
         	this.solutions.get(i).setAsRandSol(optProb);
             this.solutions.get(i).setBestPos();
             

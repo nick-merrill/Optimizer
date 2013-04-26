@@ -22,6 +22,8 @@ public class CSSolutionSet extends SolutionSet {
         for (int i = 0; i < numNests; i++) {
             this.solutions.add(i, new CSSolution(numVars));
         }
+        
+        super.solutions = solutions;
     }
     
     public void initializeWithRandomSols(OptimizationProblem optProb) {
