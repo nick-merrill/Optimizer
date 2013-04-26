@@ -15,17 +15,9 @@ import java.util.ArrayList;
  */
 
 public class ManufacturingProblem extends OptimizationProblem {
-	private double constraintA; 
-	private double constraintB;
-	private double constraintC;
-	private double profitX;
-	private double profitY;
-	private double usageAbyX;
-	private double usageAbyY;
-	private double usageBbyX;
-	private double usageBbyY;
-	private double usageCbyX;
-	private double usageCbyY;
+	private double constraintA, constraintB, constraintC, profitX, profitY,
+	               usageAbyX, usageAbyY, usageBbyX, usageBbyY, usageCbyX,
+	               usageCbyY;
 	
 	/**
 	 * Constructs a ManufacturingProblem, where only constraints are inputed
@@ -69,9 +61,9 @@ public class ManufacturingProblem extends OptimizationProblem {
 	}
 	
 	private double profit(Solution sol) {
-		ArrayList<Double> coefs = sol.getCoefs();
-		double varX = coefs.get(0);
-		double varY = coefs.get(1);
+		ArrayList<Double> vars = sol.getVars();
+		double varX = vars.get(0);
+		double varY = vars.get(1);
 		return profitX * varX + profitY * varY;
 	}
 
@@ -88,10 +80,10 @@ public class ManufacturingProblem extends OptimizationProblem {
 	 * the material used for each resource must be less than the constraint
 	 * of that resource.
 	 */
-	public boolean withinConstraints(Solution sol) {
-		ArrayList<Double> coefs = sol.getCoefs();
-		double varX = coefs.get(0);
-		double varY = coefs.get(1);
+	public boolean withinCustomConstraints(Solution sol) {
+		ArrayList<Double> vars = sol.getVars();
+		double varX = vars.get(0);
+		double varY = vars.get(1);
 		return (varX > 0 && varY > 0 && 
 				usageAbyX * varX + usageAbyY * varY <= constraintA &&
 				usageBbyX * varX + usageBbyY * varY <= constraintB &&

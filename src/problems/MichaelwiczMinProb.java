@@ -11,27 +11,37 @@ public class MichaelwiczMinProb extends OptimizationProblem {
 	
     final double M = 10.;
     
-    @Override
+    public MichaelwiczMinProb() {
+        this.constraints.add(new Constraint(0, 0,5));
+        this.constraints.add(new Constraint(1, 0,5));
+    }
+    
     public int getNumVar() {
         return 2;
     }
 
+    /**
+     * Returns the evaluation of the Michaelwicz function for a given solution.
+     */
+    public double eval(Solution s) {
+        ArrayList<Double> vars = s.getVars();
+        double x = vars.get(0);
+        double y = vars.get(1);
+        
+        return
+            -Math.sin(x) * Math.pow(Math.sin(  Math.pow(x, 2) / Math.PI), 2*M) -
+             Math.sin(y) * Math.pow(Math.sin(2*Math.pow(y, 2) / Math.PI), 2*M);
+    }
+    
+    
     @Override
     /**
      * Returns the negative of the Michaelwicz function in order to
      * minimize the function.
      */
     public double fitness(Solution s) {
-        ArrayList<Double> coefs = s.getCoefs();
-        double x = coefs.get(0);
-        double y = coefs.get(1);
-        
-        double michaelwicz =
-            -Math.sin(x) * Math.pow(Math.sin(  Math.pow(x, 2) / Math.PI), 2*M) -
-             Math.sin(y) * Math.pow(Math.sin(2*Math.pow(y, 2) / Math.PI), 2*M);
-        
-        // Negates the evaluation in order to optimize for the *minimum*        
-        return -michaelwicz;
+        // Negates the evaluation in order to optimize for the *minimum*
+        return -this.eval(s);
     }
 
     /** Returns true if x is between low and high, inclusively. */
@@ -40,11 +50,10 @@ public class MichaelwiczMinProb extends OptimizationProblem {
     }
     
     /** Returns true if x and y are between 0 and 5. */
-    @Override
-    public boolean withinConstraints(Solution s) {
-        ArrayList<Double> coefs = s.getCoefs();
-        return this.isInRange(coefs.get(0), 0., 5.) &&
-               this.isInRange(coefs.get(1), 0., 5.);
+    public boolean withinCustomConstraints(Solution s) {
+        ArrayList<Double> vars = s.getVars();
+        return this.isInRange(vars.get(0), 0., 5.) &&
+               this.isInRange(vars.get(1), 0., 5.);
     }
 
 }

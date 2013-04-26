@@ -31,10 +31,10 @@ public class BoxMinAreaProb extends OptimizationProblem {
 		return 2;
 	}
 
-	private double surfacearea(Solution s) {
-		ArrayList<Double> coefs = s.getCoefs();
-        double x = coefs.get(0);
-        double y = coefs.get(1);
+	public double surfaceArea(Solution s) {
+		ArrayList<Double> var = s.getVars();
+        double x = var.get(0);
+        double y = var.get(1);
         double z = 1000 / x / y;
 		return 2*x*y + 2*y*z + 2*x*z;
 	}
@@ -44,7 +44,7 @@ public class BoxMinAreaProb extends OptimizationProblem {
 	 *  surface area required.
 	 */
 	public double fitness(Solution s) {
-		return (-1)*surfacearea(s);
+		return -surfaceArea(s);
 		//TODO -- do we want to return the negative of this, or the inverse, or what?
 	}
 
@@ -52,10 +52,12 @@ public class BoxMinAreaProb extends OptimizationProblem {
 	 * A solution is within constraints if the lengths of each side are greater 
 	 * than zero, and the area of the x-y plane is less than the boxV.
 	 */
-	public boolean withinConstraints(Solution s) {
-		ArrayList<Double> coefs = s.getCoefs();
-        double x = coefs.get(0);
-        double y = coefs.get(0);
+	@Override
+	public boolean withinCustomConstraints(Solution s) {
+		ArrayList<Double> vars = s.getVars();
+        double x = vars.get(0);
+        double y = vars.get(1);
+
 		if (x > 0 &&
 			y > 0 &&
 			x * y < boxV) {

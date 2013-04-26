@@ -20,6 +20,7 @@ public class FenceProblem extends OptimizationProblem {
      */
     public FenceProblem(double fenceLength) {
         this.fenceLength = fenceLength;
+        this.constraints.add(new Constraint(0, 0, fenceLength));
     }
     
     /**
@@ -29,9 +30,9 @@ public class FenceProblem extends OptimizationProblem {
         return fenceLength - 2*side1;
     }
     
-    private double area(Solution sol) {
-        ArrayList<Double> coefs = sol.getCoefs();
-        double side1 = coefs.get(0);
+    public double area(Solution sol) {
+        ArrayList<Double> vars = sol.getVars();
+        double side1 = vars.get(0);
         return side1 * side3(side1);
     }
     
@@ -49,9 +50,9 @@ public class FenceProblem extends OptimizationProblem {
      * greater than 0 simultaneously ensures that side1
      * is less than half the fence length.
      */
-    public boolean withinConstraints(Solution sol) {
-        ArrayList<Double> coefs = sol.getCoefs();
-        double side1 = coefs.get(0);
+    public boolean withinCustomConstraints(Solution sol) {
+        ArrayList<Double> vars = sol.getVars();
+        double side1 = vars.get(0);
         return (side1 > 0 && side3(side1) > 0);
     }
     
