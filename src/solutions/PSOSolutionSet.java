@@ -35,4 +35,22 @@ public class PSOSolutionSet implements SolutionSet {
         	this.solutions.get(i).setVelocity(//TODO)
         }
     }
+	
+	public PSOSolution getSol(int i) {
+		return solutions.get(i);
+	}
+	
+	public PSOSolution getBestSol() {
+		return bestSol;
+	}
+	
+	public void setBestSol(PSOSolution sol) {
+		bestSol = sol;
+	}
+
+	@Override
+	public void sortByFitness(OptimizationProblem optProb) {
+		// TODO Auto-generated method stub
+		
+	}
 }

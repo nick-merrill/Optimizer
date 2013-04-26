@@ -8,5 +8,5 @@ import java.util.Random;
 import problems.OptimizationProblem;
 
 public interface SolutionSet {
-    
+	public void sortByFitness(OptimizationProblem optProb);
 }
