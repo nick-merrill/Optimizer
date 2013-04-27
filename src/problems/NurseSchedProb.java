@@ -41,15 +41,46 @@ public class NurseSchedProb extends OptimizationProblem {
 	}
 	
 	/** 
+	 * Converts the solution arraylist of doubles to an arraylist of integers.
+	 * Needed for use throughout the rest of this file.
+	 */
+	private ArrayList<Integer> useableSolution(Solution sol) {
+		int length = numDays * numShifts;
+		ArrayList<Integer> newSol = new ArrayList<Integer>(length);
+		ArrayList<Double> vars = sol.getVars();
+		for (int i = 0; i < length; i++){
+			int x;
+			if (vars.get(i)<.5) {x = 0;} else {x = 1;};
+			newSol.add(i,x); 
+		}
+		return newSol;
+	}
+	
+	/**
+	 * Converts the inputed preferences matrix into a single arraylist,
+	 * mimicking the appearance of the solutions arraylist.
+	 */
+	private ArrayList<Integer> preferencesList(ArrayList<ArrayList<Integer>> preferences) {
+		int length = numDays * numShifts;
+		ArrayList<Integer> prefList = new ArrayList<Integer>(length);
+		for (int i = 0; i < numEmployees; i++){
+			prefList.addAll(preferences.get(i));
+		}
+		return prefList;
+	}
+	
+	/** 
 	 * The fitness of the solution is based on how well you can satisfy 
 	 * workers' preferences while still meeting the requirement of
 	 * workers on duty per shift.
 	 */
 	private double preferencesMet(Solution sol) {
+		ArrayList<Integer> intSol = useableSolution(sol);
+		ArrayList<Integer> listPref = preferencesList(preferences);
 		double totalHappiness = 0;
 		for (int i = 0; i<numEmployees; i++){
-			ArrayList<Integer> employeePref = row(preferences,i);
-			ArrayList<Integer> employeeSched = row(sol,i);
+			ArrayList<Integer> employeePref = row(listPref,i);
+			ArrayList<Integer> employeeSched = row(intSol,i);
 			double happiness = 0;
 			for (int j = 0; j < numDays*numShifts; j++) {
 				happiness += employeePref.get(j) * employeeSched.get(j);
@@ -70,15 +101,16 @@ public class NurseSchedProb extends OptimizationProblem {
 	 * more than two shifts in a row.
 	 */
 	public boolean withinCustomConstraints(Solution sol) {
+		int length = numDays * numShifts;
 		// changes the shiftReqs matrix into a single arraylist
-		ArrayList<Integer> shiftReqsList;
+		ArrayList<Integer> shiftReqsList = new ArrayList<Integer>(length);
 		for (int i = 0; i < numDays; i++) {
 			shiftReqsList.addAll(shiftReqs.get(i));
 		}
 		
-		int length = numDays * numShifts;
+		ArrayList<Integer> intSol = useableSolution(sol);
 		for (int j = 0; j < length; j++) {
-			if (sumArrayList(col(sol,j)) < shiftReqsList.get(j))
+			if (sumArrayList(col(intSol,j)) < shiftReqsList.get(j))
 				return false;
 		}
 		return true;
