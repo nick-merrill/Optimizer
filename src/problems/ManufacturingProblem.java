@@ -76,12 +76,10 @@ public class ManufacturingProblem extends OptimizationProblem {
 		return leastOf(list);
 	}
 	private double leastOf(ArrayList<Double> list){
-		double least = 0;
-		for (int i = 0; i < list.size() - 1; i++){
-			if (list.get(i) < list.get(i+1)) {
+		double least = Double.MAX_VALUE;
+		for (int i = 0; i < list.size(); i++){
+			if (list.get(i) < least)
 				least = list.get(i);
-			}
-			else {least = list.get(i+1);}
 		}
 		return least;
 	}
