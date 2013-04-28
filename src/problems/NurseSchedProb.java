@@ -2,7 +2,8 @@ package problems;
 /* Guided by the wise words of http://www.math.cmu.edu/~af1p/Teaching/OR2/Projects/P23/ORProject_Final_Copy.pdf */
 import java.util.ArrayList;
 
-import problems.OptimizationProblem.Constraint;
+import exceptions.InputException;
+
 import solutions.Solution;
 
 public class NurseSchedProb extends OptimizationProblem {
@@ -13,10 +14,10 @@ public class NurseSchedProb extends OptimizationProblem {
 	private ArrayList<ArrayList<Integer>> preferences;
 
 	/**
-	 * Constructs a NurseSchedProb
+	 * Constructs a Nurse Scheduling Problem
 	 */
 	public NurseSchedProb(int numEmployees, int numDays, int numShifts,
-			ArrayList<ArrayList<Integer>> shiftReqs, ArrayList<ArrayList<Integer>> preferences) {
+			ArrayList<ArrayList<Integer>> shiftReqs, ArrayList<ArrayList<Integer>> preferences) throws InputException {
 		this.numEmployees = numEmployees;
 		this.numDays = numDays;
 		this.numShifts = numShifts;
@@ -24,23 +25,20 @@ public class NurseSchedProb extends OptimizationProblem {
 		this.preferences = preferences;
 		for (int i = 0; i < numEmployees * numDays * numShifts; i++)
 			this.constraints.add(new Constraint(i,0,1));
-		// TODO NICK
+		
+		// checking user input
 		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) {
-			
-			System.out.println("The dimensions of the shift requirements must match " +
-					"the number of days and the number of shifts per day \n");
-			System.exit(4);
+			throw new InputException("shift requirements","does not have the right dimension",
+					"the matrix should have dimensions [number of days] by [number of shifts]");
 		}
 		for (int i = 0; i < numDays; i++){
 			if (shiftReqs.get(i).get(numShifts-1) != 0){
-				System.out.println("The last shift must have a requirement of zero employees. \n");
-				System.exit(4);
+				throw new InputException("the last shift","must have a requirement of zero employees");
 			}
 		}
 		if (preferences.size() != numEmployees || preferences.get(0).size() != numDays * numShifts){
-			System.out.println("The dimensions of the employee preferences must match " +
-					"the number of employees and the number of days times the number of shifts per day \n");
-			System.exit(4);
+			throw new InputException("employee preferences","does not have the right dimension",
+					"the matrix should have dimensions [number of employees] by [number of days times number of shifts]");
 		}
 
 	}
@@ -97,9 +95,8 @@ public class NurseSchedProb extends OptimizationProblem {
 				return false;
 		}
 		return true;
-		// max shifts per 24 hrs
-		// max back-to-back shifts
-		//TODO back-to-back shifts
+		// TODO max shifts per 24 hrs
+		// TODO max back-to-back shifts
 	}
 	
 	public int getNumVar() {
@@ -112,7 +109,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	/* ********************** Helper Functions **************************/
 	
 	/*
-	 * Converts the solution arraylist of doubles to an arraylist of integers.
+	 * Converts the solution array list of doubles to an array list of integers.
 	 * Needed for use throughout the rest of this file.
 	 */
 	private ArrayList<Integer> integerVarsOfSolution(Solution sol) {
@@ -132,8 +129,8 @@ public class NurseSchedProb extends OptimizationProblem {
 	}
 	
 	/*
-	 * Converts the inputed preferences matrix into a single arraylist,
-	 * mimicking the appearance of the solutions arraylist.
+	 * Converts the inputed preferences matrix into a single array list,
+	 * mimicking the appearance of the solutions array list.
 	 */
 	private ArrayList<Integer> preferencesList(ArrayList<ArrayList<Integer>> preferences) {
 		int length = numDays * numShifts;
@@ -144,7 +141,7 @@ public class NurseSchedProb extends OptimizationProblem {
 		return prefList;
 	}
 	/*
-	 * Converts the shiftReqs matrix into a single arraylist
+	 * Converts the shiftReqs matrix into a single array list
 	 */
 	private ArrayList<Integer> shiftReqsList(ArrayList<ArrayList<Integer>> shiftReqs){
 		int length = numDays * numShifts;

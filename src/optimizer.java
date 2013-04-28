@@ -96,6 +96,11 @@ public class optimizer {
     	preferences.add(pref2);
     	preferences.add(pref3);
     	
+    	for (int i = 0 ; i < numDays*numShifts; i++){
+    		System.out.println();
+    	}
+    	
+    	
     	NurseSchedProb nProb = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, preferences);
     	
     	csAlg.solve(nProb);
