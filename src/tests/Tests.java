@@ -55,4 +55,29 @@ public class Tests {
 	    Assert.assertEquals("Value not accurate.", prob.eval(sol), -1.8013, 0.01);
     }
     
+    @Test
+    public void testManufacturingProblem() {
+    	double constraintA = 20;
+    	double constraintB = 30;
+    	double constraintC = 16;
+    	double profitX = 3;
+    	double profitY = 4;
+    	double usageAbyX = 2.5;
+    	double usageAbyY = 1;
+    	double usageBbyX = 3;
+    	double usageBbyY = 3;
+    	double usageCbyX = 1;
+    	double usageCbyY = 2;
+    	ManufacturingProblem manProb = new ManufacturingProblem(constraintA, constraintB, constraintC, 
+    			profitX, profitY, usageAbyX, usageAbyY, usageBbyX, usageBbyY, usageCbyX, usageCbyY);
+	    csAlg.solve(manProb);
+	    Solution sol = csAlg.getSolutions(manProb).getMostFitSolution(manProb);
+	    double x = sol.getVars().get(0);
+	    double y = sol.getVars().get(1);
+	    //double profit = manProb.profit(sol);
+	    Assert.assertEquals("Production of X inaccurate.", 4, x, 0.01);
+	    Assert.assertEquals("Production of Y inaccurate.", 6, y, 0.01);
+	    //Assert.assertEquals("Profit inaccurate.", 36, profit, 0.01);
+    }
+    
 }

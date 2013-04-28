@@ -22,26 +22,26 @@ public class ManufacturingProblem extends OptimizationProblem {
 	/**
 	 * Constructs a ManufacturingProblem, where only constraints are inputed
 	 */
-	public ManufacturingProblem(double constraintA, double constraintB, double constraintC) {
+/*	public ManufacturingProblem(double constraintA, double constraintB, double constraintC) {
 		this.constraintA = constraintA;
 		this.constraintB = constraintB;
 		this.constraintC = constraintC;
-	}
+	} */
 
 	/**
 	 * Constructs a ManufacturingProblem, where constraints and profits are inputed
 	 */
-	public ManufacturingProblem(double constraintA, double constraintB, double constraintC, 
+/*	public ManufacturingProblem(double constraintA, double constraintB, double constraintC, 
 			double profitX, double profitY) {
 		this.constraintA = constraintA;
 		this.constraintB = constraintB;
 		this.constraintC = constraintC;
 		this.profitX = profitX;
 		this.profitY = profitY;
-	}
+	} */
 	
 	/**
-	 * Constructs a ManufacturingProblem, where only constraints, profits, 
+	 * Constructs a ManufacturingProblem, where constraints, profits, 
 	 * and material usages are inputed
 	 */
 	public ManufacturingProblem(double constraintA, double constraintB, double constraintC, 
@@ -58,8 +58,34 @@ public class ManufacturingProblem extends OptimizationProblem {
 		this.usageBbyY = usageBbyY;
 		this.usageCbyX = usageCbyX;
 		this.usageCbyY = usageCbyY;
+		this.constraints.add(new Constraint(0,0,greatestPossibleX()));
+		this.constraints.add(new Constraint(1,0,greatestPossibleY()));
 	}
-	
+	private double greatestPossibleX() {
+		ArrayList<Double> list = new ArrayList<Double>(3);
+		list.add(constraintA / usageAbyX);
+		list.add(constraintB / usageBbyX);
+		list.add(constraintC / usageCbyX);
+		return leastOf(list);
+	}
+	private double greatestPossibleY() {
+		ArrayList<Double> list = new ArrayList<Double>(3);
+		list.add(constraintA / usageAbyY);
+		list.add(constraintB / usageBbyY);
+		list.add(constraintC / usageCbyY);
+		return leastOf(list);
+	}
+	private double leastOf(ArrayList<Double> list){
+		double least = 0;
+		for (int i = 0; i < list.size() - 1; i++){
+			if (list.get(i) < list.get(i+1)) {
+				least = list.get(i);
+			}
+			else {least = list.get(i+1);}
+		}
+		return least;
+	}
+
 	private double profit(Solution sol) {
 		ArrayList<Double> vars = sol.getVars();
 		double varX = vars.get(0);

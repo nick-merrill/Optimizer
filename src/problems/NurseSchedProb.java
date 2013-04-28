@@ -4,81 +4,150 @@ import java.util.ArrayList;
 import solutions.Solution;
 
 public class NurseSchedProb extends OptimizationProblem {
-	private int earlyShift;
-	private int swingShift;
-	private int nightShift;
+	private int numEmployees;
+	private int numDays; 
+	private int numShifts;
+	private ArrayList<ArrayList<Integer>> shiftReqs;
 	private ArrayList<ArrayList<Integer>> preferences;
 	
 
 	/**
-	 * Constructs a NurseSchedProb 
+	 * Constructs a NurseSchedProb, checking for appropriate inputs, else exiting
 	 */
-	public NurseSchedProb(int earlyShift, int swingShift, int nightShift, 
-			ArrayList<ArrayList<Integer>> preferences) {
-		this.earlyShift = earlyShift;
-		this.swingShift = swingShift;
-		this.nightShift = nightShift;
+	public NurseSchedProb(int numEmployees, int numDays, int numShifts,
+			ArrayList<ArrayList<Integer>> shiftReqs, ArrayList<ArrayList<Integer>> preferences) {
+		this.numEmployees = numEmployees;
+		this.numDays = numDays;
+		this.numShifts = numShifts;
+		this.shiftReqs = shiftReqs;
 		this.preferences = preferences;
+		// run checks on inputs
+		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) {
+			System.out.println("The dimensions of the shift requirements must match " +
+					"the number of days and the number of shifts per day \n");
+			System.exit(4);
+		}
+		for (int i = 0; i < numDays; i++){
+			if (shiftReqs.get(i).get(numShifts-1) != 0){
+				System.out.println("The last shift must have a requirement of zero employees. \n");
+				System.exit(4);
+			}
+		}
+		if (preferences.size() != numEmployees || preferences.get(0).size() != numDays * numShifts){
+			System.out.println("The dimensions of the employee preferences must match " +
+					"the number of employees and the number of days times the number of shifts per day \n");
+			System.exit(4);
+		}
 	}
 	
-	int numEmployees = preferences.size(); 
-	
-	// idk, how many vars are there?? :/
-	public int getNumVar() {
-		return 1;
+	/** 
+	 * Converts the solution arraylist of doubles to an arraylist of integers.
+	 * Needed for use throughout the rest of this file.
+	 */
+	private ArrayList<Integer> useableSolution(Solution sol) {
+		int length = numDays * numShifts;
+		ArrayList<Integer> newSol = new ArrayList<Integer>(length);
+		ArrayList<Double> vars = sol.getVars();
+		for (int i = 0; i < length; i++){
+			int x;
+			if (vars.get(i)<.5) {x = 0;} else {x = 1;};
+			newSol.add(i,x); 
+		}
+		return newSol;
 	}
-
+	
+	/**
+	 * Converts the inputed preferences matrix into a single arraylist,
+	 * mimicking the appearance of the solutions arraylist.
+	 */
+	private ArrayList<Integer> preferencesList(ArrayList<ArrayList<Integer>> preferences) {
+		int length = numDays * numShifts;
+		ArrayList<Integer> prefList = new ArrayList<Integer>(length);
+		for (int i = 0; i < numEmployees; i++){
+			prefList.addAll(preferences.get(i));
+		}
+		return prefList;
+	}
+	
 	/** 
 	 * The fitness of the solution is based on how well you can satisfy 
 	 * workers' preferences while still meeting the requirement of
 	 * workers on duty per shift.
 	 */
-	private double preferencesMet(Solution sol, ArrayList<ArrayList<Integer>> preferences) {
-		double happiness = 0;
-		for (int k = 0; k<numEmployees; k++){
-			ArrayList<Integer> schedule = sol.get(k);
-			ArrayList<Integer> workerPref = preferences.get(k);
-			for (int j = 0; j<numEmployees; j=+3) {
-				happiness += schedule.get(j) * workerPref.get(0); }
-			for (int j = 1; j<numEmployees; j=+3) {
-				happiness += schedule.get(j) * workerPref.get(1); }
-			for (int j = 2; j<numEmployees; j=+3) {
-				happiness += schedule.get(j) * workerPref.get(2); }
+	private double preferencesMet(Solution sol) {
+		ArrayList<Integer> intSol = useableSolution(sol);
+		ArrayList<Integer> listPref = preferencesList(preferences);
+		double totalHappiness = 0;
+		for (int i = 0; i<numEmployees; i++){
+			ArrayList<Integer> employeePref = row(listPref,i);
+			ArrayList<Integer> employeeSched = row(intSol,i);
+			double happiness = 0;
+			for (int j = 0; j < numDays*numShifts; j++) {
+				happiness += employeePref.get(j) * employeeSched.get(j);
+			}
+			totalHappiness += happiness;
 		}
-		return happiness;
+		return totalHappiness;
 	}
 	
 	public double fitness(Solution sol) {
-		return preferencesMet(sol, preferences);
+		return preferencesMet(sol);
 	}
 
 	/**
 	 * A solution is within constraints if its number of workers
 	 * per shift match or exceed the requirement.
+	 * The solution must also not have one worker on duty for 
+	 * more than two shifts in a row.
 	 */
-	public boolean withinConstraints(Solution sol) {
-		for (int j = 0; j<numEmployees; j=+3) {
-			sumColumn(j,sol) >= earlyShift; }
-		for (int j = 1; j<numEmployees; j=+3) {
-			sumColumn(j,sol) >= swingShift; }
-		for (int j = 2; j<numEmployees; j=+3) {
-			sumColumn(j,sol) >= earlyShift; }
+	public boolean withinCustomConstraints(Solution sol) {
+		int length = numDays * numShifts;
+		// changes the shiftReqs matrix into a single arraylist
+		ArrayList<Integer> shiftReqsList = new ArrayList<Integer>(length);
+		for (int i = 0; i < numDays; i++) {
+			shiftReqsList.addAll(shiftReqs.get(i));
+		}
+		
+		ArrayList<Integer> intSol = useableSolution(sol);
+		for (int j = 0; j < length; j++) {
+			if (sumArrayList(col(intSol,j)) < shiftReqsList.get(j))
+				return false;
+		}
+		return true;
+		
+		//TODO back-to-back shifts
 	}
+	
+	public int getNumVar() {
+		return 1;
+	}
+	
 	/**
 	 *  Helper Functions
 	 */
-	private int sumColumn(int column, ArrayList<ArrayList<Integer>> matrix) {
-		int length = matrix.size();
+	private ArrayList<Integer> row(ArrayList<Integer> matrix, int index){
+		int length = numDays * numShifts;
+		ArrayList<Integer> row = new ArrayList<Integer>(length);
+		for (int i = index*length; i < (index+1)*length; i++) {
+			row.add(matrix.get(i));
+		}
+		return row;
+	}
+	private ArrayList<Integer> col(ArrayList<Integer> matrix, int index) {
+		ArrayList<Integer> col = new ArrayList<Integer>(numEmployees);
+		int skiplength = numDays * numShifts;
+		for (int i = index; i < numEmployees*skiplength+index; i += skiplength) {
+			col.add(matrix.get(i));
+		}
+		return col;
+	}
+	private int sumArrayList(ArrayList<Integer> list) {
+		int length = list.size(); 
 		int sum = 0;
-		for (int i = 0; i<length; i++)
-			sum += matrix.get(i).get(column);
+		for (int i = 0; i < length; i++){
+			sum += list.get(i);
+		}
 		return sum;
-	} 
-	/*	private int sumRow(ArrayList<Integer> list) {
-	int length = list.size();
-	int sum = 0;
-	for (int i = 0; i<length; i++)
-		sum += list.get(i);
-	return sum;
-	} */
+	}
+
 }
