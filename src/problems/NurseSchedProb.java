@@ -25,7 +25,8 @@ public class NurseSchedProb extends OptimizationProblem {
 		for (int i = 0; i < numEmployees * numDays * numShifts; i++)
 			this.constraints.add(new Constraint(i,0,1));
 		// TODO NICK
-/*		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) {
+		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) {
+			
 			System.out.println("The dimensions of the shift requirements must match " +
 					"the number of days and the number of shifts per day \n");
 			System.exit(4);
@@ -41,7 +42,7 @@ public class NurseSchedProb extends OptimizationProblem {
 					"the number of employees and the number of days times the number of shifts per day \n");
 			System.exit(4);
 		}
-*/
+
 	}
 	
 	/** 
