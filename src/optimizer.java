@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+
 import algorithms.*;
 import problems.*;
+import solutions.PSOSolution;
 import solutions.Solution;
 
 public class optimizer {
@@ -34,6 +37,10 @@ public class optimizer {
 	    System.out.printf("Michaelwicz minimum: %f\n", michaelwiczProb.eval(michaelwiczSol));
 	    
 	    psoAlg.solve(michaelwiczProb);
+	    ArrayList<PSOSolution> solutions = (ArrayList<PSOSolution>) psoAlg.getSolutions(michaelwiczProb).getSolutions();
+	    for(PSOSolution sol : solutions) {
+	    	sol.printAll();
+	    }
 	    Solution michaelwiczSol2 = psoAlg.getSolutions(michaelwiczProb).getMostFitSolution(michaelwiczProb);
 	    michaelwiczSol2.print();
 	    System.out.printf("Michaelwicz minimum: %f\n", michaelwiczProb.eval(michaelwiczSol2));

@@ -58,4 +58,12 @@ public class PSOSolution extends Solution {
     public bestPosClass getBestPosSol() {
     	return bestPos;
     }
+    
+    public void printAll() {
+    	
+        for (int i = 0; i < this.numVars; i++) {
+            System.out.printf("v%d:\t%f\n", i, this.velocity.get(i));
+        }
+        this.print();
+    }
 }
