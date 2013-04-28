@@ -1,15 +1,16 @@
 import java.util.ArrayList;
 
+import UIs.LanternaGUI;
 import algorithms.*;
 import problems.*;
 import solutions.*;
 
 public class optimizer {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
+	    
+	    LanternaGUI gui = new LanternaGUI();
+	    
 //		int numEmployees = 20;
 //		NurseSchedProb optProb = new NurseSchedProb(numEmployees);
 		CuckooSearchOpt csAlg = new CuckooSearchOpt();
