@@ -2,6 +2,8 @@ package problems;
 
 import java.util.ArrayList;
 
+import exceptions.*;
+
 import solutions.Solution;
 
 /**

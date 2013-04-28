@@ -109,21 +109,6 @@ public abstract class OptimizationProblem {
 	    }
 	}
 	
-	@SuppressWarnings("serial")
-    public class InputException extends Exception {
-        public InputException(String inputName, String msg) {
-            super("Invalid input: " +
-	            inputName.substring(0,1).toUpperCase()+inputName.substring(1) +
-	            " " + msg +".");
-	    }
-	}
-    @SuppressWarnings("serial")
-    public class PositiveNumberInputException extends InputException {
-        public PositiveNumberInputException(String variableName) {
-            super(variableName, "must be a positive real number");
-        }
-    }
-	
 	private Constraint getConstraint(int varIndex) {
         try {
             return this.constraints.getConstraintFor(varIndex);

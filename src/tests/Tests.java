@@ -10,7 +10,7 @@ import org.junit.Assert;
 
 import algorithms.*;
 import problems.*;
-import problems.OptimizationProblem.InputException;
+import exceptions.*;
 import solutions.Solution;
 
 @RunWith(JUnit4.class)

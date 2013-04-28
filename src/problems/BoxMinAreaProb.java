@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import solutions.*;
+import exceptions.*;
 
 /**
  * The minimum area box problem takes a given volume 
