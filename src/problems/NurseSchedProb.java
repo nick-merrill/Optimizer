@@ -23,7 +23,7 @@ public class NurseSchedProb extends OptimizationProblem {
 		this.shiftReqs = shiftReqs;
 		this.preferences = preferences;
 		for (int i = 0; i < numEmployees * numDays * numShifts; i++)
-			this.constraints.add(new Constraint(i,0,1);
+			this.constraints.add(new Constraint(i,0,1));
 		// TODO NICK
 /*		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) {
 			System.out.println("The dimensions of the shift requirements must match " +
@@ -64,9 +64,21 @@ public class NurseSchedProb extends OptimizationProblem {
 		}
 		return totalHappiness;
 	}
+	private double extraCost(Solution sol){
+		ArrayList<Integer> intSol = useableSolution(sol);
+		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);
+		double cost = 0; 
+		for (int i = 0; i < shiftReqsList.size(); i++){
+			ArrayList<Integer> col = col(intSol,i);
+			double difference = sumArrayList(col) - shiftReqsList.get(i);
+			cost += Math.pow(difference, 2);
+		}
+		return cost;
+	}
 	
 	public double fitness(Solution sol) {
 		return preferencesMet(sol);
+		// return lambda * preferencesMet(sol) + (1 - lambda) * extraCost(sol);
 	}
 
 	/**
@@ -76,14 +88,9 @@ public class NurseSchedProb extends OptimizationProblem {
 	 * more than two shifts in a row.
 	 */
 	public boolean withinCustomConstraints(Solution sol) {
-		int length = numDays * numShifts;
-		// changes the shiftReqs matrix into a single arraylist
-		ArrayList<Integer> shiftReqsList = new ArrayList<Integer>(length);
-		for (int i = 0; i < numDays; i++) {
-			shiftReqsList.addAll(shiftReqs.get(i));
-		}
-		
 		ArrayList<Integer> intSol = useableSolution(sol);
+		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);		
+		int length = numDays * numShifts;
 		for (int j = 0; j < length; j++) {
 			if (sumArrayList(col(intSol,j)) < shiftReqsList.get(j))
 				return false;
@@ -130,6 +137,16 @@ public class NurseSchedProb extends OptimizationProblem {
 			prefList.addAll(preferences.get(i));
 		}
 		return prefList;
+	}
+	/*
+	 * Converts the shiftReqs matrix into a single arraylist
+	 */
+	private ArrayList<Integer> shiftReqsList(ArrayList<ArrayList<Integer>> shiftReqs){
+		int length = numDays * numShifts;
+		ArrayList<Integer> shiftReqsList = new ArrayList<Integer>(length);
+		for (int i = 0; i < numDays; i++) 
+			shiftReqsList.addAll(shiftReqs.get(i));
+		return shiftReqsList;
 	}
 	
 	private ArrayList<Integer> row(ArrayList<Integer> matrix, int index){

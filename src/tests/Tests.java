@@ -1,6 +1,7 @@
 package tests;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.Ignore;
@@ -11,6 +12,8 @@ import org.junit.Assert;
 import algorithms.*;
 import problems.*;
 import solutions.Solution;
+
+import java.util.Arrays;
 
 @RunWith(JUnit4.class)
 public class Tests {
@@ -80,4 +83,13 @@ public class Tests {
 	    //Assert.assertEquals("Profit inaccurate.", 36, profit, 0.01);
     }
     
+//    @Test 
+//    public void testNurseSchedProb () {
+//    	int numEmployees = 8;
+//    	int numDays = 3;
+//    	int numShifts = 4;
+//    	ArrayList<ArrayList<Integer>> shiftReqs = ;
+//    	ArrayList<ArrayList<Integer>> preferences = ;
+//    	
+//    }
 }
