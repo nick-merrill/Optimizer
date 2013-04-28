@@ -17,10 +17,9 @@ public class BoxMinAreaProb extends OptimizationProblem {
 
 	final double boxV;
 	
-	public BoxMinAreaProb(double volume) {
-		if (volume < 0) {
-			System.out.printf("Volume must be positive!\n");
-			System.exit(3);
+	public BoxMinAreaProb(double volume) throws PositiveNumberInputException {
+		if (!(volume > 0)) {
+		    throw new PositiveNumberInputException("volume");
 		}
 		this.boxV = volume;
 		this.constraints.add(new Constraint(0,0,volume));
