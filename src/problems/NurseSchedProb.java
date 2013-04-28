@@ -51,7 +51,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	 * workers on duty per shift.
 	 */
 	private double preferencesMet(Solution sol) {
-		ArrayList<Integer> intSol = useableSolution(sol);
+		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
 		ArrayList<Integer> listPref = preferencesList(preferences);
 		double totalHappiness = 0;
 		for (int i = 0; i<numEmployees; i++){
@@ -66,7 +66,7 @@ public class NurseSchedProb extends OptimizationProblem {
 		return totalHappiness;
 	}
 	private double extraCost(Solution sol){
-		ArrayList<Integer> intSol = useableSolution(sol);
+		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
 		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);
 		double cost = 0; 
 		for (int i = 0; i < shiftReqsList.size(); i++){
@@ -78,7 +78,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	}
 	
 	public double fitness(Solution sol) {
-		return preferencesMet(sol);
+		return -preferencesMet(sol);
 		// return lambda * preferencesMet(sol) + (1 - lambda) * extraCost(sol);
 	}
 
@@ -89,7 +89,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	 * more than two shifts in a row.
 	 */
 	public boolean withinCustomConstraints(Solution sol) {
-		ArrayList<Integer> intSol = useableSolution(sol);
+		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
 		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);		
 		int length = numDays * numShifts;
 		for (int j = 0; j < length; j++) {
@@ -115,16 +115,20 @@ public class NurseSchedProb extends OptimizationProblem {
 	 * Converts the solution arraylist of doubles to an arraylist of integers.
 	 * Needed for use throughout the rest of this file.
 	 */
-	private ArrayList<Integer> useableSolution(Solution sol) {
-		int length = numDays * numShifts;
-		ArrayList<Integer> newSol = new ArrayList<Integer>(length);
+	private ArrayList<Integer> integerVarsOfSolution(Solution sol) {
 		ArrayList<Double> vars = sol.getVars();
+		return doubleListToIntegerList(vars);
+	}
+	
+	private ArrayList<Integer> doubleListToIntegerList(ArrayList<Double> doubleList) {
+	    int length = doubleList.size();
+		ArrayList<Integer> integerList = new ArrayList<Integer>(length);
 		for (int i = 0; i < length; i++){
 			int x;
-			if (vars.get(i)<.5) {x = 0;} else {x = 1;};
-			newSol.add(i,x); 
+			if (doubleList.get(i)<.5) {x = 0;} else {x = 1;};
+			integerList.add(x); 
 		}
-		return newSol;
+		return integerList;
 	}
 	
 	/*
@@ -162,7 +166,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	private ArrayList<Integer> col(ArrayList<Integer> matrix, int index) {
 		ArrayList<Integer> col = new ArrayList<Integer>(numEmployees);
 		int skiplength = numDays * numShifts;
-		for (int i = index; i < numEmployees*skiplength+index; i += skiplength) {
+		for (int i = index; i < (numEmployees-1)*skiplength+index; i += skiplength) {
 			col.add(matrix.get(i));
 		}
 		return col;
@@ -175,6 +179,18 @@ public class NurseSchedProb extends OptimizationProblem {
 			sum += list.get(i);
 		}
 		return sum;
+	}
+	
+	public void printSol(Solution s) {
+	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
+	    
+		for (int i = 0; i < vars.size(); i++) {
+		    if (i % (numDays * numShifts) == 0) System.out.printf("\n");
+		    System.out.printf("%d ", vars.get(i));
+		}
+		System.out.printf("\n");
+	    
+	    
 	}
 
 }

@@ -1,5 +1,6 @@
 package tests;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,13 +97,61 @@ public class Tests {
 	    //Assert.assertEquals("Profit inaccurate.", 36, profit, 0.01);
     }
     
-//    @Test 
-//    public void testNurseSchedProb () {
-//    	int numEmployees = 8;
-//    	int numDays = 3;
-//    	int numShifts = 4;
-//    	ArrayList<ArrayList<Integer>> shiftReqs = ;
-//    	ArrayList<ArrayList<Integer>> preferences = ;
-//    	
-//    }
+    
+    @Test 
+    public void testNurseSchedProb () {
+    	int numEmployees = 8;
+    	int numDays = 3;
+    	int numShifts = 4;
+    	Integer[] shiftReqArr = new Integer[]{1,1,1,0};
+    	ArrayList<Integer> shiftReq1 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq2 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq3 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq4 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq5 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq6 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq7 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	
+    	ArrayList<ArrayList<Integer>> shiftReqs = new ArrayList<ArrayList<Integer>>();
+    	shiftReqs.add(shiftReq1);
+    	shiftReqs.add(shiftReq2);
+    	shiftReqs.add(shiftReq3);
+    	shiftReqs.add(shiftReq4);
+    	shiftReqs.add(shiftReq5);
+    	shiftReqs.add(shiftReq6);
+    	shiftReqs.add(shiftReq7);
+    	
+    	Integer[] prefArr = new Integer[28];
+    	int j = 1;
+    	for (int i = 0; i < 28; i++) {
+    	    if (j == 5) j = 1;
+    	    prefArr[i] = j;
+    	    j++;
+    	}
+    	ArrayList<Integer> pref1 = new ArrayList<Integer>(Arrays.asList(prefArr));
+    	j = 4;
+    	for (int i = 0; i < 28; i++) {
+    	    if (j == 5) j = 1;
+    	    prefArr[i] = j;
+    	    j++;
+    	}
+    	ArrayList<Integer> pref2 = new ArrayList<Integer>(Arrays.asList(prefArr));
+    	j = 3;
+    	for (int i = 0; i < 28; i++) {
+    	    if (j == 5) j = 1;
+    	    prefArr[i] = j;
+    	    j++;
+    	}
+    	ArrayList<Integer> pref3 = new ArrayList<Integer>(Arrays.asList(prefArr));
+    	
+    	ArrayList<ArrayList<Integer>> preferences = new ArrayList<ArrayList<Integer>>();
+    	preferences.add(pref1);
+    	preferences.add(pref2);
+    	preferences.add(pref3);
+    	
+    	
+    	
+    }
+    
+    
 }
