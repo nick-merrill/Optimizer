@@ -99,7 +99,10 @@ public class optimizer {
     	NurseSchedProb nProb = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, preferences);
     	
     	csAlg.solve(nProb);
-    	csAlg.getSolutions(nProb).getMostFitSolution(nProb).print();
+    	SolutionSet sols = csAlg.getSolutions(nProb);
+    	int n = 15;
+    	for (int i = 0; i < n; i++)
+        	nProb.printSol(sols.getSol(i));
     	
 	}
 

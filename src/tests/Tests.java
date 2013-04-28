@@ -98,10 +98,6 @@ public class Tests {
     }
     
     
-		int algID = gui.getOptionChoice("Which algorithm do you want to use?",
-		        new String[]{"Cuckoo Search Optimization",
-		        "Particle Swarm Optimization"});
-    
     @Test 
     public void testNurseSchedProb () {
     	int numEmployees = 8;
