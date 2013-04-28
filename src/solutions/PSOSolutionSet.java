@@ -37,17 +37,15 @@ public class PSOSolutionSet extends SolutionSet {
             for (int j=0; j<numVars; j++) {
             	currVel.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
             }
+            
+            this.solutions.get(i).evalFitness(optProb);
+            this.solutions.get(i).print();
         }
-        
-        sortByFitness(optProb);
-        for(PSOSolution sol : solutions) {
-	    	sol.printAll();
-	    }
     }
 	
 	@Override
 	public Solution getMostFitSolution(OptimizationProblem optProb) {
-		return bestSol;
+		return bestSol.getBestPosSol();
 	}
 	
 	public PSOSolution getBestSol() {
