@@ -93,4 +93,9 @@ public class Tests {
 	    //Assert.assertEquals("Profit inaccurate.", 36, profit, 0.01);
     }
     
+    @Test
+    public void testNurseSchedulingProbSimple() {
+        
+    }
+    
 }
