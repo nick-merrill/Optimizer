@@ -11,6 +11,7 @@ import org.junit.Assert;
 
 import algorithms.*;
 import problems.*;
+import exceptions.*;
 import solutions.Solution;
 
 import java.util.Arrays;
@@ -28,7 +29,13 @@ public class Tests {
     public void testFenceProblem() {
         
 	    double fenceLength = 100.;
-	    FenceProblem fenceProb = new FenceProblem(fenceLength);
+	    FenceProblem fenceProb;
+        try {
+            fenceProb = new FenceProblem(fenceLength);
+        } catch (InputException e) {
+            e.printStackTrace();
+            return;
+        }
 	    csAlg.solve(fenceProb);
 	    Solution sol = csAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb);
 	    double side1 = sol.getVars().get(0);
@@ -41,7 +48,13 @@ public class Tests {
 //    @Ignore
     public void testBoxProb() {
 	    double volume = 100.;
-	    BoxMinAreaProb boxProb = new BoxMinAreaProb(volume);
+	    BoxMinAreaProb boxProb;
+        try {
+            boxProb = new BoxMinAreaProb(volume);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
 	    csAlg.solve(boxProb);
 	    ArrayList<Double> solVars = csAlg.getSolutions(boxProb).getMostFitSolution(boxProb).getVars();
 	    Assert.assertEquals("Dimensions not equal.", solVars.get(0), solVars.get(1), 0.01);

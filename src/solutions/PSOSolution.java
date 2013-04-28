@@ -6,7 +6,7 @@ public class PSOSolution extends Solution {
 	private bestPosClass bestPos;
     private ArrayList<Double> velocity;
     
-    private class bestPosClass extends Solution {
+    public class bestPosClass extends Solution {
     	public bestPosClass(ArrayList<Double> vars) {
     		super(vars);
     	}

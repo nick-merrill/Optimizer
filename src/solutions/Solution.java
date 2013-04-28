@@ -47,10 +47,15 @@ public class Solution {
     public double getFitness() {
         if (this.fitness == null) {
 //            throw new Exception("Uninitialized fitness!");
-            System.out.printf("Uninitializted fitness!");
+            System.out.printf("Uninitialized fitness!");
             System.exit(1);
         }
         return this.fitness;
+    }
+    
+    public double getFitness(OptimizationProblem optProb) {
+		evalFitness(optProb);
+    	return this.fitness;
     }
     
     protected void initializeWithNull() {

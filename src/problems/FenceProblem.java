@@ -2,6 +2,8 @@ package problems;
 
 import java.util.ArrayList;
 
+import exceptions.*;
+
 import solutions.Solution;
 
 /**
@@ -18,7 +20,10 @@ public class FenceProblem extends OptimizationProblem {
     /**
      * Constructs a FenceProblem.
      */
-    public FenceProblem(double fenceLength) {
+    public FenceProblem(double fenceLength) throws PositiveNumberInputException {
+        if (!(fenceLength > 0)) {
+            throw new PositiveNumberInputException("fence length");
+        }
         this.fenceLength = fenceLength;
         this.constraints.add(new Constraint(0, 0, fenceLength));
     }

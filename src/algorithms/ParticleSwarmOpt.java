@@ -16,11 +16,11 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	private double socialWeight;
 	
 	public ParticleSwarmOpt() {
-		N_PARTICLES = 50;
-		N_RUNS = 1000;
-		inertiaWeight = 0.7;
-		cognitiveWeight = 1.49;
-		socialWeight = 1.49;
+		N_PARTICLES = 10;
+		N_RUNS = 500;
+		inertiaWeight = 0.99;
+		cognitiveWeight = 1.5;
+		socialWeight = 1.5;
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 		for(int i = 0; i<N_RUNS; i++) {
 			//Iterates through particles, updating each's position and velocity
 			//Velocity: v_i,d = w * v_i,d + c1 * rp * (p_i,d - x_i,d) + c2 * rg * (g_d - x_i,d)
-			//w = intertiaWeight
+			//w = inertiaWeight
 			//c1 = cognitiveWeight
 			//c2 = socialWeight
 			//rp, rg are randomly generated numbers for each dimension
@@ -63,20 +63,28 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 					//If the particle goes out of bounds, pushes it back in
 					if(currPos.get(k) > optProb.getMaxVar(k)) {
 						currPos.set(k, optProb.getMaxVar(k));
+						currVel.set(k, currVel.get(k) * -1);
 					}
 					else if(currPos.get(k) < optProb.getMinVar(k)) {
 						currPos.set(k, optProb.getMinVar(k));
+						currVel.set(k, currVel.get(k) * -1);
 					}
 				}
 				
 				//Updates particle's best solution and globally best solution
 				if(optProb.fitness(currSol) > optProb.fitness(currSol.getBestPosSol())) {
 					currSol.setBestPos();
-					if(optProb.fitness(currSol) > optProb.fitness(solutions.getBestSol())) {
+					if(optProb.fitness(currSol) > solutions.getBestSol().getFitness()) {
 						solutions.setBestSol(currSol);
+						
 					}
 				}
+
+				
 			}
+			solutions.getBestSol().evalFitness(optProb);
+			
+			solutions.getBestSol().printAll();
 		}
 	}
 	
