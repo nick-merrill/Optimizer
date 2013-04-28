@@ -22,6 +22,10 @@ public abstract class SolutionSet {
         Collections.reverse(this.solutions);
     }
     
+    public ArrayList<? extends Solution> getSolutions() {
+    	return solutions;
+    }
+    
 	public Solution getSol(int i) {
     	return solutions.get(i);
     }
