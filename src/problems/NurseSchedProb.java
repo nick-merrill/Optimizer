@@ -178,6 +178,12 @@ public class NurseSchedProb extends OptimizationProblem {
 		return sum;
 	}
 	
+	public boolean solsAreEqual(Solution s1, Solution s2) {
+		ArrayList<Integer> s1Arr = this.integerVarsOfSolution(s1);
+		ArrayList<Integer> s2Arr = this.integerVarsOfSolution(s2);
+		return s1Arr.equals(s2Arr);
+	}
+	
 	public void printSol(Solution s) {
 	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
 	    

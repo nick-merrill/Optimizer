@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import exceptions.InputException;
+
 import UIs.LanternaGUI;
 import algorithms.*;
 import problems.*;
@@ -54,37 +56,37 @@ public class optimizer {
     	ArrayList<Integer> shiftReq1 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	ArrayList<Integer> shiftReq2 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	ArrayList<Integer> shiftReq3 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
-    	ArrayList<Integer> shiftReq4 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
-    	ArrayList<Integer> shiftReq5 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
-    	ArrayList<Integer> shiftReq6 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
-    	ArrayList<Integer> shiftReq7 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+//    	ArrayList<Integer> shiftReq4 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+//    	ArrayList<Integer> shiftReq5 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+//    	ArrayList<Integer> shiftReq6 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+//    	ArrayList<Integer> shiftReq7 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	
     	ArrayList<ArrayList<Integer>> shiftReqs = new ArrayList<ArrayList<Integer>>();
     	shiftReqs.add(shiftReq1);
     	shiftReqs.add(shiftReq2);
     	shiftReqs.add(shiftReq3);
-    	shiftReqs.add(shiftReq4);
-    	shiftReqs.add(shiftReq5);
-    	shiftReqs.add(shiftReq6);
-    	shiftReqs.add(shiftReq7);
+//    	shiftReqs.add(shiftReq4);
+//    	shiftReqs.add(shiftReq5);
+//    	shiftReqs.add(shiftReq6);
+//    	shiftReqs.add(shiftReq7);
     	
-    	Integer[] prefArr = new Integer[28];
+    	Integer[] prefArr = new Integer[12];
     	int j = 1;
-    	for (int i = 0; i < 28; i++) {
+    	for (int i = 0; i < 12; i++) {
     	    if (j == 5) j = 1;
     	    prefArr[i] = j;
     	    j++;
     	}
     	ArrayList<Integer> pref1 = new ArrayList<Integer>(Arrays.asList(prefArr));
     	j = 4;
-    	for (int i = 0; i < 28; i++) {
+    	for (int i = 0; i < 12; i++) {
     	    if (j == 5) j = 1;
     	    prefArr[i] = j;
     	    j++;
     	}
     	ArrayList<Integer> pref2 = new ArrayList<Integer>(Arrays.asList(prefArr));
     	j = 3;
-    	for (int i = 0; i < 28; i++) {
+    	for (int i = 0; i < 12; i++) {
     	    if (j == 5) j = 1;
     	    prefArr[i] = j;
     	    j++;
@@ -96,18 +98,29 @@ public class optimizer {
     	preferences.add(pref2);
     	preferences.add(pref3);
     	
-    	for (int i = 0 ; i < numDays*numShifts; i++){
-    		System.out.println();
-    	}
+
+    	NurseSchedProb nProb;
+		try {
+			nProb = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, preferences);
+			csAlg.solve(nProb);
+	    	SolutionSet sols = csAlg.getSolutions(nProb);
+	    	int n = 15;
+	    	int counter = 0;
+	    	nProb.printSol(sols.getSol(0));
+	    	for (int i = 1; i < n; i++) {
+	    		if (!nProb.solsAreEqual(sols.getSol(i), sols.getSol(i-1))){
+	    			nProb.printSol(sols.getSol(i-1));
+	    			System.out.println("("+counter+")");
+	    			counter = 0;
+	    			System.out.println(nProb.fitness(sols.getSol(i-1)));
+	    		}
+	       		else counter++;
+	    	}
+		} catch (InputException e) {
+			e.printStackTrace();
+		}
     	
     	
-    	NurseSchedProb nProb = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, preferences);
-    	
-    	csAlg.solve(nProb);
-    	SolutionSet sols = csAlg.getSolutions(nProb);
-    	int n = 15;
-    	for (int i = 0; i < n; i++)
-        	nProb.printSol(sols.getSol(i));
     	
 	}
 
