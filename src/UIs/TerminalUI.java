@@ -20,11 +20,10 @@ public class TerminalUI extends OptimizationUI {
         displayPrompt();
         return scanner.nextLine();
     }
-
+    
     @Override
     public void printSolution(Solution solution) {
-        // TODO Auto-generated method stub
-        
+        solution.print();
     }
     
     public void displayPrompt() {
@@ -34,7 +33,7 @@ public class TerminalUI extends OptimizationUI {
     public int getOptionChoice(String prompt, ArrayList<String> options) {
         
         while (true) {
-            System.out.println(prompt);
+            System.out.println(prompt + " (select by typing number)");
             
             int len = options.size();
             for (int i = 0; i < len; i++) {
@@ -51,6 +50,11 @@ public class TerminalUI extends OptimizationUI {
     
     public int getOptionChoice(String prompt, String[] options) {
         return getOptionChoice(prompt, new ArrayList<String>(Arrays.asList(options)));
+    }
+    
+    @Override
+    public ArrayList<ArrayList<Integer>> getCsvAsIntegers() {
+        return null;
     }
 
 }

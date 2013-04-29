@@ -1,5 +1,8 @@
 package UIs;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import exceptions.InputException;
@@ -15,6 +18,7 @@ public abstract class OptimizationUI {
     
     public abstract String getVariableInput(String varName);
     public abstract void printSolution(Solution solution);
+    public abstract ArrayList<ArrayList<Integer>> getCsvAsIntegers();
     
     public Double getDoubleInput(String varName) throws InputException {
         String s = getVariableInput(varName);
@@ -25,5 +29,6 @@ public abstract class OptimizationUI {
             throw new InputException(varName, "is not a double");
         }
     }
+    
 
 }

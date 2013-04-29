@@ -91,7 +91,7 @@ public class Solution {
                 System.out.printf("x%d:\t%f\n", i, this.vars.get(i));
             }
         }
-        if (this.fitness != null)
-            System.out.printf("---------------------\nFitness: %f\n", this.fitness);
+//        if (this.fitness != null)
+//            System.out.printf("---------------------\nFitness: %f\n", this.fitness);
     }
 }
