@@ -13,8 +13,8 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     private final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
     
     public CuckooSearchOpt() {
-    	N_NESTS = 15;
-		N_OPTIMIZATIONS = 3000;
+    	N_NESTS = 25;
+		N_OPTIMIZATIONS = 20000;
 		ABANDON_PROBABILITY = 0.25;
     }
     
