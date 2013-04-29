@@ -164,9 +164,10 @@ public class demo {
 	            System.out.println("Bad case!");
 	            System.exit(5);
 		}
-		
 	    algs.get(algID).solve(prob);
-	    algs.get(algID).getSolutions(prob).getMostFitSolution(prob).print();
+	    Solution sol = algs.get(algID).getSolutions(prob).getMostFitSolution(prob);
+	    gui.display(prob.solToString(sol));
+		
 	}
 
 }

@@ -73,4 +73,21 @@ public class BoxMinAreaProb extends OptimizationProblem {
 			return false;
 		}
 	}
+	
+	/**
+	 * Returns the length of the third side of the box, given two other sides.
+	 */
+	public double side3(double x, double y) {
+	    return boxV / x / y;
+	}
+	public double side3(Solution sol) {
+	    ArrayList<Double> vars = sol.getVars();
+	    return side3(vars.get(0), vars.get(1));
+	}
+
+    @Override
+    public String solToString(Solution s) {
+        ArrayList<Double> vars = s.getVars();
+        return String.format("Your box should be %.2f by %.2f by %.2f units.", vars.get(0), vars.get(1), this.side3(s));
+    }
 }

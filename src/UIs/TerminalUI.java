@@ -52,6 +52,10 @@ public class TerminalUI extends OptimizationUI {
         return getOptionChoice(prompt, new ArrayList<String>(Arrays.asList(options)));
     }
     
+    public void display(String output) {
+        System.out.println(output);
+    }
+    
     @Override
     public ArrayList<ArrayList<Integer>> getCsvAsIntegers() {
         return null;

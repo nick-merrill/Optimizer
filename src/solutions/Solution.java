@@ -83,15 +83,21 @@ public class Solution {
         } while(!optProb.withinConstraints(this));
     }
     
-    public void print() {
+    public String toString() {
+        String output = "";
         if (this.vars.size() == 0) {
-            System.out.printf("Empty Solution\n");
+            output += "Empty Solution";
         } else {
             for (int i = 0; i < this.numVars; i++) {
-                System.out.printf("x%d:\t%f\n", i, this.vars.get(i));
+                output += String.format("x%d:\t%f\n", i, this.vars.get(i));
             }
         }
 //        if (this.fitness != null)
 //            System.out.printf("---------------------\nFitness: %f\n", this.fitness);
+        return output;
+    }
+    
+    public void print() {
+        System.out.println(this.toString());
     }
 }

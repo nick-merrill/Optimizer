@@ -19,6 +19,7 @@ public abstract class OptimizationUI {
     public abstract String getVariableInput(String varName);
     public abstract void printSolution(Solution solution);
     public abstract ArrayList<ArrayList<Integer>> getCsvAsIntegers();
+    public abstract void display(String output);
     
     public Double getDoubleInput(String varName) throws InputException {
         String s = getVariableInput(varName);

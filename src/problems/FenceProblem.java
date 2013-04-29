@@ -15,7 +15,7 @@ import solutions.Solution;
  * did not use.
  */
 public class FenceProblem extends OptimizationProblem {
-    private double fenceLength;
+    private final double fenceLength;
     
     /**
      * Constructs a FenceProblem.
@@ -59,6 +59,11 @@ public class FenceProblem extends OptimizationProblem {
         ArrayList<Double> vars = sol.getVars();
         double side1 = vars.get(0);
         return (side1 > 0 && side3(side1) > 0);
+    }
+    
+    public String solToString(Solution sol) {
+        ArrayList<Double> solVars = sol.getVars();
+	    return String.format("The side adjacent to the river should be %.2f units long,\nand you will have an area of %.2f units squared.", solVars.get(0), this.area(sol));
     }
     
     public int getNumVar() {
