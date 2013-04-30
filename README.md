@@ -4,9 +4,9 @@ Implementation of Cuckoo Search Algorithm as a project for Harvard's CS51 course
 
 Collaborators:
 
-- Samuel Kim
-- Nicholas Merrill
-- Crystal Stowell
+- [Samuel Kim](https://github.com/samuelkim6626)
+- [Nicholas Merrill](https://github.com/NicholasMerrill)
+- [Crystal Stowell](https://github.com/cstowell)
 
 ## Algorithm
 
