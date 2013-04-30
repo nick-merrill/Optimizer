@@ -16,7 +16,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     
     public CuckooSearchOpt() {
     	N_NESTS = 25;
-		N_OPTIMIZATIONS = 20000;
+		N_OPTIMIZATIONS = 120000;
 		ABANDON_PROBABILITY = 0.25;
     }
     

@@ -24,37 +24,31 @@ public class CsvReader {
         }
     }
     
-    public <E> ArrayList<ArrayList<E>> getCsv(String fileName, Command<E> convertToType) {
+    @SuppressWarnings("checked")
+    public <E> ArrayList<ArrayList<E>> getCsv(String fileName, Command<E> convertToType) throws IOException {
         String delimiter = ",";
-        try {
-            File fin = new File(fileName);
-            Scanner csvScanner = new Scanner(fin);
-            csvScanner.useDelimiter(delimiter);
-            
-            ArrayList<ArrayList<E>> rows = new ArrayList<ArrayList<E>>();
-            while (csvScanner.hasNextLine()) {
-                String[] rowArr = csvScanner.nextLine().split(delimiter);
-                ArrayList<E> row = new ArrayList<E>();
-                for (int i = 0; i < rowArr.length; i++) {
-                    row.add((E) convertToType.execute(rowArr[i]));
-                }
-                rows.add(row);
+        File fin = new File(fileName);
+        Scanner csvScanner = new Scanner(fin);
+        csvScanner.useDelimiter(delimiter);
+        
+        ArrayList<ArrayList<E>> rows = new ArrayList<ArrayList<E>>();
+        while (csvScanner.hasNextLine()) {
+            String[] rowArr = csvScanner.nextLine().split(delimiter);
+            ArrayList<E> row = new ArrayList<E>();
+            for (int i = 0; i < rowArr.length; i++) {
+                row.add((E) convertToType.execute(rowArr[i]));
             }
-            
-            return rows;
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(7);
-            return null;
+            rows.add(row);
         }
+        
+        return rows;
     }
     
-    public ArrayList<ArrayList<Integer>> getCsvAsIntegers(String fileName) {
+    public ArrayList<ArrayList<Integer>> getCsvAsIntegers(String fileName) throws IOException {
         return getCsv(fileName, new ConvertToIntegerCommand());
     }
     
-    public ArrayList<ArrayList<Double>> getCsvAsDoubles(String fileName) {
+    public ArrayList<ArrayList<Double>> getCsvAsDoubles(String fileName) throws IOException {
         return getCsv(fileName, new ConvertToDoubleCommand());
     }
 

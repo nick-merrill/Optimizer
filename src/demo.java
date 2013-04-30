@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -73,24 +74,39 @@ public class demo {
         // Gets necessary CSVs
         CsvReader csvReader = new CsvReader();
         
-        String reqsFile = gui.getFile("Please choose the CSV file for nurses' shift **requirements**");
-        ArrayList<ArrayList<Integer>> shiftReqs = csvReader.getCsvAsIntegers(reqsFile);
+        int numEmployees, numDays, numShifts;
+        try {
+            numEmployees = gui.getIntegerInput("number of employees");
+            numDays = gui.getIntegerInput("number of days in the schedule");
+            numShifts = gui.getIntegerInput("number of shifts per day");
+        } catch (InputException e) {
+            e.printStackTrace();
+            System.exit(7);
+            return;
+        }
         
-        String prefsFile = gui.getFile("Please choose the CSV file for nurses' shift **preferences**");
-        ArrayList<ArrayList<Integer>> shiftPrefs = csvReader.getCsvAsIntegers(prefsFile);
-        
-        /* Num rows of preferences equals num employees         */
-        int numEmployees = shiftPrefs.size();
-        System.out.println("# emps: "+numEmployees);
-        
-        /* Num days equals the number of rows in requirements */
-        int numDays = shiftReqs.size();
-        System.out.println("# days: "+numDays);
-        
-        /* The number of days in a schedule equals the width of 
-         * the preferences divided by the number of shifts.     */
-        int numShifts = shiftPrefs.get(0).size() / numDays;
-        System.out.println("# shifts: "+numShifts);
+
+        ArrayList<ArrayList<Integer>> shiftReqs = null;
+        do {
+            try {
+                String reqsFile = gui.getFile("Please choose the CSV file for nurses' shift **requirements**");
+                shiftReqs = csvReader.getCsvAsIntegers(reqsFile);
+                break;
+            } catch (IOException e1) {
+                gui.display(e1.getMessage());
+            }
+        } while (true);
+                
+        ArrayList<ArrayList<Integer>> shiftPrefs;
+        do {
+            try {
+                String prefsFile = gui.getFile("Please choose the CSV file for nurses' shift **preferences**");
+                shiftPrefs = csvReader.getCsvAsIntegers(prefsFile);
+                break;
+            } catch (IOException e1) {
+                gui.display(e1.getMessage());
+            }
+        } while (true);
         
 		try {
 			prob = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, shiftPrefs);
