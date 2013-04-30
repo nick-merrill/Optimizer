@@ -1,12 +1,9 @@
-import java.io.IOException;
 import java.util.ArrayList;
 
-import exceptions.InputException;
-import exceptions.PositiveNumberInputException;
+import problems.OptimizationProblem;
+import UIs.CsvReader;
 import UIs.TerminalUI;
-import algorithms.*;
-import problems.*;
-import solutions.*;
+import algorithms.OptimizationAlgorithm;
 
 public class temporary {
     
@@ -19,8 +16,9 @@ public class temporary {
 	public static void main(String[] args) {
 	    
 	    gui = new TerminalUI();
+	    CsvReader csvReader = new CsvReader();
 	    
-	    gui.getCsvAsIntegers(args[0]);
+	    csvReader.getCsvAsIntegers(args[0]);
 	}
 
 }
