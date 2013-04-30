@@ -27,9 +27,11 @@ public class BoxMinAreaProb extends OptimizationProblem {
 		this.constraints.add(new Constraint(1,0,volume));
 	}
 	
-	// generates a random volume if no volume is specified.
-	private Random rand = new Random();
+	
+	
 	public BoxMinAreaProb() {
+		// generates a random volume if no volume is specified.
+		Random rand = new Random();
 		this.boxV = rand.nextDouble() * 1000;
 	}
 	
@@ -41,7 +43,7 @@ public class BoxMinAreaProb extends OptimizationProblem {
 		ArrayList<Double> var = s.getVars();
         double x = var.get(0);
         double y = var.get(1);
-        double z = 1000 / x / y;
+        double z = boxV / x / y;
 		return 2*x*y + 2*y*z + 2*x*z;
 	}
 		

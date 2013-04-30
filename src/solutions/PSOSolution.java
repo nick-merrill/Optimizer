@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class PSOSolution extends Solution {
 	private bestPosClass bestPos;
+//	private double bestFitness;
     private ArrayList<Double> velocity;
     
     public class bestPosClass extends Solution {

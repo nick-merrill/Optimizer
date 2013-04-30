@@ -21,31 +21,35 @@ public class PSOSolutionSet extends SolutionSet {
         for (int i = 0; i < nParticles; i++) {
             //TODO: random initial solution should come from the problem, not solution
         	this.solutions.add(new PSOSolution(numVars));
-        	this.solutions.get(i).setAsRandSol(optProb);
-            this.solutions.get(i).setBestPos();
+        	PSOSolution currSol = this.solutions.get(i);
+        	currSol.setAsRandSol(optProb);
+        	currSol.setBestPos();
             
             if(i==0) {
-            	bestSol = solutions.get(0);
+            	bestSol = new PSOSolution(currSol.getVars());
+            	currSol.evalFitness(optProb);
+            	bestSol.evalFitness(optProb);
+            	//currSol.evalBestFitness(optProb);
             }
-            else if(optProb.fitness(bestSol) < optProb.fitness(solutions.get(i))) {
-            	bestSol = solutions.get(i);
+            else if(bestSol.getFitness() < currSol.getFitness(optProb)) {
+            	bestSol = new PSOSolution(currSol.getVars());
+            	bestSol.evalFitness(optProb);
+            	//currSol.evalBestFitness(optProb);
             }
             
-            ArrayList<Double> currVel = this.solutions.get(i).getVelocity();
+            ArrayList<Double> currVel = currSol.getVelocity();
             
             //random velocity
             for (int j=0; j<numVars; j++) {
             	currVel.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
             }
-            
-            this.solutions.get(i).evalFitness(optProb);
-            this.solutions.get(i).print();
         }
     }
 	
 	@Override
 	public Solution getMostFitSolution(OptimizationProblem optProb) {
-		return bestSol.getBestPosSol();
+		//return bestSol.getBestPosSol();
+		return bestSol;
 	}
 	
 	public PSOSolution getBestSol() {
@@ -53,7 +57,7 @@ public class PSOSolutionSet extends SolutionSet {
 	}
 	
 	public void setBestSol(PSOSolution sol) {
-		bestSol = sol;
+		bestSol = new PSOSolution(sol.getVars());
 	}
 
 }

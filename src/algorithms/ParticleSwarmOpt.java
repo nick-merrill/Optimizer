@@ -16,8 +16,8 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	private double socialWeight;
 	
 	public ParticleSwarmOpt() {
-		N_PARTICLES = 10;
-		N_RUNS = 500;
+		N_PARTICLES = 100;
+		N_RUNS = 2000;
 		inertiaWeight = 0.99;
 		cognitiveWeight = 1.5;
 		socialWeight = 1.5;
@@ -46,7 +46,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 				ArrayList<Double> currPos = currSol.getCurrPos();
 				ArrayList<Double> currVel = currSol.getVelocity();
 				ArrayList<Double> localVector = subLists(currSol.getBestPos(), currPos);
-				ArrayList<Double> globalVector = subLists(solutions.getBestSol().getBestPos(), currPos);
+				ArrayList<Double> globalVector = subLists(solutions.getBestSol().getVars(), currPos);
 				
 				for(int k=0; k<NUM_VAR; k++) {
 					double rp = rand.nextDouble();
@@ -84,7 +84,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 			}
 			solutions.getBestSol().evalFitness(optProb);
 			
-			solutions.getBestSol().printAll();
+			solutions.getBestSol().print();
 		}
 	}
 	
