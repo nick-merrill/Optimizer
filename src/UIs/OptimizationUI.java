@@ -82,12 +82,18 @@ public abstract class OptimizationUI {
     }
     
     public interface Command {
-        public Object execute(Object data);
+        public Object execute(String data);
     }
     
-    private class ConvertIntegerCommand implements Command {
-        public Integer execute(Object data) {
-            return 777;
+    private static class ConvertToIntegerCommand implements Command {
+        public Integer execute(String data) {
+            return Integer.parseInt(data);
+        }
+    }
+    
+    private static class ConvertToDoubleCommand implements Command {
+        public Double execute(String data) {
+            return Double.parseDouble(data);
         }
     }
     
@@ -102,8 +108,7 @@ public abstract class OptimizationUI {
                 String[] rowArr = csvScanner.nextLine().split(delimiter);
                 ArrayList<Object> row = new ArrayList<Object>(Arrays.asList(rowArr));
                 for (int i = 0; i < row.size(); i++) {
-                    row.set(i, convertToType.execute(row.get(i)));
-                    System.out.println(row.get(i));
+                    row.set(i, convertToType.execute((String) row.get(i)));
                 }
                 rows.add(row);
             }
@@ -124,24 +129,12 @@ public abstract class OptimizationUI {
         }
     }
     
-    protected ArrayList<ArrayList<Object>> matrixMap(Callable<T> fun) {
-        ArrayList<ArrayList<String>> rows = getCsvAsStrings(fileName);
-        ArrayList<ArrayList<Integer>> intRows = new ArrayList<ArrayList<Integer>>(rows.size());
-        for (ArrayList<String> row : rows) {
-            ArrayList<String> intRow = new ArrayList<String>(row.size());
-            
-        }
-        fun.call();
+    public ArrayList<ArrayList<Object>> getCsvAsIntegers(String fileName) {
+        return getCsv(fileName, new ConvertToIntegerCommand());
     }
     
-    public ArrayList<ArrayList<Integer>> getCsvAsIntegers(String fileName) {
-        ArrayList<ArrayList<String>> rows = getCsvAsStrings(fileName);
-        ArrayList<ArrayList<Integer>> intRows = new ArrayList<ArrayList<Integer>>(rows.size());
-        for (ArrayList<String> row : rows) {
-            ArrayList<String> intRow = new ArrayList<String>(row.size());
-            
-        }
-        return null;
+    public ArrayList<ArrayList<Object>> getCsvAsDoubles(String fileName) {
+        return getCsv(fileName, new ConvertToDoubleCommand());
     }
 
 }
