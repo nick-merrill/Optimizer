@@ -79,19 +79,28 @@ public class demo {
         String prefsFile = gui.getFile("Please choose the CSV file for nurses' shift **preferences**");
         ArrayList<ArrayList<Integer>> shiftPrefs = csvReader.getCsvAsIntegers(prefsFile);
         
-        // Num rows of preferences equals num employees
+        /* Num rows of preferences equals num employees         */
         int numEmployees = shiftPrefs.size();
+        System.out.println("# emps: "+numEmployees);
         
-        int numDays;
-        int numShifts;
-        try {
-            numDays = gui.getIntegerInput("number of days in schedule");
-            numShifts = gui.getIntegerInput("number of total shifts per day");
-          } catch (InputException e) {
-            e.printStackTrace();
-            System.exit(7);
-            return;
-        }      
+        /* Num days equals the number of rows in requirements */
+        int numDays = shiftReqs.size();
+        System.out.println("# days: "+numDays);
+        
+        /* The number of days in a schedule equals the width of 
+         * the preferences divided by the number of shifts.     */
+        int numShifts = shiftPrefs.get(0).size() / numDays;
+        System.out.println("# shifts: "+numShifts);
+        
+        
+//        try {
+//            numDays = gui.getIntegerInput("number of days in schedule");
+//            numShifts = gui.getIntegerInput("number of total shifts per day");
+//          } catch (InputException e) {
+//            e.printStackTrace();
+//            System.exit(7);
+//            return;
+//        }      
         
 		try {
 			prob = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, shiftPrefs);
