@@ -1,6 +1,8 @@
 package tests;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.Ignore;
@@ -10,7 +12,10 @@ import org.junit.Assert;
 
 import algorithms.*;
 import problems.*;
+import exceptions.*;
 import solutions.Solution;
+
+import java.util.Arrays;
 
 @RunWith(JUnit4.class)
 public class Tests {
@@ -25,7 +30,13 @@ public class Tests {
     public void testFenceProblem() {
         
 	    double fenceLength = 100.;
-	    FenceProblem fenceProb = new FenceProblem(fenceLength);
+	    FenceProblem fenceProb;
+        try {
+            fenceProb = new FenceProblem(fenceLength);
+        } catch (InputException e) {
+            e.printStackTrace();
+            return;
+        }
 	    csAlg.solve(fenceProb);
 	    Solution sol = csAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb);
 	    double side1 = sol.getVars().get(0);
@@ -38,7 +49,13 @@ public class Tests {
 //    @Ignore
     public void testBoxProb() {
 	    double volume = 100.;
-	    BoxMinAreaProb boxProb = new BoxMinAreaProb(volume);
+	    BoxMinAreaProb boxProb;
+        try {
+            boxProb = new BoxMinAreaProb(volume);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
 	    csAlg.solve(boxProb);
 	    ArrayList<Double> solVars = csAlg.getSolutions(boxProb).getMostFitSolution(boxProb).getVars();
 	    Assert.assertEquals("Dimensions not equal.", solVars.get(0), solVars.get(1), 0.01);
@@ -79,5 +96,62 @@ public class Tests {
 	    Assert.assertEquals("Production of Y inaccurate.", 6, y, 0.01);
 	    //Assert.assertEquals("Profit inaccurate.", 36, profit, 0.01);
     }
+    
+    
+    @Test 
+    public void testNurseSchedProb () {
+    	int numEmployees = 8;
+    	int numDays = 3;
+    	int numShifts = 4;
+    	Integer[] shiftReqArr = new Integer[]{1,1,1,0};
+    	ArrayList<Integer> shiftReq1 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq2 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq3 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq4 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq5 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq6 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	ArrayList<Integer> shiftReq7 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
+    	
+    	ArrayList<ArrayList<Integer>> shiftReqs = new ArrayList<ArrayList<Integer>>();
+    	shiftReqs.add(shiftReq1);
+    	shiftReqs.add(shiftReq2);
+    	shiftReqs.add(shiftReq3);
+    	shiftReqs.add(shiftReq4);
+    	shiftReqs.add(shiftReq5);
+    	shiftReqs.add(shiftReq6);
+    	shiftReqs.add(shiftReq7);
+    	
+    	Integer[] prefArr = new Integer[28];
+    	int j = 1;
+    	for (int i = 0; i < 28; i++) {
+    	    if (j == 5) j = 1;
+    	    prefArr[i] = j;
+    	    j++;
+    	}
+    	ArrayList<Integer> pref1 = new ArrayList<Integer>(Arrays.asList(prefArr));
+    	j = 4;
+    	for (int i = 0; i < 28; i++) {
+    	    if (j == 5) j = 1;
+    	    prefArr[i] = j;
+    	    j++;
+    	}
+    	ArrayList<Integer> pref2 = new ArrayList<Integer>(Arrays.asList(prefArr));
+    	j = 3;
+    	for (int i = 0; i < 28; i++) {
+    	    if (j == 5) j = 1;
+    	    prefArr[i] = j;
+    	    j++;
+    	}
+    	ArrayList<Integer> pref3 = new ArrayList<Integer>(Arrays.asList(prefArr));
+    	
+    	ArrayList<ArrayList<Integer>> preferences = new ArrayList<ArrayList<Integer>>();
+    	preferences.add(pref1);
+    	preferences.add(pref2);
+    	preferences.add(pref3);
+    	
+    	
+    	
+    }
+    
     
 }

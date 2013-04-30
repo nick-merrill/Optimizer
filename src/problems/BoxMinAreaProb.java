@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import solutions.*;
+import exceptions.*;
 
 /**
  * The minimum area box problem takes a given volume 
@@ -17,10 +18,9 @@ public class BoxMinAreaProb extends OptimizationProblem {
 
 	final double boxV;
 	
-	public BoxMinAreaProb(double volume) {
-		if (volume < 0) {
-			System.out.printf("Volume must be positive!\n");
-			System.exit(3);
+	public BoxMinAreaProb(double volume) throws PositiveNumberInputException {
+		if (!(volume > 0)) {
+		    throw new PositiveNumberInputException("volume");
 		}
 		this.boxV = volume;
 		this.constraints.add(new Constraint(0,0,volume));
@@ -75,4 +75,21 @@ public class BoxMinAreaProb extends OptimizationProblem {
 			return false;
 		}
 	}
+	
+	/**
+	 * Returns the length of the third side of the box, given two other sides.
+	 */
+	public double side3(double x, double y) {
+	    return boxV / x / y;
+	}
+	public double side3(Solution sol) {
+	    ArrayList<Double> vars = sol.getVars();
+	    return side3(vars.get(0), vars.get(1));
+	}
+
+    @Override
+    public String solToString(Solution s) {
+        ArrayList<Double> vars = s.getVars();
+        return String.format("Your box should be %.2f by %.2f by %.2f units.", vars.get(0), vars.get(1), this.side3(s));
+    }
 }
