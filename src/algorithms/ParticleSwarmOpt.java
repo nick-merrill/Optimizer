@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import problems.OptimizationProblem;
-import solutions.*;
+import solutions.PSOSolution;
+import solutions.PSOSolutionSet;
 
 public class ParticleSwarmOpt extends OptimizationAlgorithm{
 

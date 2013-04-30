@@ -2,9 +2,8 @@ package problems;
 
 import java.util.ArrayList;
 
-import exceptions.*;
-
 import solutions.Solution;
+import exceptions.PositiveNumberInputException;
 
 /**
  * The objective of the fence problem is to maximize the area
