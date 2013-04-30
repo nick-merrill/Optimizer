@@ -19,15 +19,10 @@ public class demo {
 	    double fenceLength;
         try {
             fenceLength = gui.getDoubleInput("length of fence");
-        } catch (InputException e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-        try {
             prob = new FenceProblem(fenceLength);
-        } catch (PositiveNumberInputException e) {
-            System.out.println(e.getMessage());
-            return;
+        } catch (InputException e) {
+            gui.display(e.getMessage());
+            System.exit(6);
         }
     }
     
@@ -35,16 +30,11 @@ public class demo {
         double volume;
         try {
             volume = gui.getDoubleInput("volume of box");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             prob = new BoxMinAreaProb(volume);
         }
-        catch (PositiveNumberInputException e) {
-            System.out.println("Error. Sorry.");
-            return;
+        catch (InputException e) {
+            gui.display(e.getMessage());
+            System.exit(6);
         }
     }
     
@@ -54,73 +44,23 @@ public class demo {
             usageCbyY;
         try {
             constraintA = gui.getDoubleInput("units of resource A");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             constraintB = gui.getDoubleInput("units of resource B");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             constraintC = gui.getDoubleInput("units of resource C");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             profitX = gui.getDoubleInput("profit made by producing 1 item of X");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             profitY = gui.getDoubleInput("profit made by producing 1 item of Y");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             usageAbyX = gui.getDoubleInput("units of resource A used to produce 1 item of X");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             usageAbyY = gui.getDoubleInput("units of resource A used to produce 1 item of Y");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             usageBbyX = gui.getDoubleInput("units of resource B used to produce 1 item of X");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             usageBbyY = gui.getDoubleInput("units of resource B used to produce 1 item of Y");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             usageCbyX = gui.getDoubleInput("units of resource C used to produce 1 item of X");
-        } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
-        }
-        try {
             usageCbyY = gui.getDoubleInput("units of resource C used to produce 1 item of Y");
+            prob = new ManufacturingProblem(constraintA, constraintB, constraintC, profitX, profitY,
+                    usageAbyX, usageAbyY, usageBbyX, usageBbyY, usageCbyX,
+                    usageCbyY);
         } catch (InputException e) {
-            System.out.println("Error. Sorry.");
-            return;
+            gui.display(e.getMessage());
+            System.exit(6);
         }
-        prob = new ManufacturingProblem(constraintA, constraintB, constraintC, profitX, profitY,
-                usageAbyX, usageAbyY, usageBbyX, usageBbyY, usageCbyX,
-                usageCbyY);
     }
     
     public static void runMichaelwicz() {
