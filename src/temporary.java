@@ -18,7 +18,7 @@ public class temporary {
 	    gui = new TerminalUI();
 	    CsvReader csvReader = new CsvReader();
 	    
-	    csvReader.getCsvAsIntegers(args[0]);
+	    System.out.println(csvReader.getCsvAsIntegers(args[0]));
 	}
 
 }

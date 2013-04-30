@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import exceptions.InputException;
 import exceptions.PositiveNumberInputException;
+import UIs.CsvReader;
 import UIs.TerminalUI;
 import algorithms.*;
 import problems.*;
@@ -67,6 +69,38 @@ public class demo {
         prob = new MichaelwiczMinProb();
     }
     
+    public static void runNurse() {
+        // Gets necessary CSVs
+        CsvReader csvReader = new CsvReader();
+        
+        String reqsFile = gui.getFile("Please choose the CSV file for nurses' shift **requirements**");
+        ArrayList<ArrayList<Integer>> shiftReqs = csvReader.getCsvAsIntegers(reqsFile);
+        
+        String prefsFile = gui.getFile("Please choose the CSV file for nurses' shift **preferences**");
+        ArrayList<ArrayList<Integer>> shiftPrefs = csvReader.getCsvAsIntegers(prefsFile);
+        
+        // Num rows of preferences equals num employees
+        int numEmployees = shiftPrefs.size();
+        
+        int numDays;
+        int numShifts;
+        try {
+            numDays = gui.getIntegerInput("number of days in schedule");
+            numShifts = gui.getIntegerInput("number of total shifts per day");
+          } catch (InputException e) {
+            e.printStackTrace();
+            System.exit(7);
+            return;
+        }      
+        
+		try {
+			prob = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, shiftPrefs);
+		} catch (InputException e) {
+			e.printStackTrace();
+			System.exit(7);
+		}
+    }
+    
 	public static void main(String[] args) {
 	    
 	    gui = new TerminalUI();
@@ -75,7 +109,8 @@ public class demo {
 		        new String[]{"Fence Problem - Determines how long of a side adjacent to a river with given fence length to maximize area.",
 		        "Box Minimization of Area Problem - Minimizes the surface area of a box, given a volume.",
 		        "Manufacturing Problem - Maximize profit based on resources used.",
-		        "Michaelwicz Problem - Optimizes a bivariate Michaelwicz function. No inputs are necessary."
+		        "Michaelwicz Problem - Optimizes a bivariate Michaelwicz function. No inputs are necessary.",
+		        "Nurse Scheduling Problem - Optimizes nurse schedules for preferences with shift requirements as constraints."
 		        });
 		
 		System.out.println(probID);
@@ -99,6 +134,9 @@ public class demo {
 		        break;
 		    case 3:
 		        runMichaelwicz();
+		        break;
+		    case 4:
+		        runNurse();
 		        break;
 	        default:
 	            System.out.println("Bad case!");

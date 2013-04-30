@@ -18,6 +18,12 @@ public class TerminalUI extends OptimizationUI {
         scanner = new Scanner(System.in);
     }
     
+    /* ************ PROMPTS *************/
+    
+    public void displayPrompt() {
+        System.out.printf(" --> ");
+    }
+    
     @Override
     public String getVariableInput(String varName) {
         System.out.printf("Enter the following variable: "+varName+"\n");
@@ -26,12 +32,10 @@ public class TerminalUI extends OptimizationUI {
     }
     
     @Override
-    public void printSolution(Solution solution) {
-        solution.print();
-    }
-    
-    public void displayPrompt() {
-        System.out.printf(" --> ");
+    public String getFile(String request) {
+        System.out.printf(request + "\nPlease enter a file path from the current location (e.g. \"../file.csv\").\n");
+        displayPrompt();
+        return scanner.nextLine();
     }
     
     public int getOptionChoice(String prompt, ArrayList<String> options) {
@@ -56,10 +60,15 @@ public class TerminalUI extends OptimizationUI {
         return getOptionChoice(prompt, new ArrayList<String>(Arrays.asList(options)));
     }
     
+    /*------------ END PROMPTS -----------*/
+    
+    @Override
+    public void printSolution(Solution solution) {
+        solution.print();
+    }
+    
     public void display(String output) {
         System.out.println(output);
     }
-    
-    
 
 }
