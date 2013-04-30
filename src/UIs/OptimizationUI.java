@@ -1,9 +1,12 @@
 package UIs;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import exceptions.InputException;
 
@@ -31,5 +34,19 @@ public abstract class OptimizationUI {
         }
     }
     
+    public StringBuilder readFile(String fFileName) throws IOException {
+        StringBuilder text = new StringBuilder();
+        String NL = System.getProperty("line.separator");
+        Scanner scanner = new Scanner(new FileInputStream(fFileName));
+        try {
+            while (scanner.hasNextLine()){
+                text.append(scanner.nextLine() + NL);
+            }
+        }
+        finally{
+            scanner.close();
+        }
+        return text;
+    }
 
 }

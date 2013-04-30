@@ -1,5 +1,8 @@
 package UIs;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -58,6 +61,13 @@ public class TerminalUI extends OptimizationUI {
     
     @Override
     public ArrayList<ArrayList<Integer>> getCsvAsIntegers() {
+        try {
+            StringBuilder string = this.readFile("test.txt");
+            System.out.println(string);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return null;
     }
 
