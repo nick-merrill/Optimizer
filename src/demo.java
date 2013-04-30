@@ -92,16 +92,6 @@ public class demo {
         int numShifts = shiftPrefs.get(0).size() / numDays;
         System.out.println("# shifts: "+numShifts);
         
-        
-//        try {
-//            numDays = gui.getIntegerInput("number of days in schedule");
-//            numShifts = gui.getIntegerInput("number of total shifts per day");
-//          } catch (InputException e) {
-//            e.printStackTrace();
-//            System.exit(7);
-//            return;
-//        }      
-        
 		try {
 			prob = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, shiftPrefs);
 		} catch (InputException e) {
