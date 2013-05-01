@@ -13,20 +13,22 @@ public class NurseSchedProb extends OptimizationProblem {
 	private int numShifts;
 	private int maxShiftsInRow;
 //	private int maxShiftsADay;
+//	private int minShifts;
 	private ArrayList<ArrayList<Integer>> shiftReqs;
 	private ArrayList<ArrayList<Integer>> preferences;
 
 	/**
 	 * Constructs a Nurse Scheduling Problem
 	 */
-	public NurseSchedProb(int numEmployees, int numDays, int numShifts, int maxShiftsInRow, /*int maxShiftsADay,*/
+	public NurseSchedProb(int numEmployees, int numDays, int numShifts, int maxShiftsInRow, /*int maxShiftsADay, int minShifts, */
 			ArrayList<ArrayList<Integer>> shiftReqs, ArrayList<ArrayList<Integer>> preferences) 
 					throws InputException, PositiveNumberInputException {
 		this.numEmployees = numEmployees;
 		this.numDays = numDays;
 		this.numShifts = numShifts;
 		this.maxShiftsInRow = maxShiftsInRow;
-	//	this.maxShiftsADay = maxShiftsADay;
+//		this.maxShiftsADay = maxShiftsADay;
+//		this.minShifts = minShifts;
 		this.shiftReqs = shiftReqs;
 		this.preferences = preferences;
 		for (int i = 0; i < numEmployees * numDays * numShifts; i++)
@@ -38,6 +40,7 @@ public class NurseSchedProb extends OptimizationProblem {
 		if (numShifts <= 0) throw new PositiveNumberInputException("number of shifts per day");
 		if (maxShiftsInRow <= 0) throw new PositiveNumberInputException("maximum number of shifts in a row");
 //		if (maxShiftsADay <= 0) throw new PositiveNumberInputException("maximum number of shifts per 24 hours");
+//		if (minShifts <= 0) throw new PositiveNumberInputException("minimum number of shifts for an employee per scheduling period");
 		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) {
 			throw new InputException("shift requirements","does not have the right dimension",
 					"the matrix should have dimensions [number of days] by [number of shifts]");
@@ -51,7 +54,11 @@ public class NurseSchedProb extends OptimizationProblem {
 			throw new InputException("employee preferences","does not have the right dimension",
 					"the matrix should have dimensions [number of employees] by [number of days times number of shifts]");
 		}
-
+/*		if (minShifts > numDays * numShifts) {
+			throw new InputException("the minimum number of shifts for an employee per scheduling period",
+					"must not exceed the total number of shifts in the scheduling period");
+		}
+*/
 	}
 	
 	/** 
@@ -97,6 +104,11 @@ public class NurseSchedProb extends OptimizationProblem {
 		}
 		return violations;
 	}
+//	private double obeyMinShifts(Solution sol){
+//		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
+//		int length = numDays * numShifts;
+//		
+//	}
 	private double extraCost(Solution sol){
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
 		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);
