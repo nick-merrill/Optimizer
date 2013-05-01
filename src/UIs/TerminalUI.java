@@ -4,9 +4,12 @@ import java.awt.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.concurrent.*;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.TimerTask;
 
 import solutions.Solution;
 
@@ -69,6 +72,26 @@ public class TerminalUI extends OptimizationUI {
     
     public void display(String output) {
         System.out.println(output);
+    }
+    
+    private TimerTask displayUpdater;
+    
+    public void activateDisplayUpdater() {
+        if (displayUpdater != null) displayUpdater.cancel();
+        displayUpdater = new TimerTask();
+        
+        
+         
+    }
+    
+    public void deactivateDisplayUpdater() {
+
+@Override
+public void run() {
+    // TODO Auto-generated method stub
+    
+}
+        
     }
 
 }
