@@ -46,7 +46,6 @@ public class Tests {
     }
     
     @Test
-//    @Ignore
     public void testBoxProb() {
 	    double volume = 100.;
 	    BoxMinAreaProb boxProb;

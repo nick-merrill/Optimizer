@@ -52,6 +52,7 @@ public class optimizer {
     	int numEmployees = 3;
     	int numDays = 3;
     	int numShifts = 4;
+    	int maxShiftsInRow = 1;
     	Integer[] shiftReqArr = new Integer[]{1,1,1,0};
     	ArrayList<Integer> shiftReq1 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	ArrayList<Integer> shiftReq2 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
@@ -101,7 +102,7 @@ public class optimizer {
 
     	NurseSchedProb nProb;
 		try {
-			nProb = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, preferences);
+			nProb = new NurseSchedProb(numEmployees, numDays, numShifts, maxShiftsInRow, shiftReqs, preferences);
 			csAlg.solve(nProb);
 	    	SolutionSet sols = csAlg.getSolutions(nProb);
 	    	int n = 15;

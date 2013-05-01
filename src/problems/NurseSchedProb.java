@@ -3,6 +3,7 @@ package problems;
 import java.util.ArrayList;
 
 import exceptions.InputException;
+import exceptions.PositiveNumberInputException;
 
 import solutions.Solution;
 
@@ -10,23 +11,33 @@ public class NurseSchedProb extends OptimizationProblem {
 	private int numEmployees;
 	private int numDays; 
 	private int numShifts;
+	private int maxShiftsInRow;
+//	private int maxShiftsADay;
 	private ArrayList<ArrayList<Integer>> shiftReqs;
 	private ArrayList<ArrayList<Integer>> preferences;
 
 	/**
 	 * Constructs a Nurse Scheduling Problem
 	 */
-	public NurseSchedProb(int numEmployees, int numDays, int numShifts,
-			ArrayList<ArrayList<Integer>> shiftReqs, ArrayList<ArrayList<Integer>> preferences) throws InputException {
+	public NurseSchedProb(int numEmployees, int numDays, int numShifts, int maxShiftsInRow, /*int maxShiftsADay,*/
+			ArrayList<ArrayList<Integer>> shiftReqs, ArrayList<ArrayList<Integer>> preferences) 
+					throws InputException, PositiveNumberInputException {
 		this.numEmployees = numEmployees;
 		this.numDays = numDays;
 		this.numShifts = numShifts;
+		this.maxShiftsInRow = maxShiftsInRow;
+	//	this.maxShiftsADay = maxShiftsADay;
 		this.shiftReqs = shiftReqs;
 		this.preferences = preferences;
 		for (int i = 0; i < numEmployees * numDays * numShifts; i++)
 			this.constraints.add(new Constraint(i,0,1));
 		
 		// checking user input
+		if (numEmployees <= 0) throw new PositiveNumberInputException("number of employees");
+		if (numDays <= 0) throw new PositiveNumberInputException("number of days in scheduling cycle");
+		if (numShifts <= 0) throw new PositiveNumberInputException("number of shifts per day");
+		if (maxShiftsInRow <= 0) throw new PositiveNumberInputException("maximum number of shifts in a row");
+//		if (maxShiftsADay <= 0) throw new PositiveNumberInputException("maximum number of shifts per 24 hours");
 		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) {
 			throw new InputException("shift requirements","does not have the right dimension",
 					"the matrix should have dimensions [number of days] by [number of shifts]");
@@ -47,6 +58,9 @@ public class NurseSchedProb extends OptimizationProblem {
 	 * The fitness of the solution is based on how well you can satisfy 
 	 * workers' preferences while still meeting the requirement of
 	 * workers on duty per shift.
+	 * 
+	 * If an employee has more than maxShiftsInRow shifts in a row, 
+	 * then fitness decreases by a significant amount.
 	 */
 	private double preferencesMet(Solution sol) {
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
@@ -63,6 +77,26 @@ public class NurseSchedProb extends OptimizationProblem {
 		}
 		return totalHappiness;
 	}
+	private double obeyMaxShifts(Solution sol) {
+		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
+		int length = numDays * numShifts;
+		double penalty = Math.pow(numEmployees * length,3);
+		double violations = 0;
+		for (int i = 0; i < numEmployees; i++) { // for each employee
+			ArrayList<Integer> schedule = row(intSol,i);
+			for (int j = 0; j < length; j++) { // for each shift
+				int counter = 0;
+				// check to make sure there are NO MORE THAN n shifts in a row, 
+				// including wrapping around to the beginning of the schedule
+				for (int k = 0; k < maxShiftsInRow + 1; k++){
+					if (schedule.get((j+k) % length) == 0) break;
+					else counter++;
+				}
+				if (counter > maxShiftsInRow) return violations + penalty;
+			}
+		}
+		return violations;
+	}
 	private double extraCost(Solution sol){
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
 		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);
@@ -76,7 +110,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	}
 	
 	public double fitness(Solution sol) {
-		return -preferencesMet(sol);
+		return -(preferencesMet(sol) + obeyMaxShifts(sol)) ;
 		// return lambda * preferencesMet(sol) + (1 - lambda) * extraCost(sol);
 	}
 
@@ -84,16 +118,22 @@ public class NurseSchedProb extends OptimizationProblem {
 	 * A solution is within constraints if its number of workers
 	 * per shift match or exceed the requirement.
 	 * The solution must also not have one worker on duty for 
-	 * more than two shifts in a row.
+	 * more than maxShifts shifts in a row.
 	 */
 	public boolean withinCustomConstraints(Solution sol) {
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
-		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);		
 		int length = numDays * numShifts;
+		
+		// minimum coverage
+		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);		
 		for (int j = 0; j < length; j++) {
 			if (sumArrayList(col(intSol,j)) < shiftReqsList.get(j))
 				return false;
 		}
+		
+		
+
+		
 		return true;
 		// TODO max shifts per 24 hrs
 		// TODO max back-to-back shifts
