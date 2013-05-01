@@ -84,16 +84,16 @@ public class Solution {
     }
     
     public String toString() {
-        String output = "";
+        String output = "\n";
         if (this.vars.size() == 0) {
             output += "Empty Solution";
         } else {
             for (int i = 0; i < this.numVars; i++) {
-                output += String.format("x%d:\t%f\n", i, this.vars.get(i));
+                output += String.format("x%d:\t%f", i, this.vars.get(i));
             }
         }
-//        if (this.fitness != null)
-//            System.out.printf("---------------------\nFitness: %f\n", this.fitness);
+        if (this.fitness != null)
+            System.out.printf("---------------------\nFitness: %f\n", this.fitness);
         return output;
     }
     

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import exceptions.InputException;
+import exceptions.PositiveNumberInputException;
 
 import UIs.LanternaGUI;
 import algorithms.*;
@@ -20,7 +21,7 @@ public class optimizer {
     	
 	}
 	
-	private void csTest() {
+	private static void csTest() {
 	    LanternaGUI gui = new LanternaGUI();
 	    
 	    /*
@@ -62,11 +63,23 @@ public class optimizer {
 //	    System.out.printf("Michaelwicz minimum: %f\n", michaelwiczProb.eval(michaelwiczSol2));
 	}
 	
-	private void psoTest() {
+	private static void psoTest() {
+		ParticleSwarmOpt psoAlg = new ParticleSwarmOpt();
 		
+		double fenceLength = 100.;
+	    FenceProblem fenceProb;
+		try {
+			fenceProb = new FenceProblem(fenceLength);
+			psoAlg.solve(fenceProb);
+		    psoAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb).print();
+		} catch (PositiveNumberInputException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
 	}
 	
-	private void nurseSchedTest() {
+	private static void nurseSchedTest() {
 		CuckooSearchOpt csAlg = new CuckooSearchOpt();
 		
 		int numEmployees = 3;

@@ -8,33 +8,29 @@ import problems.OptimizationProblem;
 public class PSOSolutionSet extends SolutionSet {
     private ArrayList<PSOSolution> solutions;
     private Random rand;
-    private final int N_PARTICLES;
     private PSOSolution bestSol;
 	
 	public PSOSolutionSet(int nParticles, int numVars, OptimizationProblem optProb) {
-        this.N_PARTICLES = nParticles;
-        N_SOL = N_PARTICLES;
+        N_SOL = nParticles;
         this.rand = new Random();
-        solutions = new ArrayList<PSOSolution>(N_PARTICLES);
+        solutions = new ArrayList<PSOSolution>(nParticles);
         super.solutions = solutions;
         
         for (int i = 0; i < nParticles; i++) {
-            //TODO: random initial solution should come from the problem, not solution
+            
         	this.solutions.add(new PSOSolution(numVars));
         	PSOSolution currSol = this.solutions.get(i);
-        	currSol.setAsRandSol(optProb);
+        	
+        	//sets a random solution according to bounds
+    		currSol.setAsRandSol(optProb);
         	currSol.setBestPos();
+        	
+        	currSol.evalFitness(optProb);
             
-            if(i==0) {
-            	bestSol = new PSOSolution(currSol.getVars());
-            	currSol.evalFitness(optProb);
-            	bestSol.evalFitness(optProb);
-            	//currSol.evalBestFitness(optProb);
-            }
-            else if(bestSol.getFitness() < currSol.getFitness(optProb)) {
+        	//sets the set's globally best position
+            if(i==0 || bestSol.getFitness() > currSol.getFitness()) {
             	bestSol = new PSOSolution(currSol.getVars());
             	bestSol.evalFitness(optProb);
-            	//currSol.evalBestFitness(optProb);
             }
             
             ArrayList<Double> currVel = currSol.getVelocity();
@@ -43,6 +39,8 @@ public class PSOSolutionSet extends SolutionSet {
             for (int j=0; j<numVars; j++) {
             	currVel.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
             }
+            
+            currSol.print();
         }
     }
 	

@@ -72,9 +72,11 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 					}
 				}
 				
-				//Updates particle's best solution and globally best solution
+				//Updates particle's individual best solution
 				if(optProb.fitness(currSol) > optProb.fitness(currSol.getBestPosSol())) {
 					currSol.setBestPos();
+					
+					//updates teh globally best solution
 					if(optProb.fitness(currSol) > solutions.getBestSol().getFitness()) {
 						solutions.setBestSol(currSol);
 						
@@ -85,7 +87,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 			}
 			solutions.getBestSol().evalFitness(optProb);
 			
-			solutions.getBestSol().print();
+			//solutions.getBestSol().print();
 		}
 	}
 	
