@@ -43,11 +43,12 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 			//rp, rg are randomly generated numbers for each dimension
 			for(int j=0; j<N_PARTICLES; j++) {
 				PSOSolution currSol = (PSOSolution) solutions.getSol(j);
+				PSOSolution bestSol = solutions.getBestSol();
 
 				ArrayList<Double> currPos = currSol.getCurrPos();
 				ArrayList<Double> currVel = currSol.getVelocity();
 				ArrayList<Double> localVector = subLists(currSol.getBestPos(), currPos);
-				ArrayList<Double> globalVector = subLists(solutions.getBestSol().getVars(), currPos);
+				ArrayList<Double> globalVector = subLists(bestSol.getVars(), currPos);
 				
 				for(int k=0; k<NUM_VAR; k++) {
 					double rp = rand.nextDouble();
@@ -72,22 +73,21 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 					}
 				}
 				
+				currSol.evalFitness(optProb);
+				
 				//Updates particle's individual best solution
-				if(optProb.fitness(currSol) > optProb.fitness(currSol.getBestPosSol())) {
+				if(currSol.getFitness() > currSol.getBestPosSol().getFitness(optProb)) {
 					currSol.setBestPos();
 					
-					//updates teh globally best solution
-					if(optProb.fitness(currSol) > solutions.getBestSol().getFitness()) {
+					//updates the globally best solution
+					if(currSol.getFitness() > bestSol.getFitness()) {
 						solutions.setBestSol(currSol);
-						
+						solutions.getBestSol().evalFitness(optProb);
 					}
 				}
 
 				
 			}
-			solutions.getBestSol().evalFitness(optProb);
-			
-			//solutions.getBestSol().print();
 		}
 	}
 	

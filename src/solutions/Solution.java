@@ -23,7 +23,7 @@ public class Solution {
      * coefficients.
      */
     public Solution(ArrayList<Double> vars) {
-        this.vars = vars;
+        this.vars = new ArrayList<Double>(vars);
         this.numVars = vars.size();
     }
     
@@ -37,7 +37,7 @@ public class Solution {
     }
     
     public void setVars(ArrayList<Double> vars) {
-        this.vars = vars;
+    	this.vars = new ArrayList<Double>(vars);
     }
     
     public void evalFitness(OptimizationProblem optProb) {
@@ -84,7 +84,7 @@ public class Solution {
     }
     
     public String toString() {
-        String output = "\n";
+        String output = "";
         if (this.vars.size() == 0) {
             output += "Empty Solution";
         } else {

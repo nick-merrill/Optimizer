@@ -72,6 +72,10 @@ public class optimizer {
 			fenceProb = new FenceProblem(fenceLength);
 			psoAlg.solve(fenceProb);
 		    psoAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb).print();
+		    
+		    Solution fenceSol = psoAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb);
+		    fenceSol.print();
+		    System.out.printf("Michaelwicz minimum: %f\n", fenceSol.getFitness(fenceProb));
 		} catch (PositiveNumberInputException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -29,6 +29,7 @@ public class PSOSolutionSet extends SolutionSet {
             
         	//sets the set's globally best position
             if(i==0 || bestSol.getFitness() > currSol.getFitness()) {
+            	//sets the best solution and its fitness
             	bestSol = new PSOSolution(currSol.getVars());
             	bestSol.evalFitness(optProb);
             }
@@ -39,8 +40,6 @@ public class PSOSolutionSet extends SolutionSet {
             for (int j=0; j<numVars; j++) {
             	currVel.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
             }
-            
-            currSol.print();
         }
     }
 	
