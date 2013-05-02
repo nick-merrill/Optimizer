@@ -2,6 +2,8 @@ package problems;
 /* Guided by the wise words of http://www.math.cmu.edu/~af1p/Teaching/OR2/Projects/P23/ORProject_Final_Copy.pdf */
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 import exceptions.InputException;
 import exceptions.PositiveNumberInputException;
 
@@ -270,6 +272,24 @@ public class NurseSchedProb extends OptimizationProblem {
 		}
 		return output;
 	}
+	
+    public String solToJson(Solution s) {
+    	// converts solution array list back to matrix
+    	ArrayList<Integer> vars = integerVarsOfSolution(s);
+    	ArrayList<ArrayList<Integer>> matrix = new ArrayList<ArrayList<Integer>>(numEmployees);
+    	int length = numDays * numShifts;
+    	for (int i = 0; i < numEmployees; i++){ // for each row
+    		ArrayList<Integer> temp = new ArrayList<Integer>(length);
+    		for (int j = 0; j < length; j++){ // for each shift
+    			temp.add(vars.get(i*length + j));
+    		}
+    		matrix.add(temp);
+     	}
+    	
+    	Gson gson = new Gson();
+    	String json = gson.toJson(matrix);
+    	return json;
+    }
 	
 	public void printSol(Solution s) {
 	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);

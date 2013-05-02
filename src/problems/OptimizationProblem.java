@@ -2,6 +2,8 @@ package problems;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 import solutions.Solution;
 
 public abstract class OptimizationProblem {

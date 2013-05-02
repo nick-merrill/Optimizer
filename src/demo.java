@@ -73,7 +73,8 @@ public class demo {
     }
     
     public static void runNurse() {
-        int numEmployees, numDays, numShifts, maxShiftsInRow, maxShiftsADay, minShifts, lambdaPref, lambdaMin;
+        int numEmployees, numDays, numShifts, maxShiftsInRow, maxShiftsADay, minShifts;
+        double lambdaPref, lambdaMin;
         try {
             numEmployees = gui.getIntegerInput("number of employees");
             numDays = gui.getIntegerInput("number of days in the schedule");
@@ -81,8 +82,8 @@ public class demo {
             maxShiftsInRow = gui.getIntegerInput("the maximum number of shifts in a row that an employee can be on duty");
             maxShiftsADay = gui.getIntegerInput("the maximum number of shifts in a 24 hour span that an employee can be on duty");
             minShifts = gui.getIntegerInput("the minimum number of shifts that an employee must be on duty within one scheduling period");
-            lambdaPref = gui.getIntegerInput("the proportional weight of satisfying employee preferences over minimizing costs");
-            lambdaMin = gui.getIntegerInput("the proportional weight of satisfying minimum shifts per employee per scheduling period over minimizing costs");
+            lambdaPref = gui.getDoubleInput("the proportional weight of satisfying employee preferences over minimizing costs");
+            lambdaMin = gui.getDoubleInput("the proportional weight of satisfying minimum shifts per employee per scheduling period over minimizing costs");
         } catch (InputException e) {
             e.printStackTrace();
             System.exit(7);
@@ -138,10 +139,8 @@ public class demo {
 		        "Box Minimization of Area Problem - Minimizes the surface area of a box, given a volume.",
 		        "Manufacturing Problem - Maximize profit based on resources used.",
 		        "Michaelwicz Problem - Optimizes a bivariate Michaelwicz function. No inputs are necessary.",
-		        "Nurse Scheduling Problem - Optimizes nurse schedules for preferences with shift requirements as constraints."
+		        "Nurse Scheduling Problem - Optimizes nurse schedules for preferences and cost with shift requirements as constraints."
 		        });
-		
-		System.out.println(probID);
 		
 		int algID = gui.getOptionChoice("Which algorithm do you want to use?",
 		        new String[]{"Cuckoo Search Optimization"});
@@ -173,6 +172,7 @@ public class demo {
 	    algs.get(algID).solve(prob);
 	    Solution sol = algs.get(algID).getSolutions(prob).getMostFitSolution(prob);
 	    gui.display(prob.solToString(sol));
+	    gui.display(prob.solToJson(sol));
 		
 	}
 
