@@ -17,7 +17,6 @@ public class CSSolution extends Solution {
     /**
      * Returns a *new* solution that is a random walk away from the current solution.
      * Pass in distribution as "weibull" for an appropriate weibull distribution.
-     * TODO: Allow "levy" as a distribution type.
      */
     public CSSolution randomWalk (OptimizationProblem prob, String distribution) {
         

@@ -46,7 +46,7 @@ public class Solution {
     
     public double getFitness() {
         if (this.fitness == null) {
-//            throw new Exception("Uninitialized fitness!");
+//          TODO  throw new Exception("Uninitialized fitness!");
             System.out.printf("Uninitialized fitness!");
             System.exit(1);
         }
@@ -85,9 +85,9 @@ public class Solution {
     
     public String toString() {
         String output = "";
-        if (this.vars.size() == 0) {
+        if (this.vars.size() == 0)
             output += "Empty Solution";
-        } else {
+        else {
             for (int i = 0; i < this.numVars; i++) {
                 output += String.format("x%d:\t%f\n", i, this.vars.get(i));
             }
