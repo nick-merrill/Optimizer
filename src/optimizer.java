@@ -12,64 +12,25 @@ public class optimizer {
 
 	public static void main(String[] args) {
 	    
-//	    LanternaGUI gui = new LanternaGUI();
-//	    
-////		int numEmployees = 20;
-////		NurseSchedProb optProb = new NurseSchedProb(numEmployees);
 		CuckooSearchOpt csAlg = new CuckooSearchOpt();
-//		ParticleSwarmOpt psoAlg = new ParticleSwarmOpt();
-////		optAlg.solve(optProb);
-//	    
-//		/*
-//	    double fenceLength = 100.;
-//	    FenceProblem fenceProb = new FenceProblem(fenceLength);
-//	    csAlg.solve(fenceProb);
-//	    csAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb).print();
-//	    
-//	    
-//	    double volume = 100.;
-//	    BoxMinAreaProb boxProb = new BoxMinAreaProb(volume);
-//	    csAlg.solve(boxProb);
-//	    csAlg.getSolutions(boxProb).getMostFitSolution(boxProb).print();
-//	    */
-//	    
-//	    MichaelwiczMinProb michaelwiczProb = new MichaelwiczMinProb();
-//	    csAlg.solve(michaelwiczProb);
-//	    Solution michaelwiczSol = csAlg.getSolutions(michaelwiczProb).getMostFitSolution(michaelwiczProb);
-//	    michaelwiczSol.print();
-//	    System.out.printf("Michaelwicz minimum: %f\n", michaelwiczProb.eval(michaelwiczSol));
-//	    
-//	    psoAlg.solve(michaelwiczProb);
-////	    ArrayList<PSOSolution> solutions = (ArrayList<PSOSolution>) psoAlg.getSolutions(michaelwiczProb).getSolutions();
-////	    for(PSOSolution sol : solutions) {
-////	    	sol.printAll();
-////	    }
-//	    Solution michaelwiczSol2 = psoAlg.getSolutions(michaelwiczProb).getMostFitSolution(michaelwiczProb);
-//	    michaelwiczSol2.print();
-////	    System.out.printf("Michaelwicz minimum: %f\n", michaelwiczProb.eval(michaelwiczSol2));
-	    
-	    
+
     	int numEmployees = 3;
     	int numDays = 3;
     	int numShifts = 4;
-    	int maxShiftsInRow = 1;
+    	int maxShiftsInRow = 5;
+    	int maxShiftsADay = 4;
+    	int minShifts = 4;
+    	double lambdaPref = 0;
+    	double lambdaMin = 0;
     	Integer[] shiftReqArr = new Integer[]{1,1,1,0};
     	ArrayList<Integer> shiftReq1 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	ArrayList<Integer> shiftReq2 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	ArrayList<Integer> shiftReq3 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
-//    	ArrayList<Integer> shiftReq4 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
-//    	ArrayList<Integer> shiftReq5 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
-//    	ArrayList<Integer> shiftReq6 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
-//    	ArrayList<Integer> shiftReq7 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	
     	ArrayList<ArrayList<Integer>> shiftReqs = new ArrayList<ArrayList<Integer>>();
     	shiftReqs.add(shiftReq1);
     	shiftReqs.add(shiftReq2);
     	shiftReqs.add(shiftReq3);
-//    	shiftReqs.add(shiftReq4);
-//    	shiftReqs.add(shiftReq5);
-//    	shiftReqs.add(shiftReq6);
-//    	shiftReqs.add(shiftReq7);
     	
     	Integer[] prefArr = new Integer[12];
     	int j = 1;
@@ -102,7 +63,7 @@ public class optimizer {
 
     	NurseSchedProb nProb;
 		try {
-			nProb = new NurseSchedProb(numEmployees, numDays, numShifts, maxShiftsInRow, shiftReqs, preferences);
+			nProb = new NurseSchedProb(numEmployees, numDays, numShifts, maxShiftsInRow, maxShiftsADay, minShifts, lambdaPref, lambdaMin, shiftReqs, preferences);
 			csAlg.solve(nProb);
 	    	SolutionSet sols = csAlg.getSolutions(nProb);
 	    	int n = 15;
