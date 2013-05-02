@@ -273,7 +273,6 @@ public class NurseSchedProb extends OptimizationProblem {
 		return output;
 	}
 	
-	@Override
     public String solToJson(Solution s) {
     	// converts solution array list back to matrix
     	ArrayList<Integer> vars = integerVarsOfSolution(s);
