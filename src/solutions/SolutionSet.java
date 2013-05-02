@@ -9,6 +9,7 @@ import problems.OptimizationProblem;
 public abstract class SolutionSet {
 	protected ArrayList<? extends Solution> solutions;
 	protected int N_SOL;
+	protected int numRuns;
 	
     /** 
      * Sorts all solutions with most fit solution being solutions.get(0).
@@ -44,5 +45,13 @@ public abstract class SolutionSet {
             else if (s1Fitness > s2Fitness) return 1;
             else return 0;
         }
+    }
+    
+    public void setNumRuns(int newNumRuns){
+    	this.numRuns = newNumRuns;
+    }
+    
+    public int getNumRuns() {
+    	return numRuns;
     }
 }
