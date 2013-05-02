@@ -10,6 +10,8 @@ import algorithms.*;
 import problems.*;
 import solutions.*;
 
+import com.google.gson.*;
+
 public class demo {
     
     static ArrayList<OptimizationAlgorithm> algs;
