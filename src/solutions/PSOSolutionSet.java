@@ -8,44 +8,45 @@ import problems.OptimizationProblem;
 public class PSOSolutionSet extends SolutionSet {
     private ArrayList<PSOSolution> solutions;
     private Random rand;
-    private final int N_PARTICLES;
     private PSOSolution bestSol;
 	
 	public PSOSolutionSet(int nParticles, int numVars, OptimizationProblem optProb) {
-        this.N_PARTICLES = nParticles;
-        N_SOL = N_PARTICLES;
+        N_SOL = nParticles;
         this.rand = new Random();
-        solutions = new ArrayList<PSOSolution>(N_PARTICLES);
+        solutions = new ArrayList<PSOSolution>(nParticles);
         super.solutions = solutions;
         
         for (int i = 0; i < nParticles; i++) {
-            //TODO: random initial solution should come from the problem, not solution
+            
         	this.solutions.add(new PSOSolution(numVars));
-        	this.solutions.get(i).setAsRandSol(optProb);
-            this.solutions.get(i).setBestPos();
+        	PSOSolution currSol = this.solutions.get(i);
+        	
+        	//sets a random solution according to bounds
+    		currSol.setAsRandSol(optProb);
+        	currSol.setBestPos();
+        	
+        	currSol.evalFitness(optProb);
             
-            if(i==0) {
-            	bestSol = solutions.get(0);
-            }
-            else if(optProb.fitness(bestSol) < optProb.fitness(solutions.get(i))) {
-            	bestSol = solutions.get(i);
+        	//sets the set's globally best position
+            if(i==0 || bestSol.getFitness() > currSol.getFitness()) {
+            	//sets the best solution and its fitness
+            	bestSol = new PSOSolution(currSol.getVars());
+            	bestSol.evalFitness(optProb);
             }
             
-            ArrayList<Double> currVel = this.solutions.get(i).getVelocity();
+            ArrayList<Double> currVel = currSol.getVelocity();
             
             //random velocity
             for (int j=0; j<numVars; j++) {
             	currVel.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
             }
-            
-            this.solutions.get(i).evalFitness(optProb);
-            this.solutions.get(i).print();
         }
     }
 	
 	@Override
 	public Solution getMostFitSolution(OptimizationProblem optProb) {
-		return bestSol.getBestPosSol();
+		//return bestSol.getBestPosSol();
+		return bestSol;
 	}
 	
 	public PSOSolution getBestSol() {
@@ -53,7 +54,7 @@ public class PSOSolutionSet extends SolutionSet {
 	}
 	
 	public void setBestSol(PSOSolution sol) {
-		bestSol = sol;
+		bestSol = new PSOSolution(sol.getVars());
 	}
 
 }
