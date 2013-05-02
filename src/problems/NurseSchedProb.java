@@ -3,47 +3,72 @@ package problems;
 import java.util.ArrayList;
 
 import exceptions.InputException;
+import exceptions.PositiveNumberInputException;
 
 import solutions.Solution;
 
 public class NurseSchedProb extends OptimizationProblem {
-	private final int numEmployees, numDays, numShifts;
+	private final int numEmployees, numDays, numShifts,
+	                  maxShiftsInRow, maxShiftsADay, minShifts;
+    private final double lambdaPref, lambdaMin;
 	private final ArrayList<ArrayList<Integer>> shiftReqs, preferences;
 
 	/**
-	 * Constructs a Nurse Scheduling Problem
+	 * Constructs a Nurse Scheduling Problem.  
+	 * In this problem, maxShiftsInRow and maxShiftsADay are treated as hard constraints.
+	 * minShifts, however, has the option of being ignored via a lambdaMin value of zero.
 	 */
-	public NurseSchedProb(int numEmployees, int numDays, int numShifts,
-			ArrayList<ArrayList<Integer>> shiftReqs, ArrayList<ArrayList<Integer>> preferences) throws InputException {
+	public NurseSchedProb(int numEmployees, int numDays, int numShifts, int maxShiftsInRow, 
+			int maxShiftsADay, int minShifts, double lambdaPref, double lambdaMin,
+			ArrayList<ArrayList<Integer>> shiftReqs, ArrayList<ArrayList<Integer>> preferences) 
+					throws InputException, PositiveNumberInputException {
 		this.numEmployees = numEmployees;
 		this.numDays = numDays;
 		this.numShifts = numShifts;
+		this.maxShiftsInRow = maxShiftsInRow;
+		this.maxShiftsADay = maxShiftsADay;
+		this.minShifts = minShifts;
+		this.lambdaPref = lambdaPref;
+		this.lambdaMin = lambdaMin;
 		this.shiftReqs = shiftReqs;
 		this.preferences = preferences;
 		for (int i = 0; i < numEmployees * numDays * numShifts; i++)
 			this.constraints.add(new Constraint(i,0,1));
 		
 		// checking user input
-		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) {
+		if (numEmployees <= 0) throw new PositiveNumberInputException("number of employees");
+		if (numDays <= 0) throw new PositiveNumberInputException("number of days in scheduling cycle");
+		if (numShifts <= 0) throw new PositiveNumberInputException("number of shifts per day");
+		if (maxShiftsInRow <= 0) throw new PositiveNumberInputException("maximum number of shifts in a row");
+		if (maxShiftsADay <= 0) throw new PositiveNumberInputException("maximum number of shifts per 24 hours");
+		if (minShifts < 0) throw new PositiveNumberInputException("minimum number of shifts for an employee per scheduling period");
+		if (minShifts > numDays * numShifts)
+			throw new InputException("the minimum number of shifts for an employee per scheduling period",
+					"must not exceed the total number of shifts in the scheduling period");
+		if (lambdaPref < 0) throw new PositiveNumberInputException("the proportional weight of satisfying employee preferences");
+		if (lambdaPref > 1) throw new InputException("the proportional weight of satisfying employee preferences",
+				"must be less than or equal to one","enter a value between zero and one, inclusive");
+		if (lambdaMin < 0) throw new PositiveNumberInputException("the proportional weight of satisfying minimum shifts per employee per scheduling period");
+		if (lambdaMin > 1) throw new InputException("the proportional weight of satisfying minimum shifts per employee per scheduling period",
+				"must be less than or equal to one","enter a value between zero and one, inclusive");
+		if (shiftReqs.size() != numDays || shiftReqs.get(0).size() != numShifts) 
 			throw new InputException("shift requirements","does not have the right dimension",
 					"the matrix should have dimensions [number of days] by [number of shifts]");
-		}
-		for (int i = 0; i < numDays; i++){
-			if (shiftReqs.get(i).get(numShifts-1) != 0){
-				throw new InputException("the last shift","must have a requirement of zero employees");
-			}
-		}
-		if (preferences.size() != numEmployees || preferences.get(0).size() != numDays * numShifts){
+		if (preferences.size() != numEmployees || preferences.get(0).size() != numDays * numShifts)
 			throw new InputException("employee preferences","does not have the right dimension",
 					"the matrix should have dimensions [number of employees] by [number of days times number of shifts]");
-		}
-
 	}
 	
 	/** 
-	 * The fitness of the solution is based on how well you can satisfy 
-	 * workers' preferences while still meeting the requirement of
-	 * workers on duty per shift.
+	 * Soft Requirements: The fitness of the solution is based on how well you 
+	 * can satisfy workers' preferences while still meeting the requirement of
+	 * workers on duty per shift.  There is also an obeyMinShifts function in
+	 * case you would like all employees to have a minimum number of shifts per 
+	 * scheduling period.
+	 * 
+	 * Hard Requirements: If an employee has more than maxShiftsInRow shifts in 
+	 * a row or more than maxShiftsADay in a 24 hours period, then fitness 
+	 * decreases by a significant amount.
 	 */
 	private double preferencesMet(Solution sol) {
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
@@ -52,48 +77,96 @@ public class NurseSchedProb extends OptimizationProblem {
 		for (int i = 0; i<numEmployees; i++){
 			ArrayList<Integer> employeePref = row(listPref,i);
 			ArrayList<Integer> employeeSched = row(intSol,i);
-			double happiness = 0;
-			for (int j = 0; j < numDays*numShifts; j++) {
-				happiness += employeePref.get(j) * employeeSched.get(j);
-			}
-			totalHappiness += happiness;
+			for (int j = 0; j < numDays*numShifts; j++) 
+				totalHappiness += employeePref.get(j) * employeeSched.get(j);
 		}
 		return totalHappiness;
 	}
+	
+	private double obeyMaxShiftsInRow(Solution sol) {
+		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
+		int length = numDays * numShifts;
+		double penalty = Math.pow(numEmployees * length,2);
+		double violations = 0;
+		for (int i = 0; i < numEmployees; i++) { // for each employee
+			ArrayList<Integer> schedule = row(intSol,i);
+			for (int j = 0; j < length; j++) { // for each shift
+				int counter = 0;
+				// check to make sure there are NO MORE THAN n shifts in a row, 
+				// including wrapping around to the beginning of the schedule
+				for (int k = 0; k < maxShiftsInRow + 1; k++){
+					if (schedule.get((j+k) % length) == 0) break;
+					else counter++;
+				}
+				if (counter > maxShiftsInRow) violations += penalty;
+			}
+		}
+		return violations;
+	}
+	
+	private double obeyMaxShiftsADay(Solution sol){
+		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
+		int length = numDays * numShifts;
+		double penalty = Math.pow(numEmployees * length,2);
+		double violations = 0;
+		for (int i = 0; i < numEmployees; i++) { // for each employee
+			ArrayList<Integer> schedule = row(intSol,i);
+			for (int j = 0; j < length; j++) { // for each shift
+				int counter = 0;
+				// check to make sure there are NO MORE THAN n shifts in a 24 hours span,
+				// including wrapping around to the beginning of the schedule
+				for (int k = 0; k < numShifts; k++){
+					if (schedule.get((j+k) % length) == 1)
+						counter++;
+				}
+				if (counter > maxShiftsADay) violations += penalty;
+			}
+		}
+		return violations;
+	}
+	
+	private double obeyMinShifts(Solution sol){
+		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
+		int length = numDays * numShifts;
+		double penalty = Math.pow(numEmployees * length,2);
+		double violations = 0;
+		for (int i = 0; i < numEmployees; i++) { // for each employee
+			if (sumArrayList(row(intSol,i)) < minShifts) 
+				violations += penalty;				
+		}
+		return violations;
+	}
+	
 	private double extraCost(Solution sol){
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
 		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);
+		int length = numDays * numShifts;
 		double cost = 0; 
-		for (int i = 0; i < shiftReqsList.size(); i++){
-			ArrayList<Integer> col = col(intSol,i);
-			double difference = sumArrayList(col) - shiftReqsList.get(i);
+		for (int i = 0; i < length; i++){ // for each shift
+			double difference = sumArrayList(col(intSol,i)) - shiftReqsList.get(i);
 			cost += Math.pow(difference, 2);
 		}
 		return cost;
 	}
 	
 	public double fitness(Solution sol) {
-		return -preferencesMet(sol);
-		// return lambda * preferencesMet(sol) + (1 - lambda) * extraCost(sol);
+		return -(lambdaPref * preferencesMet(sol) + (1 - .5*lambdaPref - .5*lambdaMin) * extraCost(sol) 
+				+ obeyMaxShiftsInRow(sol) + obeyMaxShiftsADay(sol) + lambdaMin * obeyMinShifts(sol));
 	}
 
 	/**
 	 * A solution is within constraints if its number of workers
 	 * per shift match or exceed the requirement.
-	 * The solution must also not have one worker on duty for 
-	 * more than two shifts in a row.
 	 */
 	public boolean withinCustomConstraints(Solution sol) {
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
-		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);		
 		int length = numDays * numShifts;
+		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);		
 		for (int j = 0; j < length; j++) {
 			if (sumArrayList(col(intSol,j)) < shiftReqsList.get(j))
 				return false;
 		}
 		return true;
-		// TODO max shifts per 24 hrs
-		// TODO max back-to-back shifts
 	}
 	
 	public int getNumVar() {
@@ -113,13 +186,12 @@ public class NurseSchedProb extends OptimizationProblem {
 		ArrayList<Double> vars = sol.getVars();
 		return doubleListToIntegerList(vars);
 	}
-	
 	private ArrayList<Integer> doubleListToIntegerList(ArrayList<Double> doubleList) {
 	    int length = doubleList.size();
 		ArrayList<Integer> integerList = new ArrayList<Integer>(length);
+		int x;
 		for (int i = 0; i < length; i++){
-			int x;
-			if (doubleList.get(i)<.5) {x = 0;} else {x = 1;};
+			if (doubleList.get(i)<.5) {x = 0;} else {x = 1;}
 			integerList.add(x); 
 		}
 		return integerList;
@@ -131,14 +203,15 @@ public class NurseSchedProb extends OptimizationProblem {
 	 */
 	private ArrayList<Integer> preferencesList(ArrayList<ArrayList<Integer>> preferences) {
 		int length = numDays * numShifts;
-		ArrayList<Integer> prefList = new ArrayList<Integer>(length);
+		ArrayList<Integer> prefList = new ArrayList<Integer>(numEmployees * length);
 		for (int i = 0; i < numEmployees; i++){
 			prefList.addAll(preferences.get(i));
 		}
 		return prefList;
 	}
+	
 	/*
-	 * Converts the shiftReqs matrix into a single array list
+	 * Converts the inputed shift requirements matrix into a single array list.
 	 */
 	private ArrayList<Integer> shiftReqsList(ArrayList<ArrayList<Integer>> shiftReqs){
 		int length = numDays * numShifts;
@@ -148,30 +221,35 @@ public class NurseSchedProb extends OptimizationProblem {
 		return shiftReqsList;
 	}
 	
+	/*
+	 * Finds the i^th row of solution matrix or a preference matrix that is
+	 * in the form of a single array list.
+	 */
 	private ArrayList<Integer> row(ArrayList<Integer> matrix, int index){
 		int length = numDays * numShifts;
 		ArrayList<Integer> row = new ArrayList<Integer>(length);
-		for (int i = index*length; i < (index+1)*length; i++) {
+		for (int i = index*length; i < (index+1)*length; i++) 
 			row.add(matrix.get(i));
-		}
 		return row;
 	}
-	
+
+	/*
+	 * Finds the i^th column of solution matrix or a preference matrix that is
+	 * in the form of a single array list.
+	 */
 	private ArrayList<Integer> col(ArrayList<Integer> matrix, int index) {
 		ArrayList<Integer> col = new ArrayList<Integer>(numEmployees);
 		int skiplength = numDays * numShifts;
-		for (int i = index; i < (numEmployees-1)*skiplength+index; i += skiplength) {
+		for (int i = index; i < numEmployees * skiplength; i += skiplength)
 			col.add(matrix.get(i));
-		}
 		return col;
 	}
 	
 	private int sumArrayList(ArrayList<Integer> list) {
 		int length = list.size(); 
 		int sum = 0;
-		for (int i = 0; i < length; i++){
+		for (int i = 0; i < length; i++)
 			sum += list.get(i);
-		}
 		return sum;
 	}
 	
@@ -181,6 +259,7 @@ public class NurseSchedProb extends OptimizationProblem {
 		return s1Arr.equals(s2Arr);
 	}
 	
+	@Override
 	public String solToString(Solution s) {
 	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
 	    
@@ -200,8 +279,6 @@ public class NurseSchedProb extends OptimizationProblem {
 		    System.out.printf("%d ", vars.get(i));
 		}
 		System.out.printf("\n");
-	    
-	    
 	}
 
 }

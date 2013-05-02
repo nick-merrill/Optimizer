@@ -74,24 +74,24 @@ public class TerminalUI extends OptimizationUI {
         System.out.println(output);
     }
     
-    private TimerTask displayUpdater;
-    
-    public void activateDisplayUpdater() {
-        if (displayUpdater != null) displayUpdater.cancel();
-        displayUpdater = new TimerTask();
-        
-        
-         
-    }
-    
-    public void deactivateDisplayUpdater() {
-
-@Override
-public void run() {
-    // TODO Auto-generated method stub
-    
-}
-        
-    }
+//    private TimerTask displayUpdater;
+//    
+//    public void activateDisplayUpdater() {
+//        if (displayUpdater != null) displayUpdater.cancel();
+//        displayUpdater = new TimerTask();
+//        
+//        
+//         
+//    }
+//    
+//    public void deactivateDisplayUpdater() {
+//
+//@Override
+//public void run() {
+//    // TODO Auto-generated method stub
+//    
+//}
+//        
+//    }
 
 }
