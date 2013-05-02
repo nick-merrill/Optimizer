@@ -2,8 +2,10 @@ package algorithms;
 
 import java.util.Random;
 
-import solutions.*;
-import problems.*;
+import problems.OptimizationProblem;
+import solutions.CSSolution;
+import solutions.CSSolutionSet;
+import solutions.Solution;
 
 public class CuckooSearchOpt extends OptimizationAlgorithm {
 

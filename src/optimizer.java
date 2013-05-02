@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import exceptions.InputException;
+import exceptions.PositiveNumberInputException;
 
 import UIs.LanternaGUI;
 import algorithms.*;
@@ -20,8 +21,8 @@ public class optimizer {
     	int maxShiftsInRow = 5;
     	int maxShiftsADay = 4;
     	int minShifts = 4;
-    	double lambdaPref = 0;
-    	double lambdaMin = 0;
+    	double lambdaPref = 0.5;
+    	double lambdaMin = .5;
     	Integer[] shiftReqArr = new Integer[]{1,1,1,0};
     	ArrayList<Integer> shiftReq1 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	ArrayList<Integer> shiftReq2 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
@@ -81,9 +82,6 @@ public class optimizer {
 		} catch (InputException e) {
 			e.printStackTrace();
 		}
-    	
-    	
-    	
 	}
 
 }

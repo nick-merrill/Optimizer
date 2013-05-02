@@ -31,6 +31,11 @@ public abstract class OptimizationProblem {
 	 */
 	public abstract boolean withinCustomConstraints(Solution s);
 	
+	/**
+	 * Should return a user-friendly string of the solution.
+	 */
+	public abstract String solToString(Solution s);
+	
 	public double getScalingFactor() {
 		return scalingFactor;
 	}

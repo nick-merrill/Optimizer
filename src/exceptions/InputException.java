@@ -14,7 +14,6 @@ public class InputException extends Exception {
     private static String genMessage(String inputName, String msg, String suggestion) {
         return "Invalid input: " + makeSentence(inputName + " " + msg) + " " +
                 makeSentence(suggestion);
-    
     }
     
     public InputException(String inputName, String msg) {

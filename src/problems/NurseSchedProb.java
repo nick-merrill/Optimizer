@@ -8,16 +8,10 @@ import exceptions.PositiveNumberInputException;
 import solutions.Solution;
 
 public class NurseSchedProb extends OptimizationProblem {
-	private int numEmployees;
-	private int numDays; 
-	private int numShifts;
-	private int maxShiftsInRow;
-	private int maxShiftsADay;
-	private int minShifts;
-	private double lambdaPref;
-	private double lambdaMin;
-	private ArrayList<ArrayList<Integer>> shiftReqs;
-	private ArrayList<ArrayList<Integer>> preferences;
+	private final int numEmployees, numDays, numShifts,
+	                  maxShiftsInRow, maxShiftsADay, minShifts;
+    private double lambdaPref, lambdaMin;
+	private final ArrayList<ArrayList<Integer>> shiftReqs, preferences;
 
 	/**
 	 * Constructs a Nurse Scheduling Problem
@@ -260,6 +254,17 @@ public class NurseSchedProb extends OptimizationProblem {
 		ArrayList<Integer> s1Arr = this.integerVarsOfSolution(s1);
 		ArrayList<Integer> s2Arr = this.integerVarsOfSolution(s2);
 		return s1Arr.equals(s2Arr);
+	}
+	
+	public String solToString(Solution s) {
+	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
+	    
+	    String output = "";
+		for (int i = 0; i < vars.size(); i++) {
+		    if (i % (numDays * numShifts) == 0) output += "\n";
+		    output += String.format("%d ", vars.get(i));
+		}
+		return output;
 	}
 	
 	public void printSol(Solution s) {

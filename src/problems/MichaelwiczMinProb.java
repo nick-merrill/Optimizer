@@ -9,7 +9,7 @@ import solutions.Solution;
  */
 public class MichaelwiczMinProb extends OptimizationProblem {
 	
-    final double M = 10.;
+    private final double M = 10.;
     
     public MichaelwiczMinProb() {
         this.constraints.add(new Constraint(0, 0,5));
@@ -54,6 +54,11 @@ public class MichaelwiczMinProb extends OptimizationProblem {
         ArrayList<Double> vars = s.getVars();
         return this.isInRange(vars.get(0), 0., 5.) &&
                this.isInRange(vars.get(1), 0., 5.);
+    }
+    
+    public String solToString(Solution s) {
+        ArrayList<Double> vars = s.getVars();
+	    return String.format("X = %f\nY = %f", vars.get(0), vars.get(1));
     }
 
 }

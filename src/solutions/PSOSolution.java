@@ -3,6 +3,7 @@ package solutions;
 import java.util.ArrayList;
 
 public class PSOSolution extends Solution {
+	//particle's best fitness
 	private bestPosClass bestPos;
     private ArrayList<Double> velocity;
     
@@ -43,6 +44,10 @@ public class PSOSolution extends Solution {
     	super.setVars(vars);
     }
     
+    /*
+     * sets the current position as the particle's best position
+     * only use if the current position is >= best position
+     */
     public void setBestPos() {
     	this.bestPos.setVars(this.vars);
     }

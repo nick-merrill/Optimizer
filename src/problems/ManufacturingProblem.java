@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class ManufacturingProblem extends OptimizationProblem {
-	private double constraintA, constraintB, constraintC, profitX, profitY,
+	private final double constraintA, constraintB, constraintC, profitX, profitY,
 	               usageAbyX, usageAbyY, usageBbyX, usageBbyY, usageCbyX,
 	               usageCbyY;
 	
@@ -116,6 +116,11 @@ public class ManufacturingProblem extends OptimizationProblem {
 
 	public int getNumVar() {
 		return 2;
+	}
+	
+	// TODO: provide more informative solution toString
+	public String solToString(Solution sol) {
+	    return sol.toString();
 	}
 	
 }

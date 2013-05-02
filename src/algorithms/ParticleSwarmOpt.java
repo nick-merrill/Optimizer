@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import problems.OptimizationProblem;
-import solutions.*;
+import solutions.PSOSolution;
+import solutions.PSOSolutionSet;
 
 public class ParticleSwarmOpt extends OptimizationAlgorithm{
 
@@ -16,8 +17,8 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	private double socialWeight;
 	
 	public ParticleSwarmOpt() {
-		N_PARTICLES = 10;
-		N_RUNS = 500;
+		N_PARTICLES = 100;
+		N_RUNS = 2000;
 		inertiaWeight = 0.99;
 		cognitiveWeight = 1.5;
 		socialWeight = 1.5;
@@ -42,11 +43,12 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 			//rp, rg are randomly generated numbers for each dimension
 			for(int j=0; j<N_PARTICLES; j++) {
 				PSOSolution currSol = (PSOSolution) solutions.getSol(j);
+				PSOSolution bestSol = solutions.getBestSol();
 
 				ArrayList<Double> currPos = currSol.getCurrPos();
 				ArrayList<Double> currVel = currSol.getVelocity();
 				ArrayList<Double> localVector = subLists(currSol.getBestPos(), currPos);
-				ArrayList<Double> globalVector = subLists(solutions.getBestSol().getBestPos(), currPos);
+				ArrayList<Double> globalVector = subLists(bestSol.getVars(), currPos);
 				
 				for(int k=0; k<NUM_VAR; k++) {
 					double rp = rand.nextDouble();
@@ -71,20 +73,21 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 					}
 				}
 				
-				//Updates particle's best solution and globally best solution
-				if(optProb.fitness(currSol) > optProb.fitness(currSol.getBestPosSol())) {
+				currSol.evalFitness(optProb);
+				
+				//Updates particle's individual best solution
+				if(currSol.getFitness() > currSol.getBestPosSol().getFitness(optProb)) {
 					currSol.setBestPos();
-					if(optProb.fitness(currSol) > solutions.getBestSol().getFitness()) {
+					
+					//updates the globally best solution
+					if(currSol.getFitness() > bestSol.getFitness()) {
 						solutions.setBestSol(currSol);
-						
+						solutions.getBestSol().evalFitness(optProb);
 					}
 				}
 
 				
 			}
-			solutions.getBestSol().evalFitness(optProb);
-			
-			solutions.getBestSol().printAll();
 		}
 	}
 	
