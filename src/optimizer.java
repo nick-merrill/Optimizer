@@ -14,10 +14,8 @@ public class optimizer {
 	public static void main(String[] args) {
 	    
 		CuckooSearchOpt csAlg = new CuckooSearchOpt();
-<<<<<<< HEAD
 		ParticleSwarmOpt psoAlg = new ParticleSwarmOpt();
-		optAlg.solve(optProb);
-		*/
+		//optAlg.solve(optProb);
 	    
 		/*
 	    double fenceLength = 100.;
