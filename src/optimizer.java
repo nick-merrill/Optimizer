@@ -23,7 +23,11 @@ public class optimizer {
 		BirdsAndBeesOpt bbAlg = new BirdsAndBeesOpt();
 		
 		//double fenceLength = 100.;
-		RastriginMinProb prob = new RastriginMinProb();
+		//MichaelwiczMinProb prob = new MichaelwiczMinProb();
+		//RastriginMinProb prob = new RastriginMinProb();
+		//EggholderFuncProb prob = new EggholderFuncProb();
+		RosenbrockMinProb prob = new RosenbrockMinProb();
+		
 		
 		testAlgProb(psoAlg, prob);
 		testAlgProb(csAlg, prob);

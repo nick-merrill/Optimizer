@@ -16,8 +16,8 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     private final int MAX_RANDOM_ATTEMPTS;		//maximum attempts to create a new random solution
     
     public CuckooSearchOpt() {
-    	N_NESTS = 30;
-		N_OPTIMIZATIONS = 20000;
+    	N_NESTS = 15;
+		N_OPTIMIZATIONS = 70000;
 		ABANDON_PROBABILITY = 0.25;
 		MAX_RANDOM_ATTEMPTS = 1000;
     }
