@@ -18,12 +18,12 @@ public class optimizer {
     	int numEmployees = 3;
     	int numDays = 3;
     	int numShifts = 4;
-    	int maxShiftsInRow = 5;
-    	int maxShiftsADay = 4;
-    	int minShifts = 4;
-    	double lambdaPref = 0.5;
+    	int maxShiftsInRow = 12;
+    	int maxShiftsADay = 12;
+    	int minShifts = 1;
+    	double lambdaPref = .5;
     	double lambdaMin = .5;
-    	Integer[] shiftReqArr = new Integer[]{1,1,1,0};
+    	Integer[] shiftReqArr = new Integer[]{1,1,1,1};
     	ArrayList<Integer> shiftReq1 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	ArrayList<Integer> shiftReq2 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));
     	ArrayList<Integer> shiftReq3 = new ArrayList<Integer>(Arrays.asList(shiftReqArr));

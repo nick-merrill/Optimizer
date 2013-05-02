@@ -153,7 +153,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	}
 	
 	public double fitness(Solution sol) {
-		return -(lambdaPref * preferencesMet(sol) + (1 - lambdaPref) * (1 - lambdaMin) * extraCost(sol) 
+		return -(lambdaPref * preferencesMet(sol) + (1 - .5*lambdaPref - .5*lambdaMin) * extraCost(sol) 
 				+ obeyMaxShiftsInRow(sol) + obeyMaxShiftsADay(sol) + lambdaMin * obeyMinShifts(sol));
 	}
 
@@ -164,8 +164,6 @@ public class NurseSchedProb extends OptimizationProblem {
 	public boolean withinCustomConstraints(Solution sol) {
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
 		int length = numDays * numShifts;
-		
-		// minimum coverage
 		ArrayList<Integer> shiftReqsList = shiftReqsList(shiftReqs);		
 		for (int j = 0; j < length; j++) {
 			if (sumArrayList(col(intSol,j)) < shiftReqsList.get(j))
@@ -191,13 +189,12 @@ public class NurseSchedProb extends OptimizationProblem {
 		ArrayList<Double> vars = sol.getVars();
 		return doubleListToIntegerList(vars);
 	}
-	
 	private ArrayList<Integer> doubleListToIntegerList(ArrayList<Double> doubleList) {
 	    int length = doubleList.size();
 		ArrayList<Integer> integerList = new ArrayList<Integer>(length);
+		int x;
 		for (int i = 0; i < length; i++){
-			int x;
-			if (doubleList.get(i)<.5) {x = 0;} else {x = 1;};
+			if (doubleList.get(i)<.5) {x = 0;} else {x = 1;}
 			integerList.add(x); 
 		}
 		return integerList;
@@ -209,14 +206,15 @@ public class NurseSchedProb extends OptimizationProblem {
 	 */
 	private ArrayList<Integer> preferencesList(ArrayList<ArrayList<Integer>> preferences) {
 		int length = numDays * numShifts;
-		ArrayList<Integer> prefList = new ArrayList<Integer>(length);
+		ArrayList<Integer> prefList = new ArrayList<Integer>(numEmployees * length);
 		for (int i = 0; i < numEmployees; i++){
 			prefList.addAll(preferences.get(i));
 		}
 		return prefList;
 	}
+	
 	/*
-	 * Converts the shiftReqs matrix into a single array list
+	 * Converts the inputed shift requirements matrix into a single array list.
 	 */
 	private ArrayList<Integer> shiftReqsList(ArrayList<ArrayList<Integer>> shiftReqs){
 		int length = numDays * numShifts;
@@ -226,6 +224,10 @@ public class NurseSchedProb extends OptimizationProblem {
 		return shiftReqsList;
 	}
 	
+	/*
+	 * Finds the i^th row of solution matrix or a preference matrix that is
+	 * in the form of a single array list.
+	 */
 	private ArrayList<Integer> row(ArrayList<Integer> matrix, int index){
 		int length = numDays * numShifts;
 		ArrayList<Integer> row = new ArrayList<Integer>(length);
@@ -233,11 +235,15 @@ public class NurseSchedProb extends OptimizationProblem {
 			row.add(matrix.get(i));
 		return row;
 	}
-	
+
+	/*
+	 * Finds the i^th column of solution matrix or a preference matrix that is
+	 * in the form of a single array list.
+	 */
 	private ArrayList<Integer> col(ArrayList<Integer> matrix, int index) {
 		ArrayList<Integer> col = new ArrayList<Integer>(numEmployees);
 		int skiplength = numDays * numShifts;
-		for (int i = index; i < (numEmployees-1)*skiplength+index; i += skiplength)
+		for (int i = index; i < numEmployees * skiplength; i += skiplength)
 			col.add(matrix.get(i));
 		return col;
 	}
@@ -256,6 +262,7 @@ public class NurseSchedProb extends OptimizationProblem {
 		return s1Arr.equals(s2Arr);
 	}
 	
+	@Override
 	public String solToString(Solution s) {
 	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
 	    
