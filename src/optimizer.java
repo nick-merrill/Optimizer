@@ -30,22 +30,6 @@ public class optimizer {
 	    csAlg.getSolutions(boxProb).getMostFitSolution(boxProb).print();
 	    */
 	    
-	    /*
-	    MichaelwiczMinProb michaelwiczProb = new MichaelwiczMinProb();
-	    csAlg.solve(michaelwiczProb);
-	    Solution michaelwiczSol = csAlg.getSolutions(michaelwiczProb).getMostFitSolution(michaelwiczProb);
-	    michaelwiczSol.print();
-	    System.out.printf("Michaelwicz minimum: %f\n", michaelwiczProb.eval(michaelwiczSol));
-	    */
-	    
-//	    psoAlg.solve(michaelwiczProb);
-//	    ArrayList<PSOSolution> solutions = (ArrayList<PSOSolution>) psoAlg.getSolutions(michaelwiczProb).getSolutions();
-//	    for(PSOSolution sol : solutions) {
-//	    	sol.printAll();
-//	    }
-//	    Solution michaelwiczSol2 = psoAlg.getSolutions(michaelwiczProb).getMostFitSolution(michaelwiczProb);
-//	    michaelwiczSol2.print();
-//	    System.out.printf("Michaelwicz minimum: %f\n", michaelwiczProb.eval(michaelwiczSol2));
 	}
 	
 	private static void psoTest() {

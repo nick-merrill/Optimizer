@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class PSOSolution extends Solution {
 	//particle's best fitness
-	private bestPosClass bestPos;
-    private ArrayList<Double> velocity;
+	protected bestPosClass bestPos;
+    protected ArrayList<Double> velocity;
     
     public class bestPosClass extends Solution {
     	public bestPosClass(ArrayList<Double> vars) {

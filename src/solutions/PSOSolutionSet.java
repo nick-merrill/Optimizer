@@ -6,9 +6,9 @@ import java.util.Random;
 import problems.OptimizationProblem;
 
 public class PSOSolutionSet extends SolutionSet {
-    private ArrayList<PSOSolution> solutions;
-    private Random rand;
-    private PSOSolution bestSol;
+    protected ArrayList<PSOSolution> solutions;
+    protected Random rand;
+    protected PSOSolution bestSol;
 	
 	public PSOSolutionSet(int nParticles, int numVars, OptimizationProblem optProb) {
         N_SOL = nParticles;

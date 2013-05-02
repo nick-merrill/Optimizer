@@ -41,9 +41,9 @@ public class CSSolutionSet extends SolutionSet {
     public CSSolution getRandSol() {
         return this.solutions.get(rand.nextInt(this.getNumSols()));
     }
-
+    
     public void abandonWorstSols(OptimizationProblem optProb, double abandonmentRatio) {
-        this.sortByFitness(optProb);
+    	this.sortByFitness(optProb);
         int numToAbandon = (int) (abandonmentRatio * this.numNests);
         int numToKeep = this.numNests - numToAbandon;
         for (int i = numToKeep; i < numNests; i++) {
