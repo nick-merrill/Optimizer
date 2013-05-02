@@ -13,37 +13,21 @@ public class optimizer {
 
 	public static void main(String[] args) {
 	    
-		CuckooSearchOpt csAlg = new CuckooSearchOpt();
-		ParticleSwarmOpt psoAlg = new ParticleSwarmOpt();
-		//optAlg.solve(optProb);
-	    
-		/*
-	    double fenceLength = 100.;
-	    FenceProblem fenceProb = new FenceProblem(fenceLength);
-	    csAlg.solve(fenceProb);
-	    csAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb).print();
-	    
-	    
-	    double volume = 100.;
-	    BoxMinAreaProb boxProb = new BoxMinAreaProb(volume);
-	    csAlg.solve(boxProb);
-	    csAlg.getSolutions(boxProb).getMostFitSolution(boxProb).print();
-	    */
+		psoTest();
 	    
 	}
 	
 	private static void psoTest() {
 		ParticleSwarmOpt psoAlg = new ParticleSwarmOpt();
 		CuckooSearchOpt csAlg = new CuckooSearchOpt();
+		BirdsAndBeesOpt bbAlg = new BirdsAndBeesOpt();
 		
 		//double fenceLength = 100.;
-		MichaelwiczMinProb michaelwiczProb;
-	    
-
-		michaelwiczProb = new MichaelwiczMinProb();
+		RastriginMinProb prob = new RastriginMinProb();
 		
-		testAlgProb(psoAlg, michaelwiczProb);
-		testAlgProb(csAlg, michaelwiczProb);
+		testAlgProb(psoAlg, prob);
+		testAlgProb(csAlg, prob);
+		testAlgProb(bbAlg, prob);
 
 	    
 	}
@@ -58,7 +42,6 @@ public class optimizer {
 	 	
 	 	Solution sol = optAlg.getSolutions(prob).getMostFitSolution(prob);
 	    sol.print();
-	    System.out.printf("Michaelwicz minimum: %f\n", sol.getFitness(prob));
 	    
 	}
 	

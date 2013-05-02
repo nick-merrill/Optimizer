@@ -2,6 +2,8 @@ package solutions;
 
 import java.util.ArrayList;
 
+import problems.OptimizationProblem;
+
 public class PSOSolution extends Solution {
 	//particle's best fitness
 	protected bestPosClass bestPos;
@@ -35,6 +37,13 @@ public class PSOSolution extends Solution {
     public ArrayList<Double> getVelocity() {
         return this.velocity;
     }
+    
+    //random velocity
+  	public void setRandVel(OptimizationProblem optProb, int numVars) {
+  		for (int j=0; j<numVars; j++) {
+          	this.velocity.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
+          }
+  	}
     
     public ArrayList<Double> getCurrPos() {
     	return super.getVars();

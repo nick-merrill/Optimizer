@@ -37,23 +37,26 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 			CSPSOSolution iSol = (CSPSOSolution) solutions.getSol(rand.nextInt(N_NESTS));
 			CSPSOSolution newSol;
 			do {
-    		    newSol = iSol.randomWalk(optProb, "weibull");
+    		    newSol = iSol.randomWalk(optProb, "");
     		    /* If the random walk resulted in a solution that is not within constraints,
     		     * then try another random walk from the original solution. */
 			} while(!optProb.withinConstraints(newSol));
 		    
 		    int j = rand.nextInt(N_NESTS);
-		    Solution jSol = solutions.getSol(j);
+		    CSPSOSolution jSol = (CSPSOSolution) solutions.getSol(j);
 		    
 		    if (newSol.getFitness(optProb) > jSol.getFitness()) {
 		    	solutions.replace(j, newSol);
+		    	newSol = (CSPSOSolution) solutions.getSol(j);
+		    	newSol.setRandVel(optProb, NUM_VAR);
+		    	newSol.setBestPos();
 		    }
 
 		    
 		    //PSO
 		    for(int j1=0; j1<N_NESTS; j1++) {
-				PSOSolution currSol = (PSOSolution) solutions.getSol(j1);
-				PSOSolution bestSol = solutions.getBestSol();
+				CSPSOSolution currSol = (CSPSOSolution) solutions.getSol(j1);
+				CSPSOSolution bestSol = solutions.getBestSol();
 
 				ArrayList<Double> currPos = currSol.getCurrPos();
 				ArrayList<Double> currVel = currSol.getVelocity();

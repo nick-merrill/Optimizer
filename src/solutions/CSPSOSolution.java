@@ -56,6 +56,8 @@ public class CSPSOSolution extends PSOSolution {
     		distanceSquared -= Math.pow(varStep, 2);
     	}
     	
+    	
+    	
     	return newSol;
     }
 }

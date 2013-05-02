@@ -10,6 +10,10 @@ public class PSOSolutionSet extends SolutionSet {
     protected Random rand;
     protected PSOSolution bestSol;
 	
+    public PSOSolutionSet() {
+    	
+    }
+    
 	public PSOSolutionSet(int nParticles, int numVars, OptimizationProblem optProb) {
         N_SOL = nParticles;
         this.rand = new Random();
@@ -34,12 +38,7 @@ public class PSOSolutionSet extends SolutionSet {
             	bestSol.evalFitness(optProb);
             }
             
-            ArrayList<Double> currVel = currSol.getVelocity();
-            
-            //random velocity
-            for (int j=0; j<numVars; j++) {
-            	currVel.add(2*(rand.nextDouble()-0.5) * (optProb.getMaxVar(j) - optProb.getMinVar(j)));
-            }
+            currSol.setRandVel(optProb, numVars);
         }
     }
 	
