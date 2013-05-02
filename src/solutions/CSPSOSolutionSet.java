@@ -20,8 +20,11 @@ public class CSPSOSolutionSet extends PSOSolutionSet {
     	this.sortByFitness(optProb);
         int numToAbandon = (int) (abandonmentRatio * this.N_SOL);
         int numToKeep = this.N_SOL - numToAbandon;
+        
+        PSOSolutionSet newSols = new PSOSolutionSet(numToAbandon, optProb.getNumVar(), optProb);
+        
         for (int i = numToKeep; i < N_SOL; i++) {
-            solutions.get(i).setAsRandSol(optProb);
+            solutions.set(i, (CSPSOSolution) newSols.getSol(i-numToKeep));
         }
     }
 

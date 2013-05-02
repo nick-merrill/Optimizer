@@ -5,15 +5,21 @@ import java.util.Random;
 import problems.OptimizationProblem;
 import solutions.*;
 
-public class BirdsAndBeesOpt extends CuckooSearchOpt {
+public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 
 	private CSPSOSolutionSet solutions;
+	protected final int N_NESTS;					//number of nests (solutions)
+    protected final int N_OPTIMIZATIONS;			//number of generations
+    protected final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
+
 	private double inertiaWeight;
 	private double cognitiveWeight;
 	private double socialWeight;
 	
 	public BirdsAndBeesOpt() {
-    	super();
+		N_NESTS = 50;
+		N_OPTIMIZATIONS = 5000;
+		ABANDON_PROBABILITY = 0.25;
 		inertiaWeight = 0.7;
 		cognitiveWeight = 1.5;
 		socialWeight = 1.5;
@@ -39,10 +45,8 @@ public class BirdsAndBeesOpt extends CuckooSearchOpt {
 		    int j = rand.nextInt(N_NESTS);
 		    Solution jSol = solutions.getSol(j);
 		    
-		    // TODO: use solutions' instance data to get the fitnesses to avoid unnecessary calculations
-		    if (optProb.fitness(newSol) > jSol.getFitness()) {
+		    if (newSol.getFitness(optProb) > jSol.getFitness()) {
 		    	solutions.replace(j, newSol);
-		    	solutions.getSol(j).evalFitness(optProb);
 		    }
 
 		    
@@ -84,8 +88,6 @@ public class BirdsAndBeesOpt extends CuckooSearchOpt {
 				//Updates particle's individual best solution
 				if(currSol.getFitness() > currSol.getBestPosSol().getFitness(optProb)) {
 					currSol.setBestPos();
-					
-					
 				}
 			}
 		    
@@ -111,10 +113,9 @@ public class BirdsAndBeesOpt extends CuckooSearchOpt {
 		return diff;
 	}
 
-	@Override
-	public CSSolutionSet getSolutions(OptimizationProblem optProb) {
-		// TODO Auto-generated method stub
-		return null;
+	public CSPSOSolutionSet getSolutions(OptimizationProblem optProb) {
+		solutions.sortByFitness(optProb);
+        return solutions;
 	}
 
 }
