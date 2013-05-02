@@ -15,7 +15,7 @@ import solutions.Solution;
 
 public class TerminalUI extends OptimizationUI {
 
-    private Scanner scanner;
+    protected Scanner scanner;
     
     public TerminalUI() {
         scanner = new Scanner(System.in);
