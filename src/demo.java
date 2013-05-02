@@ -172,7 +172,7 @@ public class demo {
 	    algs.get(algID).solve(prob);
 	    Solution sol = algs.get(algID).getSolutions(prob).getMostFitSolution(prob);
 	    gui.display(prob.solToString(sol));
-	    gui.display(prob.solToJson(sol));
+//	    gui.display(prob.solToJson(sol));
 		
 	}
 
