@@ -71,21 +71,24 @@ public class demo {
     }
     
     public static void runNurse() {
-        // Gets necessary CSVs
-        CsvReader csvReader = new CsvReader();
-        
-        int numEmployees, numDays, numShifts;
+        int numEmployees, numDays, numShifts, maxShiftsInRow, maxShiftsADay, minShifts, lambdaPref, lambdaMin;
         try {
             numEmployees = gui.getIntegerInput("number of employees");
             numDays = gui.getIntegerInput("number of days in the schedule");
             numShifts = gui.getIntegerInput("number of shifts per day");
+            maxShiftsInRow = gui.getIntegerInput("the maximum number of shifts in a row that an employee can be on duty");
+            maxShiftsADay = gui.getIntegerInput("the maximum number of shifts in a 24 hour span that an employee can be on duty");
+            minShifts = gui.getIntegerInput("the minimum number of shifts that an employee must be on duty within one scheduling period");
+            lambdaPref = gui.getIntegerInput("the proportional weight of satisfying employee preferences over minimizing costs");
+            lambdaMin = gui.getIntegerInput("the proportional weight of satisfying minimum shifts per employee per scheduling period over minimizing costs");
         } catch (InputException e) {
             e.printStackTrace();
             System.exit(7);
             return;
         }
         
-
+        // Gets necessary CSVs
+        CsvReader csvReader = new CsvReader();
         ArrayList<ArrayList<Integer>> shiftReqs = null;
         do {
             try {
@@ -116,7 +119,8 @@ public class demo {
         } while (true);
         
 		try {
-			prob = new NurseSchedProb(numEmployees, numDays, numShifts, shiftReqs, shiftPrefs);
+			prob = new NurseSchedProb(numEmployees, numDays, numShifts, maxShiftsInRow, 
+					maxShiftsADay, minShifts,  lambdaPref, lambdaMin, shiftReqs, shiftPrefs);
 		} catch (InputException e) {
 			e.printStackTrace();
 			System.exit(7);
