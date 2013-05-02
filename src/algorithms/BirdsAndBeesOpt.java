@@ -1,9 +1,7 @@
 package algorithms;
 
 import java.util.ArrayList;
-
 import java.util.Random;
-
 import problems.OptimizationProblem;
 import solutions.*;
 
@@ -42,12 +40,11 @@ public class BirdsAndBeesOpt extends CuckooSearchOpt {
 		    Solution jSol = solutions.getSol(j);
 		    
 		    // TODO: use solutions' instance data to get the fitnesses to avoid unnecessary calculations
-		    if (optProb.fitness(newSol) > optProb.fitness(jSol))
-		        solutions.replace(j, newSol);
-		    
-		    
-		    
-		    
+		    if (optProb.fitness(newSol) > jSol.getFitness()) {
+		    	solutions.replace(j, newSol);
+		    	solutions.getSol(j).evalFitness(optProb);
+		    }
+
 		    
 		    //PSO
 		    for(int j1=0; j1<N_NESTS; j1++) {
@@ -88,18 +85,20 @@ public class BirdsAndBeesOpt extends CuckooSearchOpt {
 				if(currSol.getFitness() > currSol.getBestPosSol().getFitness(optProb)) {
 					currSol.setBestPos();
 					
-					//updates the globally best solution
-					if(currSol.getFitness() > bestSol.getFitness()) {
-						solutions.setBestSol(currSol);
-						solutions.getBestSol().evalFitness(optProb);
-					}
+					
 				}
-
-				// Resets worst solutions to random values.
-			    solutions.abandonWorstSols(optProb, ABANDON_PROBABILITY);
-			    
-			    t++;
 			}
+		    
+		    // Resets worst solutions to random values.
+		    solutions.abandonWorstSols(optProb, ABANDON_PROBABILITY);
+		    
+		    //updates the globally best solution
+			if(solutions.getSol(0).getFitness() > solutions.getBestSol().getFitness()) {
+				solutions.setBestSol((CSPSOSolution) solutions.getSol(0));
+				solutions.getBestSol().evalFitness(optProb);
+			}
+		    
+		    t++;
 		}
 
 	}

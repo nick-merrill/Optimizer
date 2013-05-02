@@ -10,9 +10,9 @@ import solutions.Solution;
 public class CuckooSearchOpt extends OptimizationAlgorithm {
 
     private CSSolutionSet solutions;
-    private final int N_NESTS;					//number of nests (solutions)
-    private final int N_OPTIMIZATIONS;			//number of generations
-    private final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
+    protected final int N_NESTS;					//number of nests (solutions)
+    protected final int N_OPTIMIZATIONS;			//number of generations
+    protected final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
     private final int MAX_RANDOM_ATTEMPTS;		//maximum attempts to create a new random solution
     
     public CuckooSearchOpt() {
