@@ -72,6 +72,30 @@ public class Tests {
     }
     
     @Test
+    public void testRastriginMinProb() {
+    	int numVar = 10;
+    	RastriginMinProb prob = new RastriginMinProb(numVar);
+    	csAlg.solve(prob);
+    	Solution sol = csAlg.getSolutions(prob).getMostFitSolution(prob);
+	    ArrayList<Double> solVars = sol.getVars();
+    	for(int i=0; i<numVar; i++) {
+    		Assert.assertEquals("x" + i + " not inaccurate.", 0, solVars.get(i), 0.01);
+    	}
+	    Assert.assertEquals("Value not accurate.", prob.fitness(sol), 0, 0.01);
+    }
+    
+    @Test
+    public void testEggholderFuncProb() {
+    	EggholderFuncProb prob = new EggholderFuncProb();
+    	csAlg.solve(prob);
+    	Solution sol = csAlg.getSolutions(prob).getMostFitSolution(prob);
+	    ArrayList<Double> solVars = sol.getVars();
+    	Assert.assertEquals("x not inaccurate.", 512, solVars.get(0), 0.01);
+	    Assert.assertEquals("y not inaccurate.", 404.2319, solVars.get(1), 0.01);
+	    Assert.assertEquals("Value not accurate.", prob.fitness(sol), 959.6407, 0.01);
+    }
+    
+    @Test
     public void testManufacturingProblem() {
     	double constraintA = 20;
     	double constraintB = 30;
