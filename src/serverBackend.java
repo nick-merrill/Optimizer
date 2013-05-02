@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import exceptions.InputException;
 import exceptions.PositiveNumberInputException;
+import UIs.ArgumentUI;
 import UIs.CsvReader;
 import UIs.TerminalUI;
 import algorithms.*;
@@ -12,7 +13,7 @@ import solutions.*;
 
 import com.google.gson.*;
 
-public class demo {
+public class serverBackend {
     
     static ArrayList<OptimizationAlgorithm> algs;
     static int algID;
@@ -132,7 +133,7 @@ public class demo {
     
 	public static void main(String[] args) {
 	    
-	    gui = new TerminalUI();
+	    gui = new ArgumentUI(args);
 	    
 		int probID = gui.getOptionChoice("Hey! What problem do you want to solve?",
 		        new String[]{"Fence Problem - Determines how long of a side adjacent to a river with given fence length to maximize area.",
