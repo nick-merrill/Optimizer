@@ -2,6 +2,8 @@ package problems;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 import solutions.Solution;
 
 public abstract class OptimizationProblem {
@@ -35,6 +37,13 @@ public abstract class OptimizationProblem {
 	 * Should return a user-friendly string of the solution.
 	 */
 	public abstract String solToString(Solution s);
+	
+    public String solToJson(Solution s) {
+    	Gson gson = new Gson();
+    	// Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    	String json = gson.toJson(s);
+    	return json;
+    }
 	
 	public double getScalingFactor() {
 		return scalingFactor;

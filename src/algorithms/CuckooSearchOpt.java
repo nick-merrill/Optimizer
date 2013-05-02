@@ -19,7 +19,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     	N_NESTS = 15;
 		N_OPTIMIZATIONS = 20000;
 		ABANDON_PROBABILITY = 0.25;
-		MAX_RANDOM_ATTEMPTS = 20;
+		MAX_RANDOM_ATTEMPTS = 1000;
     }
     
 	public void solve(OptimizationProblem optProb) {
