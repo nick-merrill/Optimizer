@@ -89,7 +89,7 @@ public class Solution {
             output += "Empty Solution";
         } else {
             for (int i = 0; i < this.numVars; i++) {
-                output += String.format("x%d:\t%f", i, this.vars.get(i));
+                output += String.format("x%d:\t%f\n", i, this.vars.get(i));
             }
         }
         if (this.fitness != null)

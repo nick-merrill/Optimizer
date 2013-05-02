@@ -65,21 +65,31 @@ public class optimizer {
 	
 	private static void psoTest() {
 		ParticleSwarmOpt psoAlg = new ParticleSwarmOpt();
+		CuckooSearchOpt csAlg = new CuckooSearchOpt();
 		
-		double fenceLength = 100.;
-	    FenceProblem fenceProb;
-		try {
-			fenceProb = new FenceProblem(fenceLength);
-			psoAlg.solve(fenceProb);
-		    psoAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb).print();
-		    
-		    Solution fenceSol = psoAlg.getSolutions(fenceProb).getMostFitSolution(fenceProb);
-		    fenceSol.print();
-		    System.out.printf("Michaelwicz minimum: %f\n", fenceSol.getFitness(fenceProb));
-		} catch (PositiveNumberInputException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//double fenceLength = 100.;
+		MichaelwiczMinProb michaelwiczProb;
+	    
+
+		michaelwiczProb = new MichaelwiczMinProb();
+		
+		testAlgProb(psoAlg, michaelwiczProb);
+		testAlgProb(csAlg, michaelwiczProb);
+
+	    
+	}
+	
+	private static void testAlgProb(OptimizationAlgorithm optAlg, OptimizationProblem prob) {
+		long startTime, endTime;
+
+	 	startTime = System.currentTimeMillis();
+	 	optAlg.solve(prob);
+	 	endTime = System.currentTimeMillis();
+	 	System.out.println("Algorithm Time: " + (endTime - startTime));
+	 	
+	 	Solution sol = optAlg.getSolutions(prob).getMostFitSolution(prob);
+	    sol.print();
+	    System.out.printf("Michaelwicz minimum: %f\n", sol.getFitness(prob));
 	    
 	}
 	
