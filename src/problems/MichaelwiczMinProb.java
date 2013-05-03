@@ -63,5 +63,17 @@ public class MichaelwiczMinProb extends OptimizationProblem {
 	    return String.format("X = %f, and Y = %f\n" +
 	    		"F(x,y) = %f", vars.get(0), vars.get(1), s.getFitness());
     }
+    
+    @Override
+    public String solToTable(Solution s) {
+    	ArrayList<Double> vars = s.getVars();
+    	
+		String html = "<table>";
+		html += String.format("<tr><td>x</td><td>%.4f</td></tr>", vars.get(0));
+		html += String.format("<tr><td>y</td><td>%.4f</td></tr>", vars.get(1));
+		html += String.format("<tr><td>Minimum f(x):</td><td>%.2f</td></tr></table>",-s.getFitness());
+		
+		return html;
+    }
 
 }
