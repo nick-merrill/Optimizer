@@ -1,5 +1,6 @@
 package algorithms;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import problems.OptimizationProblem;
@@ -17,9 +18,13 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     
     public CuckooSearchOpt() {
     	N_NESTS = 15;
-		N_OPTIMIZATIONS = 70000;
+    	//56000
+		N_OPTIMIZATIONS = 177000;
 		ABANDON_PROBABILITY = 0.25;
 		MAX_RANDOM_ATTEMPTS = 1000;
+		
+		//for collecting data - delete afterwards
+		fitnesses = new ArrayList<Double>(N_OPTIMIZATIONS/NUM_DATA+1);
     }
     
 	public void solve(OptimizationProblem optProb) {
@@ -77,6 +82,11 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		    
 		    numRuns++;
 		    solutions.setNumRuns(numRuns);
+		    
+		    //for collecting data - TODO: delete afterwards
+		    if((t+1)%(N_OPTIMIZATIONS/NUM_DATA)==0) {
+		    	fitnesses.add(new Double(solutions.getMostFitSolution(optProb).getFitness()));
+		    }
 		}
 	}
 	

@@ -16,16 +16,22 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 	private double cognitiveWeight;
 	private double socialWeight;
 	
-	private final int MAX_RANDOM_ATTEMPTS;	
+	private final int MAX_RANDOM_ATTEMPTS;
+	
+	
 	
 	public BirdsAndBeesOpt() {
 		N_NESTS = 50;
-		N_OPTIMIZATIONS = 2000;
+		//3900
+		N_OPTIMIZATIONS = 12800;
 		ABANDON_PROBABILITY = 0.25;
 		inertiaWeight = 0.7;
 		cognitiveWeight = 1.5;
 		socialWeight = 1.5;
 		MAX_RANDOM_ATTEMPTS = 1000;
+		
+		//for collecting data - delete afterwards
+		fitnesses = new ArrayList<Double>(N_OPTIMIZATIONS/NUM_DATA+1);
     }
 	
 	@Override
@@ -42,8 +48,8 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 			int tries = 0;
 			do {
 				if (tries > MAX_RANDOM_ATTEMPTS) {
-		   //       TODO  throw new Exception("Could not generate new random solution! Perhaps you should widen your constraints.");
-		            System.out.printf("Could not generate new random solution! Perhaps you should widen your constraints.");
+		            System.out.printf("Could not generate new random solution! " +
+		            		"Perhaps you should widen your constraints.");
 		            System.exit(1);;
 				}
     		    newSol = iSol.randomWalk(optProb, "");
@@ -114,6 +120,11 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 			}
 		    
 		    t++;
+		    
+		  //for collecting data - TODO: delete afterwards
+		    if((t+1)%(N_OPTIMIZATIONS/NUM_DATA)==0) {
+		    	fitnesses.add(new Double(solutions.getBestSol().getFitness()));
+		    }
 		}
 
 	}
