@@ -17,12 +17,11 @@ public class FenceProblem extends OptimizationProblem {
     private final double fenceLength;
     
     /**
-     * Constructs a FenceProblem.
+     * Constructs a Fence Problem.
      */
     public FenceProblem(double fenceLength) throws PositiveNumberInputException {
-        if (!(fenceLength > 0)) {
+        if (!(fenceLength > 0))
             throw new PositiveNumberInputException("fence length");
-        }
         this.fenceLength = fenceLength;
         this.constraints.add(new Constraint(0, 0, fenceLength));
     }
@@ -44,6 +43,7 @@ public class FenceProblem extends OptimizationProblem {
      * Returns the area of the fence, as the objective is
      * to maximize that.
      */
+    @Override
     public double fitness(Solution sol) {
         return area(sol);
     }
@@ -54,17 +54,20 @@ public class FenceProblem extends OptimizationProblem {
      * greater than 0 simultaneously ensures that side1
      * is less than half the fence length.
      */
+    @Override
     public boolean withinCustomConstraints(Solution sol) {
         ArrayList<Double> vars = sol.getVars();
         double side1 = vars.get(0);
         return (side1 > 0 && side3(side1) > 0);
     }
     
+    @Override
     public String solToString(Solution sol) {
         ArrayList<Double> solVars = sol.getVars();
 	    return String.format("The side adjacent to the river should be %.2f units long, and you will have an area of %.2f units squared.", solVars.get(0), this.area(sol));
     }
     
+    @Override
     public int getNumVar() {
         return 1;
     }

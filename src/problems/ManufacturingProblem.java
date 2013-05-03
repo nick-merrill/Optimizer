@@ -20,28 +20,7 @@ public class ManufacturingProblem extends OptimizationProblem {
 	               usageCbyY;
 	
 	/**
-	 * Constructs a ManufacturingProblem, where only constraints are inputed
-	 */
-/*	public ManufacturingProblem(double constraintA, double constraintB, double constraintC) {
-		this.constraintA = constraintA;
-		this.constraintB = constraintB;
-		this.constraintC = constraintC;
-	} */
-
-	/**
-	 * Constructs a ManufacturingProblem, where constraints and profits are inputed
-	 */
-/*	public ManufacturingProblem(double constraintA, double constraintB, double constraintC, 
-			double profitX, double profitY) {
-		this.constraintA = constraintA;
-		this.constraintB = constraintB;
-		this.constraintC = constraintC;
-		this.profitX = profitX;
-		this.profitY = profitY;
-	} */
-	
-	/**
-	 * Constructs a ManufacturingProblem, where constraints, profits, 
+	 * Constructs a Manufacturing Problem, where constraints, profits, 
 	 * and material usages are inputed
 	 */
 	public ManufacturingProblem(double constraintA, double constraintB, double constraintC, 

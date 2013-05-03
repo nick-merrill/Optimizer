@@ -12,8 +12,8 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     private CSSolutionSet solutions;
     protected final int N_NESTS;					//number of nests (solutions)
     protected final int N_OPTIMIZATIONS;			//number of generations
-    protected final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
-    private final int MAX_RANDOM_ATTEMPTS;		//maximum attempts to create a new random solution
+    protected final double ABANDON_PROBABILITY;		//percentage of worst solutions discarded
+    private final int MAX_RANDOM_ATTEMPTS;			//maximum attempts to create a new random solution
     
     public CuckooSearchOpt() {
     	N_NESTS = 30;
@@ -68,7 +68,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		    int j = rand.nextInt(solutions.getNumSols());
 		    Solution jSol = solutions.getSol(j);
 		    
-		    // TODO: use solutions' instance data to get the fitnesses to avoid unnecessary calculations
+		    // TODO: use solutions' instance data to get the fitness values to avoid unnecessary calculations
 		    if (optProb.fitness(newSol) > optProb.fitness(jSol))
 		        solutions.replace(j, newSol);
 		    
