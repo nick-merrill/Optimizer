@@ -1,6 +1,8 @@
 package solutions;
 
 import java.util.ArrayList;
+
+import DistLib.uniform;
 import DistLib.weibull;
 
 import problems.OptimizationProblem;

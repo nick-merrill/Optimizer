@@ -1,6 +1,9 @@
 package problems;
 
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
+
 import solutions.Solution;
 
 public class RosenbrockMinProb extends OptimizationProblem {
@@ -59,4 +62,20 @@ public class RosenbrockMinProb extends OptimizationProblem {
 	    return solString;
 	}
 
+	@Override
+    public String solToJson(Solution s) {
+    	// converts solution array list into a matrix
+    	ArrayList<Double> vars = s.getVars();
+    	ArrayList<ArrayList<String>> matrix = new ArrayList<ArrayList<String>>(N);
+    	for (int i = 0; i < N; i++){ // for each row
+    		ArrayList<String> temp = new ArrayList<String>(2);
+    		temp.add("x" + i);
+    		temp.add(String.format("%.4f", vars.get(i)));
+    		matrix.add(temp);
+     	}
+    	
+    	Gson gson = new Gson();
+    	String json = gson.toJson(matrix);
+    	return json;
+    }
 }

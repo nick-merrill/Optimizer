@@ -103,7 +103,7 @@ public class ManufacturingProblem extends OptimizationProblem {
 	@Override
     public String solToString(Solution sol) {
         ArrayList<Double> solVars = sol.getVars();
-	    return String.format("You should produce %.2f items of Product X and %.2f items of Product Y.", 
+	    return String.format("You should produce %.1f items of Product X and %.1f items of Product Y.", 
 	    		solVars.get(0), solVars.get(1));
     }
 	
