@@ -32,9 +32,12 @@ public abstract class OptimizationProblem {
 	public abstract boolean withinCustomConstraints(Solution s);
 	
 	/**
-	 * Should return a user-friendly string of the solution.
+	 * Should return a user-friendly string or Json of the solution.
 	 */
 	public abstract String solToString(Solution s);
+	public String solToJson(Solution s){
+		return null;
+	}
 	
 	public double getScalingFactor() {
 		return scalingFactor;

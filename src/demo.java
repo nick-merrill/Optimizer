@@ -206,8 +206,9 @@ public class demo {
 		}
 	    algs.get(algID).solve(prob);
 	    Solution sol = algs.get(algID).getSolutions(prob).getMostFitSolution(prob);
-	    gui.display(prob.solToString(sol));
-//	    gui.display(prob.solToJson(sol));
+	    if (prob.solToJson(sol) != null)
+	    	gui.display(prob.solToJson(sol));
+	    else gui.display(prob.solToString(sol));
 		
 	}
 
