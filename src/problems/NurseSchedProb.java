@@ -151,6 +151,7 @@ public class NurseSchedProb extends OptimizationProblem {
 		return cost;
 	}
 	
+	@Override
 	public double fitness(Solution sol) {
 		return -(lambdaPref * preferencesMet(sol) + (1 - .5*lambdaPref - .5*lambdaMin) * extraCost(sol) 
 				+ obeyMaxShiftsInRow(sol) + obeyMaxShiftsADay(sol) + lambdaMin * obeyMinShifts(sol));
@@ -160,6 +161,7 @@ public class NurseSchedProb extends OptimizationProblem {
 	 * A solution is within constraints if its number of workers
 	 * per shift match or exceed the requirement.
 	 */
+	@Override
 	public boolean withinCustomConstraints(Solution sol) {
 		ArrayList<Integer> intSol = integerVarsOfSolution(sol);
 		int length = numDays * numShifts;
@@ -171,11 +173,51 @@ public class NurseSchedProb extends OptimizationProblem {
 		return true;
 	}
 	
+	@Override
 	public int getNumVar() {
 		return numEmployees * numDays * numShifts;
 	}
 	
+	@Override
+	public String solToString(Solution s) {
+	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
+	    
+	    String output = "";
+		for (int i = 0; i < vars.size(); i++) {
+		    if (i % (numDays * numShifts) == 0) output += "\n";
+		    output += String.format("%d ", vars.get(i));
+		}
+		return output;
+	}
 	
+    public String solToJson(Solution s) {
+    	// converts solution array list back to matrix
+    	ArrayList<Integer> vars = integerVarsOfSolution(s);
+    	ArrayList<ArrayList<Integer>> matrix = new ArrayList<ArrayList<Integer>>(numEmployees);
+    	int length = numDays * numShifts;
+    	for (int i = 0; i < numEmployees; i++){ // for each row
+    		ArrayList<Integer> temp = new ArrayList<Integer>(length);
+    		for (int j = 0; j < length; j++){ // for each shift
+    			temp.add(vars.get(i*length + j));
+    		}
+    		matrix.add(temp);
+     	}
+    	
+    	Gson gson = new Gson();
+    	String json = gson.toJson(matrix);
+    	return json;
+    }
+	
+	public void printSol(Solution s) {
+	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
+	    
+		for (int i = 0; i < vars.size(); i++) {
+		    if (i % (numDays * numShifts) == 0) System.out.printf("\n");
+		    System.out.printf("%d ", vars.get(i));
+		}
+		System.out.printf("\n");
+	}
+
 	
 
 	/* ********************** Helper Functions **************************/
@@ -261,44 +303,4 @@ public class NurseSchedProb extends OptimizationProblem {
 		return s1Arr.equals(s2Arr);
 	}
 	
-	@Override
-	public String solToString(Solution s) {
-	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
-	    
-	    String output = "";
-		for (int i = 0; i < vars.size(); i++) {
-		    if (i % (numDays * numShifts) == 0) output += "\n";
-		    output += String.format("%d ", vars.get(i));
-		}
-		return output;
-	}
-	
-    public String solToJson(Solution s) {
-    	// converts solution array list back to matrix
-    	ArrayList<Integer> vars = integerVarsOfSolution(s);
-    	ArrayList<ArrayList<Integer>> matrix = new ArrayList<ArrayList<Integer>>(numEmployees);
-    	int length = numDays * numShifts;
-    	for (int i = 0; i < numEmployees; i++){ // for each row
-    		ArrayList<Integer> temp = new ArrayList<Integer>(length);
-    		for (int j = 0; j < length; j++){ // for each shift
-    			temp.add(vars.get(i*length + j));
-    		}
-    		matrix.add(temp);
-     	}
-    	
-    	Gson gson = new Gson();
-    	String json = gson.toJson(matrix);
-    	return json;
-    }
-	
-	public void printSol(Solution s) {
-	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
-	    
-		for (int i = 0; i < vars.size(); i++) {
-		    if (i % (numDays * numShifts) == 0) System.out.printf("\n");
-		    System.out.printf("%d ", vars.get(i));
-		}
-		System.out.printf("\n");
-	}
-
 }

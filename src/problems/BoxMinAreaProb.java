@@ -15,9 +15,11 @@ import exceptions.*;
  * problem on which to test our algorithms.
  */
 public class BoxMinAreaProb extends OptimizationProblem {
-
 	final double boxV;
 	
+	/**
+	 * Constructs a Nurse Scheduling Problem with a set volume.  
+	 */
 	public BoxMinAreaProb(double volume) throws PositiveNumberInputException {
 		if (!(volume > 0)) {
 		    throw new PositiveNumberInputException("volume");
@@ -27,14 +29,16 @@ public class BoxMinAreaProb extends OptimizationProblem {
 		this.constraints.add(new Constraint(1,0,volume));
 	}
 	
-	
-	
+	/**
+	 * Constructs a Nurse Scheduling Problem with a random volume.  
+	 */
 	public BoxMinAreaProb() {
 		// generates a random volume if no volume is specified.
 		Random rand = new Random();
 		this.boxV = rand.nextDouble() * 1000;
 	}
 	
+	@Override
 	public int getNumVar() {
 		return 2;
 	}
@@ -51,9 +55,9 @@ public class BoxMinAreaProb extends OptimizationProblem {
 	 *  The fitness of the solution is defined as the minimal 
 	 *  surface area required.
 	 */
+	@Override
 	public double fitness(Solution s) {
 		return -surfaceArea(s);
-		//TODO -- do we want to return the negative of this, or the inverse, or what?
 	}
 
 	/** 
@@ -66,14 +70,9 @@ public class BoxMinAreaProb extends OptimizationProblem {
         double x = vars.get(0);
         double y = vars.get(1);
 
-		if (x > 0 &&
-			y > 0 &&
-			x * y < boxV) {
+		if (x * y < boxV) 
 			return true;
-		}
-		else {
-			return false;
-		}
+		else return false;
 	}
 	
 	/**

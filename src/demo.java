@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import exceptions.InputException;
 import exceptions.PositiveNumberInputException;
@@ -9,8 +8,6 @@ import UIs.TerminalUI;
 import algorithms.*;
 import problems.*;
 import solutions.*;
-
-import com.google.gson.*;
 
 public class demo {
     
