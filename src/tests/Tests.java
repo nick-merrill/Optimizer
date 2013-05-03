@@ -1,8 +1,6 @@
 package tests;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.Ignore;
@@ -14,8 +12,6 @@ import algorithms.*;
 import problems.*;
 import exceptions.*;
 import solutions.Solution;
-
-import java.util.Arrays;
 
 @RunWith(JUnit4.class)
 public class Tests {

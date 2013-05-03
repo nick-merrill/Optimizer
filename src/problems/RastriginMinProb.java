@@ -50,7 +50,7 @@ public class RastriginMinProb extends OptimizationProblem {
 
 	@Override
 	public double fitness(Solution s) {
-		return -1 * this.rastriginFunction(s);
+		return -this.rastriginFunction(s);
 	}
 
 	@Override

@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import exceptions.InputException;
-import exceptions.PositiveNumberInputException;
 import UIs.CsvReader;
 import UIs.TerminalUI;
 import algorithms.*;
@@ -127,24 +126,54 @@ public class demo {
 		}
     }
     
-	public static void main(String[] args) {
+    public static void runEgg() {
+        prob = new EggholderFuncProb();
+    }
+    
+    public static void runRastrigin() {
+	    int N;
+        try {
+			N = gui.getIntegerInput("number of variables");
+			prob = new RastriginMinProb(N);
+		} catch (InputException e) {
+			e.printStackTrace();
+			System.exit(7);
+		}
+     }
+    
+    public static void runRosenbrock() {
+	    int N;
+        try {
+			N = gui.getIntegerInput("number of variables");
+			prob = new RosenbrockMinProb(N);
+		} catch (InputException e) {
+			e.printStackTrace();
+			System.exit(7);
+		}
+     }
+        
+    public static void main(String[] args) {
 	    
 	    gui = new TerminalUI();
 	    
-		int probID = gui.getOptionChoice("Hey! What problem do you want to solve?",
+	    int probID = gui.getOptionChoice("Hey! What problem do you want to solve?",
 		        new String[]{"Fence Problem - Determines how long of a side adjacent to a river with given fence length to maximize area.",
 		        "Box Minimization of Area Problem - Minimizes the surface area of a box, given a volume.",
 		        "Manufacturing Problem - Maximize profit based on resources used.",
 		        "Michaelwicz Problem - Optimizes a bivariate Michaelwicz function. No inputs are necessary.",
-		        "Nurse Scheduling Problem - Optimizes nurse schedules for preferences and cost with shift requirements as constraints."
+		        "Nurse Scheduling Problem - Optimizes nurse schedules for preferences and cost with shift requirements as constraints.",
+		        "Egg Holder Function - Optimizes a bivariate Egg Holder function. No inputs are necessary.",
+		        "Rastrigin Minimization Problem - Optimizes a multivariate Rastrigin function. User inputs number of variables.",
+		        "Rosenbrock Minimization Problem - Optimizes a multivariate Rosenbrock function. User inputs number of variables."
 		        });
 		
 		int algID = gui.getOptionChoice("Which algorithm do you want to use?",
-		        new String[]{"Cuckoo Search Optimization"});
+		        new String[]{"Cuckoo Search Optimization","Particle Swarm Optimization","Hybrid CS/PSO"});
 		
 	    algs = new ArrayList<OptimizationAlgorithm>();
 		algs.add(new CuckooSearchOpt());
 		algs.add(new ParticleSwarmOpt());
+		algs.add(new BirdsAndBeesOpt());
 		
 		switch (probID) {
 		    case 0:
@@ -162,6 +191,15 @@ public class demo {
 		    case 4:
 		        runNurse();
 		        break;
+		    case 5:
+		    	runEgg();
+		    	break;
+		    case 6: 
+		    	runRastrigin();
+		    	break;
+		    case 7: 
+		    	runRosenbrock();
+		    	break;
 	        default:
 	            System.out.println("Bad case!");
 	            System.exit(5);

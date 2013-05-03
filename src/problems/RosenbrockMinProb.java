@@ -40,7 +40,7 @@ public class RosenbrockMinProb extends OptimizationProblem {
 
 	@Override
 	public double fitness(Solution s) {
-		return -1 * rosenbrockFunc(s);
+		return -rosenbrockFunc(s);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class EggholderFuncProb extends OptimizationProblem {
 	
 	@Override
 	public double fitness(Solution s) {
-		return -1 * eggholderFunction(s);
+		return -eggholderFunction(s);
 	}
 
 	@Override
