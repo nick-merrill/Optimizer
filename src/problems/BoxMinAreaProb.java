@@ -91,6 +91,6 @@ public class BoxMinAreaProb extends OptimizationProblem {
     @Override
     public String solToString(Solution s) {
         ArrayList<Double> vars = s.getVars();
-        return String.format("Your box should be %.2f by %.2f by %.2f units.  The minimum surface area is %.2f", vars.get(0), vars.get(1), this.side3(s), s.getFitness());
+        return String.format("Your box should be %.2f by %.2f by %.2f units.  The minimum surface area is %.2f square units", vars.get(0), vars.get(1), this.side3(s), -s.getFitness());
     }
 }
