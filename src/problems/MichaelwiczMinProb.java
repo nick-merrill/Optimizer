@@ -60,7 +60,8 @@ public class MichaelwiczMinProb extends OptimizationProblem {
     @Override
     public String solToString(Solution s) {
         ArrayList<Double> vars = s.getVars();
-	    return String.format("X = %f, and Y = %f", vars.get(0), vars.get(1));
+	    return String.format("X = %f, and Y = %f\n" +
+	    		"F(x,y) = %f", vars.get(0), vars.get(1), s.getFitness());
     }
 
 }

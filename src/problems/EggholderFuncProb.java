@@ -43,7 +43,9 @@ public class EggholderFuncProb extends OptimizationProblem {
 	@Override
 	public String solToString(Solution s) {
 		ArrayList<Double> vars = s.getVars();
-	    return String.format("x = %f\ny = %f", vars.get(0), vars.get(1));
+	    return String.format("x = %f\ny = %f\nf(x,y) = %f\n", 
+	    		vars.get(0), vars.get(1),s.getFitness());
 	}
+	
 
 }
