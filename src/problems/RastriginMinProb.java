@@ -65,6 +65,7 @@ public class RastriginMinProb extends OptimizationProblem {
 		for(int i=0; i<N; i++) {
 			solString += "x" + i +" = " + vars.get(i) + "\n";
 		}
+		solString += "f(x) = " + s.getFitness();
 		
 	    return solString;
 	}
