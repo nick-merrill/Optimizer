@@ -173,11 +173,12 @@ public class serverBackend {
 		        });
 		
 		int algID = gui.getOptionChoice("Which algorithm do you want to use?",
-		        new String[]{"Cuckoo Search Optimization"});
+		        new String[]{"Cuckoo Search Optimization","Particle Swarm Optimization","Hybrid CS/PSO"});
 		
 	    algs = new ArrayList<OptimizationAlgorithm>();
 		algs.add(new CuckooSearchOpt());
 		algs.add(new ParticleSwarmOpt());
+		algs.add(new BirdsAndBeesOpt());
 		
 		switch (probID) {
 		    case 0:
