@@ -10,7 +10,7 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 	private CSPSOSolutionSet solutions;
 	protected final int N_NESTS;					//number of nests (solutions)
     protected final int N_OPTIMIZATIONS;			//number of generations
-    protected final double ABANDON_PROBABILITY;	//percentage of worst solutions discarded
+    protected final double ABANDON_PROBABILITY;		//percentage of worst solutions discarded
 
 	private double inertiaWeight;
 	private double cognitiveWeight;
@@ -99,9 +99,8 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 				currSol.evalFitness(optProb);
 				
 				//Updates particle's individual best solution
-				if(currSol.getFitness() > currSol.getBestPosSol().getFitness(optProb)) {
+				if(currSol.getFitness() > currSol.getBestPosSol().getFitness(optProb))
 					currSol.setBestPos();
-				}
 			}
 		    
 		    // Resets worst solutions to random values.

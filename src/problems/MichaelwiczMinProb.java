@@ -16,6 +16,7 @@ public class MichaelwiczMinProb extends OptimizationProblem {
         this.constraints.add(new Constraint(1, 0,5));
     }
     
+    @Override
     public int getNumVar() {
         return 2;
     }
@@ -33,12 +34,11 @@ public class MichaelwiczMinProb extends OptimizationProblem {
              Math.sin(y) * Math.pow(Math.sin(2*Math.pow(y, 2) / Math.PI), 2*M);
     }
     
-    
-    @Override
-    /**
+     /**
      * Returns the negative of the Michaelwicz function in order to
      * minimize the function.
      */
+    @Override
     public double fitness(Solution s) {
         // Negates the evaluation in order to optimize for the *minimum*
         return -this.eval(s);
@@ -50,12 +50,14 @@ public class MichaelwiczMinProb extends OptimizationProblem {
     }
     
     /** Returns true if x and y are between 0 and 5. */
+    @Override
     public boolean withinCustomConstraints(Solution s) {
         ArrayList<Double> vars = s.getVars();
         return this.isInRange(vars.get(0), 0., 5.) &&
                this.isInRange(vars.get(1), 0., 5.);
     }
     
+    @Override
     public String solToString(Solution s) {
         ArrayList<Double> vars = s.getVars();
 	    return String.format("X = %f, and Y = %f", vars.get(0), vars.get(1));
