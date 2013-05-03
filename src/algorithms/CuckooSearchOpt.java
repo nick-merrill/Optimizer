@@ -1,6 +1,5 @@
 package algorithms;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import problems.OptimizationProblem;

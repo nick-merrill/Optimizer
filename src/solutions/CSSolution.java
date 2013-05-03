@@ -46,7 +46,7 @@ public class CSSolution extends Solution {
     		// use correct distribution to generate random double [0,1)
     		double r;
             if (distribution == "weibull")
-                r = weibull.random(1.5, 1, null);
+                r = weibull.random(1.5, 1, new uniform());
             else
                 r = rand.nextDouble();
     		// alters this variable coefficient by adding a random step between (-distance,distance)
