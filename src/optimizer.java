@@ -13,8 +13,8 @@ public class optimizer {
 
 	public static void main(String[] args) {
 	    
-		//psoTest();
-		nurseSchedTest();
+		psoTest();
+		//nurseSchedTest();
 	}
 	
 	private static void psoTest() {
