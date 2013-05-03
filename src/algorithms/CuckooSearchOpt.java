@@ -19,12 +19,9 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     public CuckooSearchOpt() {
     	N_NESTS = 15;
     	//56000
-		N_OPTIMIZATIONS = 177000;
+		N_OPTIMIZATIONS = 15000;
 		ABANDON_PROBABILITY = 0.25;
 		MAX_RANDOM_ATTEMPTS = 1000;
-		
-		//for collecting data - delete afterwards
-		fitnesses = new ArrayList<Double>(N_OPTIMIZATIONS/NUM_DATA+1);
     }
     
 	public void solve(OptimizationProblem optProb) {
@@ -33,19 +30,22 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		 * Generate an initial population of host nests; 
 		 * While (t<MaxGeneration) or (stop criterion)
 		 *    Get a cuckoo randomly (say, i) and replace its solution by performing Lévy flights;
-		 *    Evaluate its quality/fitness 
-		 *          [For maximization,  ];
+		 *    Evaluate its quality/fitness F_i
+		 *          [For maximization, -F_i];
 		 *    Choose a nest among n (say, j) randomly;
-		 *    if (),
+		 *    if (F_i > F_j),
 		 *           Replace j by the new solution;
 		 *    end if
-		 *    A fraction () of the worse nests are abandoned and new ones are built;
+		 *    A fraction (P_a) of the worse nests are abandoned and new ones are built;
 		 *    Keep the best solutions/nests;
 		 *    Rank the solutions/nests and find the current best;
 		 *    Pass the current best solutions to the next generation;
 		 * end while
 		*/
 
+		//for collecting data - delete afterwards
+		//fitnesses = new ArrayList<Double>(N_OPTIMIZATIONS/NUM_DATA+1);
+		
 		int NUM_VAR = optProb.getNumVar();
 		solutions = new CSSolutionSet(N_NESTS, NUM_VAR);
 		solutions.initializeWithRandomSols(optProb);
@@ -84,9 +84,10 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		    solutions.setNumRuns(numRuns);
 		    
 		    //for collecting data - TODO: delete afterwards
+		    /*
 		    if((t+1)%(N_OPTIMIZATIONS/NUM_DATA)==0) {
 		    	fitnesses.add(new Double(solutions.getMostFitSolution(optProb).getFitness()));
-		    }
+		    }*/
 		}
 	}
 	

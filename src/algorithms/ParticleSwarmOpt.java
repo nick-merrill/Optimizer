@@ -19,17 +19,19 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	public ParticleSwarmOpt() {
 		N_PARTICLES = 50;
 		//5500
-		N_RUNS = 18000;
+		N_RUNS = 1500;
 		inertiaWeight = 0.7;
 		cognitiveWeight = 1.5;
 		socialWeight = 1.5;
-		
-		//for collecting data - TODO: delete afterwards
-		fitnesses = new ArrayList<Double>(N_RUNS/NUM_DATA+1);
 	}
+	
+	
 	
 	@Override
 	public void solve(OptimizationProblem optProb) {
+		//for collecting data - TODO: delete afterwards
+		//fitnesses = new ArrayList<Double>(N_RUNS/NUM_DATA+1);
+		
 		int NUM_VAR = optProb.getNumVar();
 		
 		//Initializes the swarm with random solutions and velocities
@@ -95,9 +97,10 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 		    
 		    
 		    //for collecting data - TODO: delete afterwards
+		    /*
 		    if((i+1)%(N_RUNS/NUM_DATA)==0) {
 		    	fitnesses.add(new Double(solutions.getBestSol().getFitness()));
-		    }
+		    }*/
 		}
 	}
 	

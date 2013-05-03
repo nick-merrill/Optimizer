@@ -10,13 +10,14 @@ import solutions.*;
 public class optimizer {
 	
 	static final Double ZERO_D = new Double(0);
-	static final int N_TRIALS = 50;
+	static final int N_TRIALS = 1;
 	
 	private static double avgTime = 0;
+	private static ArrayList<Double> finalFitnesses;
 
 	public static void main(String[] args) {
-	    dataTest();
-		//psoTest();
+	    //dataTest();
+		psoTest();
 	}
 	
 	private static void psoTest() {
@@ -26,8 +27,8 @@ public class optimizer {
 		
 		
 		//MichaelwiczMinProb prob = new MichaelwiczMinProb();
-		RastriginMinProb prob = new RastriginMinProb();
-		//EggholderFuncProb prob = new EggholderFuncProb();
+		//RastriginMinProb prob = new RastriginMinProb();
+		EggholderFuncProb prob = new EggholderFuncProb();
 		//RosenbrockMinProb prob = new RosenbrockMinProb(4);
 		
 		
@@ -52,17 +53,23 @@ public class optimizer {
 		ParticleSwarmOpt psoAlg = new ParticleSwarmOpt();
 		CuckooSearchOpt csAlg = new CuckooSearchOpt();
 		BirdsAndBeesOpt bbAlg = new BirdsAndBeesOpt();
-		ArrayList<Double> psoAvg, csAvg, bbAvg;
+		ArrayList<Double> psoAvg, csAvg, bbAvg, psoFinal, csFinal, bbFinal;
 		double psoTime, csTime, bbTime;
 		
-		RastriginMinProb prob = new RastriginMinProb();
+		//RastriginMinProb prob = new RastriginMinProb();
+		//EggholderFuncProb prob = new EggholderFuncProb();
+		//RosenbrockMinProb prob = new RosenbrockMinProb(4);
+		MichaelwiczMinProb prob = new MichaelwiczMinProb();
 		
 		psoAvg = avgData(psoAlg, prob);
 		psoTime = avgTime;
+		psoFinal = finalFitnesses;
 		csAvg = avgData(csAlg, prob);
 		csTime = avgTime;
+		csFinal = finalFitnesses;
 		bbAvg = avgData(bbAlg, prob);
 		bbTime = avgTime;
+		bbFinal = finalFitnesses;
 		
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("fitnesses.txt"));
@@ -79,11 +86,25 @@ public class optimizer {
 				line += (i+1) + "\t";
 				line += psoAvg.get(i) + "\t";
 				line += csAvg.get(i) + "\t";
-				line += bbAvg.get(i);
+				line += bbAvg.get(i) + "\t";
 				bw.write(line);
 				bw.newLine();
 				line = "";
 			}
+			
+			bw.newLine();
+			bw.write("Trial\tPSO Final\tCS Final\tHybrid Final\n");
+			
+			for(int i=0; i<N_TRIALS; i++) {
+				line += (i+1) + "\t";
+				line += psoFinal.get(i) + "\t";
+				line += csFinal.get(i) + "\t";
+				line += bbFinal.get(i) + "\t";
+				bw.write(line);
+				bw.newLine();
+				line = "";
+			}
+			
 			
 			bw.close();
 		} catch(Exception e) {}
@@ -92,8 +113,10 @@ public class optimizer {
 	private static ArrayList<Double> avgData(OptimizationAlgorithm optAlg, OptimizationProblem prob) {
 		long startTime, endTime;
 		avgTime = 0;
+		finalFitnesses = new ArrayList<Double>(N_TRIALS);
 		
 		ArrayList<Double> avg = new ArrayList<Double>(Collections.nCopies(optAlg.NUM_DATA, ZERO_D));
+		
 		for(int i=0; i<N_TRIALS; i++) {
 			startTime = System.currentTimeMillis();
 			optAlg.solve(prob);
@@ -102,6 +125,7 @@ public class optimizer {
 			avgTime += endTime - startTime;
 			
 			addLists(avg, optAlg.getFitnesses(), optAlg.NUM_DATA);
+			finalFitnesses.add(optAlg.getFitnesses().get(optAlg.NUM_DATA-1));
 		}
 		divList(avg, N_TRIALS, optAlg.NUM_DATA);
 		avgTime /= N_TRIALS;
