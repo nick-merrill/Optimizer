@@ -18,7 +18,7 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
     public CuckooSearchOpt() {
     	N_NESTS = 15;
     	//56000
-		N_OPTIMIZATIONS = 50000;
+		N_OPTIMIZATIONS = 100000;
 		ABANDON_PROBABILITY = 0.25;
 		MAX_RANDOM_ATTEMPTS = 1000;
     }
@@ -73,8 +73,11 @@ public class CuckooSearchOpt extends OptimizationAlgorithm {
 		    Solution jSol = solutions.getSol(j);
 		    
 		    // TODO: use solutions' instance data to get the fitness values to avoid unnecessary calculations
-		    if (optProb.fitness(newSol) > optProb.fitness(jSol))
-		        solutions.replace(j, newSol);
+		    if (optProb.fitness(newSol) > jSol.getFitness()) {
+		    	solutions.replace(j, newSol);
+		    	solutions.getSol(j).evalFitness(optProb);
+		    }
+		        
 		    
 		    // Resets worst solutions to random values.
 		    solutions.abandonWorstSols(optProb, ABANDON_PROBABILITY);

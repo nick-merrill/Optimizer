@@ -99,7 +99,7 @@ public class serverBackend {
                 gui.display(e1.getMessage());
             }
         } while (true);
-           
+
         ArrayList<ArrayList<Integer>> shiftPrefs;
         do {
             try {

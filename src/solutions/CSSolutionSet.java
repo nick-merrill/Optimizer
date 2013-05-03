@@ -27,6 +27,7 @@ public class CSSolutionSet extends SolutionSet {
     public void initializeWithRandomSols(OptimizationProblem optProb) {
         for (CSSolution sol : this.solutions) {
             sol.setAsRandSol(optProb);
+            sol.evalFitness(optProb);
         }
     }
     
@@ -48,6 +49,7 @@ public class CSSolutionSet extends SolutionSet {
         int numToKeep = this.numNests - numToAbandon;
         for (int i = numToKeep; i < numNests; i++) {
             solutions.get(i).setAsRandSol(optProb);
+            solutions.get(i).evalFitness(optProb);
         }
     }
 }
