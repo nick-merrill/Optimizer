@@ -23,7 +23,7 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 	public BirdsAndBeesOpt() {
 		N_NESTS = 50;
 		//3900
-		N_OPTIMIZATIONS = 840;
+		N_OPTIMIZATIONS = 4000;
 		ABANDON_PROBABILITY = 0.25;
 		inertiaWeight = 0.7;
 		cognitiveWeight = 1.5;
