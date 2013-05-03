@@ -61,10 +61,11 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 
 		int t = 0;
 		while (t < N_OPTIMIZATIONS) {
-			CSPSOSolution iSol = (CSPSOSolution) solutions.getSol(rand.nextInt(N_NESTS));
+			
 			CSPSOSolution newSol;
 			int tries = 0;
 			do {
+				CSPSOSolution iSol = (CSPSOSolution) solutions.getSol(rand.nextInt(N_NESTS));
 				if (tries > MAX_RANDOM_ATTEMPTS) {
 		            System.out.printf("Could not generate new random solution! " +
 		            		"Perhaps you should widen your constraints.");
@@ -93,6 +94,7 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 				CSPSOSolution bestSol = solutions.getBestSol();
 
 				ArrayList<Double> currPos = currSol.getCurrPos();
+				ArrayList<Double> currPosTemp = new ArrayList<Double>(currPos);
 				ArrayList<Double> currVel = currSol.getVelocity();
 				ArrayList<Double> localVector = subLists(currSol.getBestPos(), currPos);
 				ArrayList<Double> globalVector = subLists(bestSol.getVars(), currPos);
@@ -120,11 +122,19 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 					}
 				}
 				
-				currSol.evalFitness(optProb);
+				//If the particle goes out of custom constraints, reset position and velocity
+				if(!optProb.withinConstraints(currSol)) {
+					currPos = currPosTemp;
+					currSol.setRandVel(optProb, NUM_VAR);
+				}
+				else {
+					currSol.evalFitness(optProb);
+					
+					//Updates particle's individual best solution
+					if(currSol.getFitness() > currSol.getBestPosSol().getFitness(optProb))
+						currSol.setBestPos();
+				}
 				
-				//Updates particle's individual best solution
-				if(currSol.getFitness() > currSol.getBestPosSol().getFitness(optProb))
-					currSol.setBestPos();
 			}
 		    
 		    // Resets worst solutions to random values.
@@ -156,7 +166,7 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 	}
 
 	public CSPSOSolutionSet getSolutions(OptimizationProblem optProb) {
-		solutions.sortByFitness(optProb);
+		//solutions.sortByFitness(optProb);
         return solutions;
 	}
 

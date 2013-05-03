@@ -39,7 +39,8 @@ public class LanternaGUI extends OptimizationUI {
                 MessageBox.showMessageBox(window.getOwner(), "Hello", "You selected the button with an action attached to it.");
             }
         }));
-        return s;
+        String s = null;
+		return s;
     }
 
     @Override
@@ -47,5 +48,23 @@ public class LanternaGUI extends OptimizationUI {
         // TODO Auto-generated method stub
         
     }
+
+	@Override
+	public String getFile(String request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getOptionChoice(String prompt, String[] options) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void display(String output) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

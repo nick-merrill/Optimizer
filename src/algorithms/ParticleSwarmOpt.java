@@ -52,6 +52,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 				PSOSolution bestSol = solutions.getBestSol();
 
 				ArrayList<Double> currPos = currSol.getCurrPos();
+				ArrayList<Double> currPosTemp = new ArrayList<Double>(currPos);
 				ArrayList<Double> currVel = currSol.getVelocity();
 				ArrayList<Double> localVector = subLists(currSol.getBestPos(), currPos);
 				ArrayList<Double> globalVector = subLists(bestSol.getVars(), currPos);
@@ -79,6 +80,12 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 					}
 				}
 				
+				//If the particle goes out of custom constraints, reset position and velocity
+				if(!optProb.withinConstraints(currSol)) {
+					currPos = currPosTemp;
+					currSol.setRandVel(optProb, NUM_VAR);
+				}
+				
 				currSol.evalFitness(optProb);
 				
 				//Updates particle's individual best solution
@@ -95,8 +102,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 			}
 		    solutions.setNumRuns(i);
 		    
-		    
-		    //for collecting data - TODO: delete afterwards
+		    //for collecting data
 		    /*
 		    if((i+1)%(N_RUNS/NUM_DATA)==0) {
 		    	fitnesses.add(new Double(solutions.getBestSol().getFitness()));
@@ -113,7 +119,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	}
 	
 	public PSOSolutionSet getSolutions(OptimizationProblem optProb) {
-	    solutions.sortByFitness(optProb);
+	    //solutions.sortByFitness(optProb);
         return solutions;
     }
 }

@@ -25,10 +25,10 @@ public class optimizer {
 		CuckooSearchOpt csAlg = new CuckooSearchOpt();
 		BirdsAndBeesOpt bbAlg = new BirdsAndBeesOpt();
 		
-		
+		//BoxMinAreaProb prob = new BoxMinAreaProb();
 		//MichaelwiczMinProb prob = new MichaelwiczMinProb();
-		//RastriginMinProb prob = new RastriginMinProb();
-		EggholderFuncProb prob = new EggholderFuncProb();
+		RastriginMinProb prob = new RastriginMinProb();
+		//EggholderFuncProb prob = new EggholderFuncProb();
 		//RosenbrockMinProb prob = new RosenbrockMinProb(4);
 		
 		

@@ -36,9 +36,6 @@ public class CSPSOSolutionSet extends SolutionSet {
             }
             
             currSol.setRandVel(optProb, numVars);
-            
-            
-            
         }
 	}
 	

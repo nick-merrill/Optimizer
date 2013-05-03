@@ -36,6 +36,8 @@ public class BoxMinAreaProb extends OptimizationProblem {
 		// generates a random volume if no volume is specified.
 		Random rand = new Random();
 		this.boxV = rand.nextDouble() * 1000;
+		this.constraints.add(new Constraint(0,0,this.boxV));
+		this.constraints.add(new Constraint(1,0,this.boxV));
 	}
 	
 	@Override

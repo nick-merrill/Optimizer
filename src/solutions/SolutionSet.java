@@ -16,10 +16,14 @@ public abstract class SolutionSet {
      */
     public void sortByFitness(OptimizationProblem optProb) {
         // Evaluates the fitness of each solution in solutions.
-        for (int i = 0; i < this.N_SOL; i++)
+        /*
+    	for (int i = 0; i < this.N_SOL; i++)
             solutions.get(i).evalFitness(optProb);
+        */
+    	
         // Sorts solutions by their respective fitness numbers with lowest fitness first.
         Collections.sort(this.solutions, new SolutionByFitnessComparator());
+        
         // Reverses sort to put the most fit solution first.
         Collections.reverse(this.solutions);
     }
