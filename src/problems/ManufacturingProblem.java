@@ -2,7 +2,7 @@ package problems;
 
 import solutions.Solution;
 import java.util.ArrayList;
-import ptolemy . plot . * ;
+//import ptolemy . plot . * ;
 
 /** 
  * 	The manufacturing problem is always a problem of maximizing 

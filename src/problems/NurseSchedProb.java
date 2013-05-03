@@ -190,24 +190,47 @@ public class NurseSchedProb extends OptimizationProblem {
 		return output;
 	}
 	
+    // converts solution array list back to matrix
+	public ArrayList<ArrayList<Integer>> solToMatrix(Solution s) {
+        ArrayList<Integer> vars = integerVarsOfSolution(s);
+        ArrayList<ArrayList<Integer>> matrix = new ArrayList<ArrayList<Integer>>(numEmployees);
+        int length = numDays * numShifts;
+        for (int i = 0; i < numEmployees; i++){ // for each row
+            ArrayList<Integer> temp = new ArrayList<Integer>(length);
+            for (int j = 0; j < length; j++){ // for each shift
+                temp.add(vars.get(i*length + j));
+            }
+            matrix.add(temp);
+        }
+        return matrix;
+	}
+	
 	@Override
     public String solToJson(Solution s) {
-    	// converts solution array list back to matrix
-    	ArrayList<Integer> vars = integerVarsOfSolution(s);
-    	ArrayList<ArrayList<Integer>> matrix = new ArrayList<ArrayList<Integer>>(numEmployees);
-    	int length = numDays * numShifts;
-    	for (int i = 0; i < numEmployees; i++){ // for each row
-    		ArrayList<Integer> temp = new ArrayList<Integer>(length);
-    		for (int j = 0; j < length; j++){ // for each shift
-    			temp.add(vars.get(i*length + j));
-    		}
-    		matrix.add(temp);
-     	}
+	    ArrayList<ArrayList<Integer>> matrix = solToMatrix(s);
     	
     	Gson gson = new Gson();
     	String json = gson.toJson(matrix);
     	return json;
     }
+	
+	@Override
+	public String solToTable(Solution s) {
+	    ArrayList<ArrayList<Integer>> matrix = solToMatrix(s);
+	    
+	    String html = "<table>";
+	    for (int i = 0; i < matrix.size(); i++) {
+	        html += "<tr>";
+	        ArrayList<Integer> row = matrix.get(i);
+	        for (int j = 0; j < row.size(); j++) {
+	            html += String.format("<td>%d</td>", row.get(j));
+	        }
+	        html += "</tr>";
+	    }
+	    html += "</table>";
+	    
+	    return html;
+	}
 	
 	public void printSol(Solution s) {
 	    ArrayList<Integer> vars = this.integerVarsOfSolution(s);
