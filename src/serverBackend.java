@@ -140,7 +140,9 @@ public class serverBackend {
 		        "Box Minimization of Area Problem - Minimizes the surface area of a box, given a volume.",
 		        "Manufacturing Problem - Maximize profit based on resources used.",
 		        "Michaelwicz Problem - Optimizes a bivariate Michaelwicz function. No inputs are necessary.",
-		        "Nurse Scheduling Problem - Optimizes nurse schedules for preferences and cost with shift requirements as constraints."
+		        "Nurse Scheduling Problem - Optimizes nurse schedules for preferences and cost with shift requirements as constraints.",
+		        "Egg Holder Function - Optimizes a bivariate Egg Holder function. No inputs are necessary.",
+		        "Rastrigin Function Problem - Optimizes a multivariate Rastrigin function. User inputs number of variables."
 		        });
 		
 		int algID = gui.getOptionChoice("Which algorithm do you want to use?",

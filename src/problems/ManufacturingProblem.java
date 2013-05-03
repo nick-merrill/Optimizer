@@ -73,6 +73,7 @@ public class ManufacturingProblem extends OptimizationProblem {
 	/**
 	 * Returns the profit, as the objective is to maximize that.
 	 */
+	@Override
 	public double fitness(Solution sol) {
 		return profit(sol);
 	}
@@ -83,6 +84,7 @@ public class ManufacturingProblem extends OptimizationProblem {
 	 * the material used for each resource must be less than the constraint
 	 * of that resource.
 	 */
+	@Override
 	public boolean withinCustomConstraints(Solution sol) {
 		ArrayList<Double> vars = sol.getVars();
 		double varX = vars.get(0);
@@ -93,13 +95,16 @@ public class ManufacturingProblem extends OptimizationProblem {
 				usageCbyX * varX + usageCbyY * varY <= constraintC);
 	}
 
+	@Override
 	public int getNumVar() {
 		return 2;
 	}
 	
-	// TODO: provide more informative solution toString
-	public String solToString(Solution sol) {
-	    return sol.toString();
-	}
+	@Override
+    public String solToString(Solution sol) {
+        ArrayList<Double> solVars = sol.getVars();
+	    return String.format("You should produce %.2f items of Product X and %.2f items of Product Y.", 
+	    		solVars.get(0), solVars.get(1));
+    }
 	
 }

@@ -64,7 +64,8 @@ public class FenceProblem extends OptimizationProblem {
     @Override
     public String solToString(Solution sol) {
         ArrayList<Double> solVars = sol.getVars();
-	    return String.format("The side adjacent to the river should be %.2f units long, and you will have an area of %.2f units squared.", solVars.get(0), this.area(sol));
+	    return String.format("The side adjacent to the river should be %.2f units long, " +
+	    		"and you will have an area of %.2f units squared.", solVars.get(0), this.area(sol));
     }
     
     @Override
