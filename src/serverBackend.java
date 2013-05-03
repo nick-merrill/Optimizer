@@ -131,6 +131,32 @@ public class serverBackend {
 		}
     }
     
+    public static void runEgg() {
+        prob = new EggholderFuncProb();
+    }
+    
+    public static void runRastrigin() {
+	    int N;
+        try {
+			N = gui.getIntegerInput("number of variables");
+			prob = new RastriginMinProb(N);
+		} catch (InputException e) {
+			e.printStackTrace();
+			System.exit(7);
+		}
+     }
+    
+    public static void runRosenbrock() {
+	    int N;
+        try {
+			N = gui.getIntegerInput("number of variables");
+			prob = new RosenbrockMinProb(N);
+		} catch (InputException e) {
+			e.printStackTrace();
+			System.exit(7);
+		}
+     }
+    
 	public static void main(String[] args) {
 	    
 	    gui = new ArgumentUI(args);
@@ -142,7 +168,8 @@ public class serverBackend {
 		        "Michaelwicz Problem - Optimizes a bivariate Michaelwicz function. No inputs are necessary.",
 		        "Nurse Scheduling Problem - Optimizes nurse schedules for preferences and cost with shift requirements as constraints.",
 		        "Egg Holder Function - Optimizes a bivariate Egg Holder function. No inputs are necessary.",
-		        "Rastrigin Function Problem - Optimizes a multivariate Rastrigin function. User inputs number of variables."
+		        "Rastrigin Minimization Problem - Optimizes a multivariate Rastrigin function. User inputs number of variables.",
+		        "Rosenbrock Minimization Problem - Optimizes a multivariate Rosenbrock function. User inputs number of variables."
 		        });
 		
 		int algID = gui.getOptionChoice("Which algorithm do you want to use?",
@@ -168,6 +195,15 @@ public class serverBackend {
 		    case 4:
 		        runNurse();
 		        break;
+		    case 5:
+		    	runEgg();
+		    	break;
+		    case 6: 
+		    	runRastrigin();
+		    	break;
+		    case 7: 
+		    	runRosenbrock();
+		    	break;
 	        default:
 	            System.out.println("Bad case!");
 	            System.exit(5);
