@@ -80,6 +80,7 @@ public class RosenbrockMinProb extends OptimizationProblem {
     	return json;
     }
 	
+	@Override
 	public String solToTable(Solution s){
     	ArrayList<Double> vars = s.getVars();
     	

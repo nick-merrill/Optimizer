@@ -90,6 +90,7 @@ public class RastriginMinProb extends OptimizationProblem {
     	return json;
     }
 	
+	@Override
 	public String solToTable(Solution s){
     	ArrayList<Double> vars = s.getVars();
     	
@@ -97,7 +98,7 @@ public class RastriginMinProb extends OptimizationProblem {
 		for (int i = 0; i < N; i++) { // for each row
 			html += String.format("<tr><td>x%d</td><td>%.4f</td></tr>", i, vars.get(i));
 		}
-		html += "</table>";
+		html += String.format("<tr>Minimum f(x):</td><td>%.2f</tr></table>",s.getFitness());
 		
 		return html;
 	}
