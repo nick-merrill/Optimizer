@@ -99,14 +99,7 @@ public class serverBackend {
                 gui.display(e1.getMessage());
             }
         } while (true);
-        
-        for (int i = 0; i < shiftReqs.size(); i++) {
-            for (int j = 0; j < shiftReqs.get(0).size(); j++) {
-                System.out.print(shiftReqs.get(i).get(j)+" ");
-            }
-            System.out.println();
-        }
-                
+           
         ArrayList<ArrayList<Integer>> shiftPrefs;
         do {
             try {
@@ -207,7 +200,7 @@ public class serverBackend {
 		}
 	    algs.get(algID).solve(prob);
 	    Solution sol = algs.get(algID).getSolutions(prob).getMostFitSolution(prob);
-	    if (prob.solToJson(sol) != null)
+	    if (prob.solToTable(sol) != null)
 	    	gui.display(prob.solToJson(sol));
 	    else gui.display(prob.solToString(sol));
 		

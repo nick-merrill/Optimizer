@@ -2,6 +2,7 @@ package problems;
 
 import solutions.Solution;
 import java.util.ArrayList;
+import ptolemy . plot . * ;
 
 /** 
  * 	The manufacturing problem is always a problem of maximizing 
@@ -106,5 +107,51 @@ public class ManufacturingProblem extends OptimizationProblem {
 	    return String.format("You should produce %.1f items of Product X and %.1f items of Product Y.", 
 	    		solVars.get(0), solVars.get(1));
     }
+	
+	
+	/* ****************** GRAPHING ***********************/
+	
+	private double xAxisValue() {
+		ArrayList<Double> list = new ArrayList<Double>(3);
+		list.add(constraintA / usageAbyX);
+		list.add(constraintB / usageBbyX);
+		list.add(constraintC / usageCbyX);
+		return greatestOf(list);
+	}
+	private double yAxisValue() {
+		ArrayList<Double> list = new ArrayList<Double>(3);
+		list.add(constraintA / usageAbyY);
+		list.add(constraintB / usageBbyY);
+		list.add(constraintC / usageCbyY);
+		return greatestOf(list);
+	}
+	private double greatestOf(ArrayList<Double> list){
+		double greatest = Double.MAX_VALUE;
+		for (int i = 0; i < list.size(); i++){
+			if (list.get(i) < greatest)
+				greatest = list.get(i);
+		}
+		return greatest;
+	}
+
+//	public class easyPtPlot {
+//		public static final double xMin = 0 , xMax = xAxisValue();
+//		public static final int numPoints = 500;
+//		public static void main (String[] args){
+//			Plot plotObj = new Plot();
+//			plotObj.setTitle("Manufacturing Problem");
+//			plotObj.setXLabel("Number of X Items");
+//			plotObj.setYLabel("Number of Y Items");
+//			
+//			plotObj.setXRange(xMin, xMax);
+//			
+//			double xStep = (xMax - xMin) / Npoint;
+//			
+//			for (double x = xMin; x < xMax; x += xStep) {
+//				double y1 = ;
+//				plotObj.addPoint(0, x, y, true);		
+//			}
+//			PlotApplication app = new PlotApplication ( plotObj );
+//		}
 	
 }

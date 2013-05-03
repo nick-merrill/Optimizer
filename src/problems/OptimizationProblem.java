@@ -35,7 +35,12 @@ public abstract class OptimizationProblem {
 	 * Should return a user-friendly string or Json of the solution.
 	 */
 	public abstract String solToString(Solution s);
+	
 	public String solToJson(Solution s){
+		return null;
+	}
+	
+	public String solToTable(Solution s){
 		return null;
 	}
 	

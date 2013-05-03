@@ -79,4 +79,16 @@ public class RosenbrockMinProb extends OptimizationProblem {
     	String json = gson.toJson(matrix);
     	return json;
     }
+	
+	public String solToTable(Solution s){
+    	ArrayList<Double> vars = s.getVars();
+    	
+		String html = "<table>";
+		for (int i = 0; i < N; i++) { // for each row
+			html += String.format("<tr><td>x%d</td><td>%.4f</td></tr>", i, vars.get(i));
+		}
+		html += "</table>";
+		
+		return html;
+	}
 }
