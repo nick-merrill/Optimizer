@@ -14,7 +14,7 @@ public class EggholderFuncProb extends OptimizationProblem {
 	//Default constructor for setting constraints
 	public EggholderFuncProb() {
 		this.constraints.add(new Constraint(0, -512, 512));
-		this.constraints.add(new Constraint(2, -512, 512));
+		this.constraints.add(new Constraint(1, -512, 512));
 	}
 	
 	@Override

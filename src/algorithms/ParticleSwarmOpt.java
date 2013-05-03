@@ -18,7 +18,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	
 	public ParticleSwarmOpt() {
 		N_PARTICLES = 50;
-		N_RUNS = 3000;
+		N_RUNS = 5000;
 		inertiaWeight = 0.7;
 		cognitiveWeight = 1.5;
 		socialWeight = 1.5;
@@ -34,7 +34,6 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 		Random rand = new Random();
 		
 		//number of iterations, or "generations", to termination criterion
-		int numRuns = 0;
 		for(int i = 0; i<N_RUNS; i++) {
 			//Iterates through particles, updating each's position and velocity
 			//Velocity: v_i,d = w * v_i,d + c1 * rp * (p_i,d - x_i,d) + c2 * rg * (g_d - x_i,d)
@@ -88,8 +87,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 				}
 
 			}
-		    numRuns++;
-		    solutions.setNumRuns(numRuns);
+		    solutions.setNumRuns(i);
 		}
 	}
 	

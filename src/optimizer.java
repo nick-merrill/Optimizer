@@ -1,10 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import exceptions.InputException;
-import exceptions.PositiveNumberInputException;
-
-import UIs.LanternaGUI;
 import algorithms.*;
 import problems.*;
 import solutions.*;
@@ -14,7 +7,6 @@ public class optimizer {
 	public static void main(String[] args) {
 	    
 		psoTest();
-	    
 	}
 	
 	private static void psoTest() {
@@ -23,13 +15,15 @@ public class optimizer {
 		BirdsAndBeesOpt bbAlg = new BirdsAndBeesOpt();
 		
 		//double fenceLength = 100.;
-		RastriginMinProb prob = new RastriginMinProb();
+		MichaelwiczMinProb prob = new MichaelwiczMinProb();
+		//RastriginMinProb prob = new RastriginMinProb();
+		//EggholderFuncProb prob = new EggholderFuncProb();
+		//RosenbrockMinProb prob = new RosenbrockMinProb(4);
+		
 		
 		testAlgProb(psoAlg, prob);
 		testAlgProb(csAlg, prob);
 		testAlgProb(bbAlg, prob);
-
-	    
 	}
 	
 	private static void testAlgProb(OptimizationAlgorithm optAlg, OptimizationProblem prob) {
@@ -42,7 +36,6 @@ public class optimizer {
 	 	
 	 	Solution sol = optAlg.getSolutions(prob).getMostFitSolution(prob);
 	    sol.print();
-	    
 	}
 	
 }

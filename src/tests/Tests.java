@@ -72,6 +72,7 @@ public class Tests {
     }
     
     @Test
+    @Ignore
     public void testRastriginMinProb() {
     	int numVar = 10;
     	RastriginMinProb prob = new RastriginMinProb(numVar);
@@ -85,6 +86,7 @@ public class Tests {
     }
     
     @Test
+    @Ignore
     public void testEggholderFuncProb() {
     	EggholderFuncProb prob = new EggholderFuncProb();
     	csAlg.solve(prob);

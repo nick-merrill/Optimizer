@@ -16,13 +16,16 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 	private double cognitiveWeight;
 	private double socialWeight;
 	
+	private final int MAX_RANDOM_ATTEMPTS;	
+	
 	public BirdsAndBeesOpt() {
 		N_NESTS = 50;
-		N_OPTIMIZATIONS = 5000;
+		N_OPTIMIZATIONS = 2000;
 		ABANDON_PROBABILITY = 0.25;
 		inertiaWeight = 0.7;
 		cognitiveWeight = 1.5;
 		socialWeight = 1.5;
+		MAX_RANDOM_ATTEMPTS = 1000;
     }
 	
 	@Override
@@ -36,10 +39,17 @@ public class BirdsAndBeesOpt extends OptimizationAlgorithm {
 		while (t < N_OPTIMIZATIONS) {
 			CSPSOSolution iSol = (CSPSOSolution) solutions.getSol(rand.nextInt(N_NESTS));
 			CSPSOSolution newSol;
+			int tries = 0;
 			do {
+				if (tries > MAX_RANDOM_ATTEMPTS) {
+		   //       TODO  throw new Exception("Could not generate new random solution! Perhaps you should widen your constraints.");
+		            System.out.printf("Could not generate new random solution! Perhaps you should widen your constraints.");
+		            System.exit(1);;
+				}
     		    newSol = iSol.randomWalk(optProb, "");
     		    /* If the random walk resulted in a solution that is not within constraints,
     		     * then try another random walk from the original solution. */
+    		    tries++;
 			} while(!optProb.withinConstraints(newSol));
 		    
 		    int j = rand.nextInt(N_NESTS);
