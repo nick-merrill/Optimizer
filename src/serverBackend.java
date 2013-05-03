@@ -100,13 +100,6 @@ public class serverBackend {
             }
         } while (true);
         
-        for (int i = 0; i < shiftReqs.size(); i++) {
-            for (int j = 0; j < shiftReqs.get(0).size(); j++) {
-                System.out.print(shiftReqs.get(i).get(j)+" ");
-            }
-            System.out.println();
-        }
-                
         ArrayList<ArrayList<Integer>> shiftPrefs;
         do {
             try {
