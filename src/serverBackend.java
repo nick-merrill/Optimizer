@@ -201,7 +201,7 @@ public class serverBackend {
 	    algs.get(algID).solve(prob);
 	    Solution sol = algs.get(algID).getSolutions(prob).getMostFitSolution(prob);
 	    if (prob.solToTable(sol) != null)
-	    	gui.display(prob.solToJson(sol));
+	    	gui.display(prob.solToTable(sol));
 	    else gui.display(prob.solToString(sol));
 		
 	}
