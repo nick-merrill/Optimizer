@@ -19,7 +19,7 @@ public class ParticleSwarmOpt extends OptimizationAlgorithm{
 	public ParticleSwarmOpt() {
 		N_PARTICLES = 50;
 		//5500
-		N_RUNS = 1500;
+		N_RUNS = 5000;
 		inertiaWeight = 0.7;
 		cognitiveWeight = 1.5;
 		socialWeight = 1.5;
