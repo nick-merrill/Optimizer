@@ -13,8 +13,8 @@ public class optimizer {
 
 	public static void main(String[] args) {
 	    
-		psoTest();
-	    
+		//psoTest();
+		nurseSchedTest();
 	}
 	
 	private static void psoTest() {
@@ -23,10 +23,10 @@ public class optimizer {
 		BirdsAndBeesOpt bbAlg = new BirdsAndBeesOpt();
 		
 		//double fenceLength = 100.;
-		//MichaelwiczMinProb prob = new MichaelwiczMinProb();
+		MichaelwiczMinProb prob = new MichaelwiczMinProb();
 		//RastriginMinProb prob = new RastriginMinProb();
 		//EggholderFuncProb prob = new EggholderFuncProb();
-		RosenbrockMinProb prob = new RosenbrockMinProb();
+		//RosenbrockMinProb prob = new RosenbrockMinProb(4);
 		
 		
 		testAlgProb(psoAlg, prob);
@@ -50,7 +50,9 @@ public class optimizer {
 	}
 	
 	private static void nurseSchedTest() {
+		ParticleSwarmOpt psoAlg = new ParticleSwarmOpt();
 		CuckooSearchOpt csAlg = new CuckooSearchOpt();
+		BirdsAndBeesOpt bbAlg = new BirdsAndBeesOpt();
 		
 		int numEmployees = 3;
     	int numDays = 3;
