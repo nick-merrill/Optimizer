@@ -40,7 +40,6 @@ public class CsvReader {
             }
             rows.add(row);
         }
-        System.out.println(rows);
         
         return rows;
     }
