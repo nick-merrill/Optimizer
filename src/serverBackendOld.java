@@ -2,13 +2,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import exceptions.InputException;
+import UIs.ArgumentUI;
 import UIs.CsvReader;
 import UIs.TerminalUI;
 import algorithms.*;
 import problems.*;
 import solutions.*;
 
-public class demo {
+public class serverBackendOld {
     
     static ArrayList<OptimizationAlgorithm> algs;
     static int algID;
@@ -98,14 +99,7 @@ public class demo {
                 gui.display(e1.getMessage());
             }
         } while (true);
-        
-        for (int i = 0; i < shiftReqs.size(); i++) {
-            for (int j = 0; j < shiftReqs.get(0).size(); j++) {
-                System.out.print(shiftReqs.get(i).get(j)+" ");
-            }
-            System.out.println();
-        }
-                
+
         ArrayList<ArrayList<Integer>> shiftPrefs;
         do {
             try {
@@ -151,16 +145,12 @@ public class demo {
 			System.exit(7);
 		}
      }
-        
-    public static void main(String[] args) {
-	    
-	    gui = new TerminalUI();
-	    
-	    optUI();
-	}
     
-    public static void optUI() {
-    	int probID = gui.getOptionChoice("Hey! What problem do you want to solve?",
+	public static void main(String[] args) {
+	    
+	    gui = new ArgumentUI(args);
+	    
+		int probID = gui.getOptionChoice("Hey! What problem do you want to solve?",
 		        new String[]{"Fence Problem - Determines how long of a side adjacent to a river with given fence length to maximize area.",
 		        "Box Minimization of Area Problem - Minimizes the surface area of a box, given a volume.",
 		        "Manufacturing Problem - Maximize profit based on resources used.",
@@ -210,9 +200,10 @@ public class demo {
 		}
 	    algs.get(algID).solve(prob);
 	    Solution sol = algs.get(algID).getSolutions(prob).getMostFitSolution(prob);
-	    if (prob.solToJson(sol) != null)
-	    	gui.display(prob.solToJson(sol));
+	    if (prob.solToTable(sol) != null)
+	    	gui.display(prob.solToTable(sol));
 	    else gui.display(prob.solToString(sol));
-    }
+		
+	}
 
 }
