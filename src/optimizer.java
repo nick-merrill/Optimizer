@@ -7,6 +7,9 @@ import algorithms.*;
 import problems.*;
 import solutions.*;
 
+/**
+ * This class is used for internal testing purposes only.
+ */
 public class optimizer {
 	
 	static final Double ZERO_D = new Double(0);

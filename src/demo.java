@@ -8,6 +8,12 @@ import algorithms.*;
 import problems.*;
 import solutions.*;
 
+/**
+ * This class is used for general demonstration purposes.
+ * Specifically, the main function runs a simple terminal-based
+ * GUI with user prompts. See the README for more information
+ * on running the demonstration.
+ */
 public class demo {
     
     static ArrayList<OptimizationAlgorithm> algs;
