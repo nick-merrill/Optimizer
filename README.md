@@ -1,6 +1,6 @@
-# Cuckoo Search, applied to the Nurse Scheduling Problem
+# The Birds and the Bees
 
-Implementation of Cuckoo Search Algorithm as a project for Harvard's CS51 course.
+## Implementation of Cuckoo Search Algorithm and Particle Swarm Optimization as a project for Harvard's CS51 course.
 
 Collaborators:
 
