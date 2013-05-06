@@ -30,3 +30,5 @@ Once the program is running, you can choose various problems to solve. A brief d
 
 
 ## Organization
+
+The project is broken up into three main packages: algorithms, problems, and solutions.  By organizing the project this way, it is very simple to switch in different algorithms for each problems, providing many combinations.  The abstraction within each class also aided in the ease of writing each respective algorithm and problem.
