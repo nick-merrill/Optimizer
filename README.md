@@ -26,7 +26,7 @@ On Unix, the command to begin the program should be something like:
 
     java -jar demo.jar
     
-Once the program is running, you can choose various problems to solve. A brief description is given for each.
+Once the program is running, you can choose various problems to solve. Follow the on-screen prompts to enter a problem, an algorithm with which to solve it, and any input parameters, if needed.  A brief description is given for each problem.
 
 
 ## Organization
