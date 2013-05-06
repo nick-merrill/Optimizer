@@ -24,7 +24,7 @@ The source code is in `src`, but to run the demonstration of the system, use the
 
 On Unix, the command to begin the program should be something like:
 
-    java -jar optimizer.jar
+    java -jar demo.jar
     
 Once the program is running, you can choose various problems to solve. A brief description is given for each.
 
