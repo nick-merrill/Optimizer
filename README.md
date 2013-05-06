@@ -1,4 +1,4 @@
-# Cuckoo Search, applied to the Pilot Scheduling Problem
+# Cuckoo Search, applied to the Nurse Scheduling Problem
 
 Implementation of Cuckoo Search Algorithm as a project for Harvard's CS51 course.
 
