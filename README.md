@@ -1,6 +1,6 @@
 # The Birds and the Bees
 
-## Implementation of Cuckoo Search Algorithm and Particle Swarm Optimization as a project for Harvard's CS51 course.
+#### Implementation of Cuckoo Search Algorithm and Particle Swarm Optimization applied to the nurse scheduling problem as a project for Harvard's CS51 course.
 
 Collaborators:
 
