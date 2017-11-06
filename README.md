@@ -5,7 +5,7 @@
 Collaborators:
 
 - [Samuel Kim](https://github.com/samuelkim6626)
-- [Nicholas Merrill](https://github.com/NicholasMerrill)
+- [Nicholas Merrill](https://github.com/cloudrave)
 - [Crystal Stowell](https://github.com/cstowell)
 
 ## Background
